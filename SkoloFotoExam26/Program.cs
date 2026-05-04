@@ -1,12 +1,13 @@
 using SkoloFotoExam26.Interfaces;
 using SkoloFotoExam26.Models;
+using SkoloFotoExam26.Services;
 
 
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 builder.Services.AddRazorPages();
-//builder.Services.AddSingleton<IPhotographingEvent, PhotographingEvent>();
+builder.Services.AddSingleton<IPhotographingEvent, PhotographingEventRepo>();
 
 
 var app = builder.Build();
