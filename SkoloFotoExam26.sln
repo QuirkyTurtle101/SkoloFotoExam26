@@ -1,9 +1,11 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
-VisualStudioVersion = 17.14.36414.22 d17.14
+VisualStudioVersion = 17.14.36414.22
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SkoloFotoExam26", "SkoloFotoExam26\SkoloFotoExam26.csproj", "{DB4BC738-CD79-49A4-92B7-C08E8A43B24E}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ConsoleAksel", "ConsoleAksel\ConsoleAksel.csproj", "{D33B1DF7-C598-444B-A2A3-A53EF0EB8A55}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -15,6 +17,10 @@ Global
 		{DB4BC738-CD79-49A4-92B7-C08E8A43B24E}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{DB4BC738-CD79-49A4-92B7-C08E8A43B24E}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{DB4BC738-CD79-49A4-92B7-C08E8A43B24E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D33B1DF7-C598-444B-A2A3-A53EF0EB8A55}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D33B1DF7-C598-444B-A2A3-A53EF0EB8A55}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D33B1DF7-C598-444B-A2A3-A53EF0EB8A55}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D33B1DF7-C598-444B-A2A3-A53EF0EB8A55}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
