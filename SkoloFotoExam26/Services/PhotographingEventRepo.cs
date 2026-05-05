@@ -3,7 +3,7 @@ using SkoloFotoExam26.Models;
 
 namespace SkoloFotoExam26.Services
 {
-    public class PhotographingEventRepo : Repo<int, PhotographingEvent>, IPhotographingEvent
+    public class PhotographingEventRepo : Repo<int, PhotographingEvent>, IPhotographingEventRepo
     {
         
     }

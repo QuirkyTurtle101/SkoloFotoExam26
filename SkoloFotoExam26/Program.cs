@@ -7,7 +7,7 @@ var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 builder.Services.AddRazorPages();
-builder.Services.AddSingleton<IPhotographingEvent, PhotographingEventRepo>();
+builder.Services.AddSingleton<IPhotographingEventRepo, PhotographingEventRepo>();
 
 
 var app = builder.Build();

@@ -7,11 +7,11 @@ namespace SkoloFotoExam26.Pages
 {
     public class CreateSchoolSecretaryModel : PageModel
     {
-        private IPhotographingEvent _repo;
+        private IPhotographingEventRepo _repo;
         [BindProperty]
         public PhotographingEvent NewPhotographingEvent { get; set; }
 
-        public CreateSchoolSecretaryModel(IPhotographingEvent photographingEventRepo)
+        public CreateSchoolSecretaryModel(IPhotographingEventRepo photographingEventRepo)
         {
             _repo = photographingEventRepo;
         }

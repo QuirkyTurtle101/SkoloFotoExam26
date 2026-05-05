@@ -2,7 +2,7 @@
 
 namespace SkoloFotoExam26.Interfaces
 {
-    public interface IPhotographingEvent : IRepo<int, PhotographingEvent>
+    public interface IPhotographingEventRepo : IRepo<int, PhotographingEvent>
     { 
 
     }
