@@ -7,10 +7,10 @@ namespace SkoloFotoExam26.Services
 {
     public class ParentRepoAsync : MartinConnectionString, IRepoAsync<Parent, int>
     {
-        private string _addAsync = "INSERT INTO Parent Values (@FirstName, @LastName, @Email, @PhoneNumber, @StreetName, @ZipCode)";
-        private string _getAllAsync = "SELECT * FROM Parent";
-        private string _searchAsync = "SELECT * FROM Parent WHERE ParentID = @ParentID";
-        private string _updateAsync = "Update Parent SET @ParentID, @FirstName, @LastName, @Email, @PhoneNumber, @StreetName, @ZipCode WHERE ParentID = @ParentID";
+        private string _addParent = "INSERT INTO Parent Values (@FirstName, @LastName, @Email, @PhoneNumber, @StreetName, @ZipCode)";
+        private string _getAllParent = "SELECT * FROM Parent";
+        private string _searchParent = "SELECT * FROM Parent WHERE ParentID = @ParentID";
+        private string _updateParent = "Update Parent SET @ParentID, @FirstName, @LastName, @Email, @PhoneNumber, @StreetName, @ZipCode WHERE ParentID = @ParentID";
 
         public Task<int> CountAsync()
         {
@@ -23,7 +23,7 @@ namespace SkoloFotoExam26.Services
             {
                 try
                 {
-                    SqlCommand command = new SqlCommand(_addAsync, connection);
+                    SqlCommand command = new SqlCommand(_addParent, connection);
 
                     await command.Connection.OpenAsync();
                     command.Parameters.AddWithValue("@ParentID", input.ParentID);
@@ -65,7 +65,7 @@ namespace SkoloFotoExam26.Services
             {
                 try
                 {
-                    SqlCommand command = new SqlCommand(_getAllAsync, connection);
+                    SqlCommand command = new SqlCommand(_getAllParent, connection);
                     await command.Connection.OpenAsync();
 
                     SqlDataReader reader = await command.ExecuteReaderAsync();
