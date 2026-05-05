@@ -3,18 +3,16 @@
     public class SchoolSecretary : User
     {
 
-        private static int _counter = 1;
+        //private static int _counter = 1;
         public int SchoolSecretaryID { get; private set; }
 
         public string Initials { get; private set; }
         public SchoolSecretary(string firstName, string lastName, string initials, string phoneNumber, string email, string password) :
-            base(firstName, lastName, phoneNumber, email, password)
+            base(firstName, lastName, phoneNumber, email)
         {
-            SchoolSecretaryID = _counter++;
+            //SchoolSecretaryID = _counter++;
             Initials = initials;
-            //char tempFirstName = firstName[0];
-            //char tempLastName = lastName[0];
-            //Initials = $"{tempFirstName}. {tempLastName}.";
+
         }
 
 
