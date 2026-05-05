@@ -7,7 +7,7 @@
         public int SchoolSecretaryID { get; private set; }
 
         public string Initials { get; private set; }
-        public SchoolSecretary(string firstName, string lastName, string initials, string phoneNumber, string email, string password) :
+        public SchoolSecretary(string firstName, string lastName, string initials, string phoneNumber, string email) :
             base(firstName, lastName, phoneNumber, email)
         {
             //SchoolSecretaryID = _counter++;

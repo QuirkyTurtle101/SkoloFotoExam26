@@ -18,9 +18,20 @@
             <label asp-for="@Model.NewPhotographingEvent.End" class="control-label" ></label>
             <input asp-for ="@Model.NewPhotographingEvent.End" class="form-control" />
         </div>
-        @* <div class="form-group">
-            <label asp-for="@Model.NewPhotographingEvent.SchoolSecretary" 
-        </div> *@
+        <br />
+        <div class="form-group">
+            <label asp-for="@Model.SchoolSecretaryID"></label>
+            <input asp-for="@Model.SchoolSecretaryID" />
+        </div>
+        <br />
+        <div class="form-group">
+            <label asp-for="@Model.PhotographerID"></label>
+            <input asp-for="@Model.PhotographerID" />
+        </div>
+        <br />
+        <div>
+            <input type="submit" value="Create New Photographing Event" class="btn btn-primary"
+        </div>
 
     </form>
 </div>
