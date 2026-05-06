@@ -5,9 +5,10 @@ using System.Data;
 
 namespace SkoloFotoExam26.Services
 {
-    public class SchoolSecretaryRepoAsync : SofieConnectionString, IRepoAsync<SchoolSecretary, int>
+    public class SchoolSecretaryRepoAsync : SofieConnectionString, ISchoolSecretaryAsync
     {
         #region SQL querys
+        private string _addSchoolSecretary = "INSERT INTO SchoolSecretary VALUES(@FirstName)";
 
         private string _getSchoolSecretary = "SELECT * FROM SchoolSecretary WHERE SchoolSecretaryID = @SchoolSecretaryID";
         #endregion
