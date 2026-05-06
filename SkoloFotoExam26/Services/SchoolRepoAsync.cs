@@ -9,7 +9,7 @@ namespace SkoloFotoExam26.Services
     public class SchoolRepoAsync : SofieConnectionString, ISchoolRepoAsync
     {
         #region QueryStrings
-        private string _addSchool = "INSERT INTO School VALUES(@Name, @StreetName, @ZipCode, @SchoolType)";
+        private string _addSchool = "INSERT INTO School VALUES(@Name, @Street, @ZipCode, @SchoolType)";
         private string _countSchools = "SELECT COUNT(*) FROM School";
         private string _deleteSchool = "Delete FROM School WHERE SchoolID = @SchoolID";
         private string _getAllSchools = "SELECT * FROM  School";
@@ -28,7 +28,7 @@ namespace SkoloFotoExam26.Services
                     await connection.OpenAsync();
 
                     command.Parameters.AddWithValue("@Name", input.Name);
-                    command.Parameters.AddWithValue("@StreetName", input.StreetName);
+                    command.Parameters.AddWithValue("@Street", input.Street);
                     command.Parameters.AddWithValue("@ZipCode", input.ZipCode);
                     command.Parameters.AddWithValue("@SchoolType", (int)input.SchoolType); //Skal lige forhøre mig hos Rosa.
                     command.Parameters.AddWithValue("@City", input.City);
@@ -94,7 +94,7 @@ namespace SkoloFotoExam26.Services
             //    while (reader.Read())
             //    {
             //        string name = reader.GetString("Name");
-            //        string streetName = reader.GetString("StreetName");
+            //        string street = reader.GetString("Street");
             //        string zipCode = reader.GetString("ZipCode");
             //        SchoolType schooltype = Enum.Parse<SchoolType>reader.GetInt32("SchoolType");
             //    }

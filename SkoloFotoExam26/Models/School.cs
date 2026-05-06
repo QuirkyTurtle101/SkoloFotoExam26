@@ -6,7 +6,7 @@ namespace SkoloFotoExam26.Models
     {
         public int SchoolID { get; }
         public string Name { get; set; }
-        public string StreetName { get; set; }
+        public string Street { get; set; }
         public string City { get; set; }
         public string ZipCode { get; set; }
         public SchoolType SchoolType { get; set; }
@@ -16,10 +16,10 @@ namespace SkoloFotoExam26.Models
             
         }
 
-        public School(string name, string streetName, string city, string zipCode, SchoolType schoolType)
+        public School(string name, string street, string city, string zipCode, SchoolType schoolType)
         {
             Name = name;
-            StreetName = streetName;
+            Street = street;
             City = city;
             SchoolType = schoolType;
             ZipCode = zipCode;
@@ -27,7 +27,7 @@ namespace SkoloFotoExam26.Models
 
         public override string ToString()
         {
-            return $"SchoolID: {SchoolID}, Name: {Name}, Street: {StreetName}, Zip-Code: {ZipCode}, school type: {SchoolType}";
+            return $"SchoolID: {SchoolID}, Name: {Name}, Street: {Street}, Zip-Code: {ZipCode}, school type: {SchoolType}";
         }
     }
 }

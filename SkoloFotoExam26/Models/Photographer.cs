@@ -8,7 +8,7 @@
 
         public string CVRNumber { get; private set; }
 
-        public string StreetName { get; private set; }
+        public string street { get; private set; }
 
         public string City { get; private set; }
 
@@ -23,7 +23,7 @@
 
 
         public Photographer(string firstName, string lastName, string phoneNumber, string email, string website, string cvrNumber,
-            string city, string postCode, string streetName, int experienceInYears, int maxTravelRadiusInKm, string instagram,
+            string city, string postCode, string street, int experienceInYears, int maxTravelRadiusInKm, string instagram,
             string facebook) 
             : base(firstName, lastName, phoneNumber, email)
         {
@@ -31,7 +31,7 @@
             CVRNumber = cvrNumber;
             City = city;
             PostCode = postCode;
-            StreetName = streetName;
+            street = street;
             ExperienceInYears = experienceInYears;
             MaxTravelRadiusInKm = maxTravelRadiusInKm;
             Instagram = instagram;
@@ -42,7 +42,7 @@
         public override string ToString()
         {
             return $"PhotographerID: {PhotographerID}, {base.ToString()}, WebPage: {Website}, CVRNumber: {CVRNumber}, " +
-                $"City: {City}, PostCode: {PostCode}, TheAddress: {StreetName}, ExperienceInYears: {ExperienceInYears}, " +
+                $"City: {City}, PostCode: {PostCode}, TheAddress: {street}, ExperienceInYears: {ExperienceInYears}, " +
                 $"MaxTravelRadiusInKm: {MaxTravelRadiusInKm}, Instagram: {Instagram}, Facebook: {Facebook}";
         }
 
