@@ -9,10 +9,11 @@ namespace SkoloFotoExam26.Services
     public class SchoolRepoAsync : SofieConnectionString, ISchoolRepoAsync
     {
         #region QueryStrings
-        private string _addSchool = "INSERT INTO School VALUES(@Name, @StreetName, @ZipCode, @SchoolType)";
+        private string _addSchool = "INSERT INTO School VALUES(@Name, @Street, @ZipCode, @SchoolType)";
         private string _countSchools = "SELECT COUNT(*) FROM School";
         private string _deleteSchool = "Delete FROM School WHERE SchoolID = @SchoolID";
-        private string _getAllSchools = "SELECT * FROM  school";
+        private string _getAllSchools = "SELECT * FROM  School";
+        private string _getSchool = "SELECT * FROM School WHERE SchoolID = @SchoolID";
 
         #endregion
 
@@ -27,7 +28,7 @@ namespace SkoloFotoExam26.Services
                     await connection.OpenAsync();
 
                     command.Parameters.AddWithValue("@Name", input.Name);
-                    command.Parameters.AddWithValue("@StreetName", input.StreetName);
+                    command.Parameters.AddWithValue("@Street", input.Street);
                     command.Parameters.AddWithValue("@ZipCode", input.ZipCode);
                     command.Parameters.AddWithValue("@SchoolType", (int)input.SchoolType); //Skal lige forhøre mig hos Rosa.
                     command.Parameters.AddWithValue("@City", input.City);
@@ -93,7 +94,7 @@ namespace SkoloFotoExam26.Services
             //    while (reader.Read())
             //    {
             //        string name = reader.GetString("Name");
-            //        string streetName = reader.GetString("StreetName");
+            //        string street = reader.GetString("Street");
             //        string zipCode = reader.GetString("ZipCode");
             //        SchoolType schooltype = Enum.Parse<SchoolType>reader.GetInt32("SchoolType");
             //    }
@@ -102,9 +103,45 @@ namespace SkoloFotoExam26.Services
             throw new NotImplementedException();
         }
 
-        public Task<School> GetAsync(int toGet)
+        public async Task<School> GetAsync(int toGet)
         {
-            throw new NotImplementedException();
+            School school = null;
+            using (SqlConnection connection = new SqlConnection(connectionString))
+            {
+                try
+                {
+                    SqlCommand command = new SqlCommand(_getSchool, connection);
+                    await connection.OpenAsync();
+                    command.Parameters.AddWithValue("@SchoolID", toGet);
+
+                    SqlDataReader reader = await command.ExecuteReaderAsync();
+
+                    if (reader.Read())
+                    {
+                        string name = reader.GetString("Name");
+                        string streetName = reader.GetString("StreetName");
+                        string zipCode = reader.GetString("ZipCode");
+                        string city = reader.GetString("City"); //
+                        int valueType = reader.GetInt32("SchoolType");
+                        SchoolType schoolType = (SchoolType)valueType;
+                        int schoolID = reader.GetInt32("SchoolID");
+                        school = new School(name, streetName, city, zipCode, schoolType);
+                    }
+                }
+                catch (SqlException sqlex)
+                {
+                    throw;
+                }
+                catch (Exception ex)
+                {
+                    throw;
+                }
+                finally
+                {
+                    await connection.CloseAsync();
+                }
+            }
+            return school;
         }
 
         public Task UpdateAsync(School toUpdate)

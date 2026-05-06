@@ -50,14 +50,14 @@ namespace SkoloFotoExam26.Services
                     string website = reader.GetString("Website");
                     string cvrNumber = reader.GetString("CVRNumber");
                     string city = reader.GetString("City");
-                    string postCode = reader.GetString("PostCode");
-                    string streetName = reader.GetString("StreetName");
+                    string postCode = reader.GetString("postCode");
+                    string street = reader.GetString("Street");
                     int experienceInYears = reader.GetInt32("ExperienceInYears");
                     int maxTravelRadiusInKm = reader.GetInt32("MaxTravelRadiusInKm");
                     string instagram = reader.GetString("Instagram");
                     string facebook = reader.GetString("Facebook");
                     photographer = new Photographer(firstName, lastName, phoneNumber, email, website, cvrNumber, city, postCode,
-                        streetName, experienceInYears, maxTravelRadiusInKm, instagram, facebook);
+                        street, experienceInYears, maxTravelRadiusInKm, instagram, facebook);
                 }
             }
             catch (SqlException sqlEx)

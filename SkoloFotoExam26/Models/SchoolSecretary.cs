@@ -9,6 +9,12 @@
         public string Initials { get; private set; }
 
         public School TheSchool { get; private set; }
+
+        public SchoolSecretary()
+        {
+            
+        }
+
         public SchoolSecretary(string firstName, string lastName, string initials, string phoneNumber, string email, 
             School theSchool) :
             base(firstName, lastName, phoneNumber, email)

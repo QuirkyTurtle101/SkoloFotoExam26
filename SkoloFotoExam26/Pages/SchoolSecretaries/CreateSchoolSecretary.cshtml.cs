@@ -4,36 +4,42 @@ using Microsoft.Data.SqlClient;
 using SkoloFotoExam26.Interfaces;
 using SkoloFotoExam26.Models;
 
-namespace SkoloFotoExam26.Pages.Schools
+namespace SkoloFotoExam26.Pages.SchoolSecretaries
 {
-    public class CreateSchoolModel : PageModel
+    public class CreateSchoolSecretaryModel : PageModel
     {
 
+        private ISchoolSecretaryRepoAsync _schoolSecRepo;
         private ISchoolRepoAsync _schoolRepo;
 
         [BindProperty]
-        public School NewSchool { get; set; }
+        public SchoolSecretary NewSchoolSecretary { get; set; }
+        [BindProperty]
+        public int SchoolID { get; set; }// skal formentlig ændres i fremtiden.
 
-        public CreateSchoolModel(ISchoolRepoAsync repoAsync)
+        public CreateSchoolSecretaryModel(ISchoolSecretaryRepoAsync schoolSecretaryAsync, ISchoolRepoAsync schoolRepoAsync)
         {
-            _schoolRepo = repoAsync;
+            _schoolSecRepo = schoolSecretaryAsync;
+            _schoolRepo = schoolRepoAsync;
         }
 
         public void OnGet()
         {
         }
+
         public async Task<IActionResult> OnPostAsync()
         {
             try
             {
-                await _schoolRepo.AddAsync(NewSchool);
+                School
+                await _schoolSecRepo.AddAsync(NewSchoolSecretary);
             }
-            catch(SqlException sqlex)
+            catch (SqlException sqlex)
             {
                 ViewData["ErrorMessage"] = sqlex.Message;
                 return Page();
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 ViewData["ErrorMessage"] = ex.Message;
                 return Page();
