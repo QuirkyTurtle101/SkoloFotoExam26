@@ -8,15 +8,41 @@ namespace SkoloFotoExam26.Services
     public class SchoolSecretaryRepoAsync : SofieConnectionString, ISchoolSecretaryAsync
     {
         #region SQL querys
-        private string _addSchoolSecretary = "INSERT INTO SchoolSecretary VALUES(@FirstName)";
+        private string _addSchoolSecretary = "INSERT INTO SchoolSecretary VALUES(@FirstName, @LastName, @Email, @PhoneNumber, @Initials, @SchoolID)";
 
         private string _getSchoolSecretary = "SELECT * FROM SchoolSecretary WHERE SchoolSecretaryID = @SchoolSecretaryID";
         #endregion
 
 
-        public Task AddAsync(SchoolSecretary input)
+        public async Task AddAsync(SchoolSecretary input)
         {
-            throw new NotImplementedException();
+            using (SqlConnection connection = new SqlConnection(connectionString))
+            {
+                try
+                {
+                    SqlCommand command = new SqlCommand(_addSchoolSecretary, connection);
+                    await connection.OpenAsync();
+
+                    command.Parameters.AddWithValue("@Name", input.FirstName);
+                    command.Parameters.AddWithValue("@LastName", input.LastName);
+                    command.Parameters.AddWithValue("@Email", input.Email);
+                    command.Parameters.AddWithValue("@PhoneNumber", input.PhoneNumber); 
+                    command.Parameters.AddWithValue("@Initails", input.Initials);
+                    command.Parameters.AddWithValue("@SchoolID", input.School.SchoolID);
+                    int noOfRowsEffected = await command.ExecuteNonQueryAsync();
+
+                    await connection.CloseAsync();
+                }
+                catch (SqlException sqlex)
+                {
+                    throw;
+                }
+                catch (Exception ex)
+                {
+
+                    throw;
+                }
+            }
         }
 
         public Task<int> CountAsync()
