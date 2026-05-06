@@ -14,20 +14,20 @@ namespace SkoloFotoExam26.Pages
         {
         }
 
-        public async Task<IActionResult> OnPostAsync()
-        {
-            if (!ModelState.IsValid)
-            {
-                return Page();
-            }
-            LoginHandler handler = new LoginHandler(Attempt);
-            Task<object> handled = handler.HandleLogin();
-            var result = await handled;
-            //TODO finish
-            if (result is User)
-            {
+        //public async Task<IActionResult> OnPostAsync()
+        //{
+        //    if (!ModelState.IsValid)
+        //    {
+        //        return Page();
+        //    }
+        //    LoginHandler handler = new LoginHandler(Attempt);
+        //    Task<object> handled = handler.HandleLogin();
+        //    var result = await handled;
+        //    TODO finish
+        //    if (result is User)
+        //    {
 
-            }
-        }
+        //    }
+        //}
     }
 }
