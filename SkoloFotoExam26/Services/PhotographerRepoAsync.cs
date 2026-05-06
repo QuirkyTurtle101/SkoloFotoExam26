@@ -50,7 +50,7 @@ namespace SkoloFotoExam26.Services
                     string website = reader.GetString("Website");
                     string cvrNumber = reader.GetString("CVRNumber");
                     string city = reader.GetString("City");
-                    string postCode = reader.GetString("postCode");
+                    string postCode = reader.GetString("PostCode");
                     string streetName = reader.GetString("StreetName");
                     int experienceInYears = reader.GetInt32("ExperienceInYears");
                     int maxTravelRadiusInKm = reader.GetInt32("MaxTravelRadiusInKm");

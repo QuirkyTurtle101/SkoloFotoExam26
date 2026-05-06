@@ -1,0 +1,60 @@
+﻿@page
+@using SkoloFotoExam26.Models
+@model SkoloFotoExam26.Pages.CreateSchoolSecretaryModel
+@{
+    ViewData["Title"] = "Create Photographing Event";
+}
+
+<div>
+    <h2>
+        Create Photographing Event
+    </h2>
+    <div asp-validation-summary="All" class="text-danger"></div>
+    <form method="post">
+        <div class="form-group">
+            <label asp-for ="NewPhotographingEvent.Start" class="control-label"  ></label>
+            <input asp-for ="NewPhotographingEvent.Start" class="form-control"/>
+        </div>
+        <div class="form-group">
+            <label asp-for="NewPhotographingEvent.End" class="control-label" ></label>
+            <input asp-for ="NewPhotographingEvent.End" class="form-control" />
+        </div>
+        <br />
+        <div class="form-group">
+            <label asp-for="SchoolSecretaryID"></label>
+            <select asp-for="SchoolSecretaryID" class="form-select">
+                <option value= ""> Select Secretary</option>
+                @foreach (SchoolSecretary s in @Model.SecretaryList)
+                        {
+                            <option value="@s.SchoolSecretaryID">
+                                @s.FirstName @s.LastName
+                            </option>
+                        }
+            </select>
+        </div>
+        <br />
+        <div class="form-group">
+            <label asp-for="PhotographerID"></label>
+            <input asp-for="PhotographerID" class="form-select"/>
+                <option value=""> Select Photographer</option>
+                @foreach (Photographer p in Model.PhotographerList)
+                {
+                    <option value="@p.PhotographerID">
+                        @p.FirstName @p.LastName
+                    </option>
+                }
+        </div>
+        <br />
+        
+        
+        <input type="submit" value="Create Event" class="btn btn-success" />
+        
+        <a asp-page="Index" class=" btn btn-warning">
+            Cancel
+        </a>
+       
+        
+        
+    </form>
+
+</div>
