@@ -7,10 +7,10 @@ namespace SkoloFotoExam26.Services
 {
     public class ParentRepoAsync : MartinConnectionString, IRepoAsync<Parent, int>
     {
-        private string _addParent = "INSERT INTO Parent Values (@FirstName, @LastName, @Email, @PhoneNumber, @StreetName, @ZipCode)";
+        private string _addParent = "INSERT INTO Parent Values (@FirstName, @LastName, @Email, @PhoneNumber, @Street, @ZipCode)";
         private string _getAllParent = "SELECT * FROM Parent";
         private string _searchParent = "SELECT * FROM Parent WHERE ParentID = @ParentID";
-        private string _updateParent = "Update Parent SET @ParentID, @FirstName, @LastName, @Email, @PhoneNumber, @StreetName, @ZipCode WHERE ParentID = @ParentID";
+        private string _updateParent = "Update Parent SET @ParentID, @FirstName, @LastName, @Email, @PhoneNumber, @Street, @ZipCode WHERE ParentID = @ParentID";
 
         public Task<int> CountAsync()
         {
@@ -31,7 +31,7 @@ namespace SkoloFotoExam26.Services
                     command.Parameters.AddWithValue("@LastName", input.LastName);
                     command.Parameters.AddWithValue("@Email", input.Email);
                     command.Parameters.AddWithValue("@PhoneNumber", input.PhoneNumber);
-                    command.Parameters.AddWithValue("@StreetName", input.StreetName);
+                    command.Parameters.AddWithValue("@Street", input.Street);
                     command.Parameters.AddWithValue("@ZipCode", input.ZipCode);
                     command.Parameters.AddWithValue("@City", input.City);
 
@@ -76,10 +76,10 @@ namespace SkoloFotoExam26.Services
                         string lastName = reader.GetString("LastName");
                         string email = reader.GetString("Email");
                         string phoneNumber = reader.GetString("PhoneNumber");
-                        string streetName = reader.GetString("StreetName");
+                        string street = reader.GetString("Street");
                         int zipCode = reader.GetInt32("ZipCode");
                         string city = reader.GetString("City");
-                        Parent input = new Parent(parentID, firstName, lastName, email, phoneNumber, streetName, zipCode, city);
+                        Parent input = new Parent(parentID, firstName, lastName, email, phoneNumber, street, zipCode, city);
                         parents.Add(input);
                     }
                     reader.Close();

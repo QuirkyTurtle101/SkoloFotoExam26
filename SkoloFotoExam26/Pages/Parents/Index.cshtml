@@ -1,0 +1,48 @@
+﻿@page
+@using SkoloFotoExam26.Models
+@model SkoloFotoExam26.Pages.Parents.IndexModel
+@{
+    ViewData["Titel"] = "Liste af forældre";
+}
+
+<h1>Informationer</h1>
+
+<p>
+    <a asp-page="OpretForældre">Opret forældreprofil</a>
+</p>
+
+@*Maybe create a Filter here*@
+
+<table class="table">
+    <thead>
+        <tr>
+            <form method"get">
+            <th>
+                    <button type="submit" class="btn btn-link" name="SortBy" value="ForældreID" >ID</button>
+            </th>
+            </form>
+            <th>Fornavn</th>
+            <th>Efternavn</th>
+            <th>Email</th>
+            <th>Telefonnummer</th>
+            <th>By</th>
+            <th>PostNummer</th>
+            <th>Vejnavn</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (Parent item in @Model.Parents)
+        {
+            <tr>
+                <td>@item.ParentID</td>
+                <td>@item.FirstName</td>
+                <td>@item.LastName</td>
+                <td>@item.Email</td>
+                <td>@item.PhoneNumber</td>
+                <td>@item.City</td>
+                <td>@item.ZipCode</td>
+                <td>@item.Street</td>
+            </tr>
+        }
+    </tbody>
+</table>
