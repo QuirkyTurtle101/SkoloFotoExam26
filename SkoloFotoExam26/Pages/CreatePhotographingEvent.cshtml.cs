@@ -7,7 +7,12 @@ namespace SkoloFotoExam26.Pages
 {
     public class CreateSchoolSecretaryModel : PageModel
     {
-        private IPhotographingEventRepoAsync _repo;
+        private IPhotographingEventRepoAsync _eventRepo;
+
+        private IPhotographerRepoAsync _photographerRepo;
+
+        private ISchoolSecretaryRepoAsync _secretaryRepo;
+
         [BindProperty]
         public PhotographingEvent NewPhotographingEvent { get; set; }
 
@@ -17,9 +22,12 @@ namespace SkoloFotoExam26.Pages
         [BindProperty]
         public int PhotographerID { get; set; }
 
-        public CreateSchoolSecretaryModel(IPhotographingEventRepoAsync photographingEventRepo)
+        public CreateSchoolSecretaryModel(IPhotographingEventRepoAsync photographingEventRepo, IPhotographerRepoAsync photographerRepo,
+            ISchoolSecretaryRepoAsync secretaryRepo)
         {
-            _repo = photographingEventRepo;
+            _eventRepo = photographingEventRepo;
+            _photographerRepo = photographerRepo;
+            _secretaryRepo = secretaryRepo;
         }
 
         public async Task<IActionResult> OnPostAsync()
@@ -29,11 +37,12 @@ namespace SkoloFotoExam26.Pages
                 return Page();
             try
             {
-                //PhotographingEvent newPhotographingEvent = new PhotographingEvent(NewPhotographingEvent.Start,
-                //    NewPhotographingEvent.End, _repo.GetAsync(SchoolSecretaryID), _repo.GetAsync(PhotographerID);
+                PhotographingEvent newPhotographingEvent = new PhotographingEvent(NewPhotographingEvent.Start,
+                    NewPhotographingEvent.End, await _secretaryRepo.GetAsync(SchoolSecretaryID), 
+                    await _photographerRepo.GetAsync(PhotographerID));
 
-                //NewPhotographingEvent = newPhotographingEvent;
-                await _repo.AddAsync(NewPhotographingEvent);
+                NewPhotographingEvent = newPhotographingEvent;
+                await _eventRepo.AddAsync(NewPhotographingEvent);
 
             }
             catch (Exception ex)

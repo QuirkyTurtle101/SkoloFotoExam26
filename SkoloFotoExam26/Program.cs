@@ -9,8 +9,9 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddRazorPages();
 builder.Services.AddSingleton<IPhotographingEventRepoAsync, PhotographingEventRepoAsync>();
 
-builder.Services.AddSingleton<IPhotographingEventRepo, PhotographingEventRepo>();
 builder.Services.AddSingleton<ISchoolRepoAsync, SchoolRepoAsync>();
+builder.Services.AddSingleton<ISchoolSecretaryRepoAsync, SchoolSecretaryRepoAsync>();
+builder.Services.AddSingleton<IPhotographerRepoAsync, PhotographerRepoAsync>();
 
 
 builder.Services.AddSingleton<ISchoolSecretaryAsync, SchoolSecretaryRepoAsync>();

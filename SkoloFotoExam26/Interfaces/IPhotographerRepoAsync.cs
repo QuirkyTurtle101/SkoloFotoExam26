@@ -2,7 +2,8 @@
 
 namespace SkoloFotoExam26.Interfaces
 {
-    public interface ISchoolSecretaryAsync : IRepoAsync<SchoolSecretary, int>
+    public interface IPhotographerRepoAsync : IRepoAsync<Photographer, int>
     {
+
     }
 }

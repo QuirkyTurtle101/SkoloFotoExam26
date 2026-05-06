@@ -5,7 +5,7 @@ using System.Data;
 
 namespace SkoloFotoExam26.Services
 {
-    public class SchoolSecretaryRepoAsync : SofieConnectionString, ISchoolSecretaryAsync
+    public class SchoolSecretaryRepoAsync : SofieConnectionString, ISchoolSecretaryRepoAsync
     {
         #region SQL querys
         private string _addSchoolSecretary = "INSERT INTO SchoolSecretary VALUES(@FirstName, @LastName, @Email, @PhoneNumber, @Initials, @SchoolID)";
@@ -81,7 +81,7 @@ namespace SkoloFotoExam26.Services
                         string phoneNumber = reader.GetString("PhoneNumber");
                         int schoolSecretaryID = reader.GetInt32("SchoolSecretaryID");
                         string initials = reader.GetString("Initials");
-                        secretary = new SchoolSecretary(firstName, lastName, initials, phoneNumber, email);
+                        //secretary = new SchoolSecretary(firstName, lastName, initials, phoneNumber, email, );
                     }
                 }
                 catch (SqlException sqlex)
