@@ -13,9 +13,6 @@ builder.Services.AddSingleton<ISchoolRepoAsync, SchoolRepoAsync>();
 builder.Services.AddSingleton<ISchoolSecretaryRepoAsync, SchoolSecretaryRepoAsync>();
 builder.Services.AddSingleton<IPhotographerRepoAsync, PhotographerRepoAsync>();
 
-
-builder.Services.AddSingleton<ISchoolSecretaryAsync, SchoolSecretaryRepoAsync>();
-
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.

@@ -28,7 +28,7 @@ namespace SkoloFotoExam26.Services
                     command.Parameters.AddWithValue("@Email", input.Email);
                     command.Parameters.AddWithValue("@PhoneNumber", input.PhoneNumber); 
                     command.Parameters.AddWithValue("@Initails", input.Initials);
-                    command.Parameters.AddWithValue("@SchoolID", input.School.SchoolID);
+                    command.Parameters.AddWithValue("@SchoolID", input.TheSchool.SchoolID);
                     int noOfRowsEffected = await command.ExecuteNonQueryAsync();
 
                     await connection.CloseAsync();
