@@ -4,7 +4,7 @@ using SkoloFotoExam26.Models;
 
 namespace SkoloFotoExam26.Services
 {
-    public class PhotographingEventRepoAsync : AkselConnectionString, IPhotographingEventRepoAsync
+    public class PhotographingEventRepoAsync : ConnectionString, IPhotographingEventRepoAsync
     {
 
         private string _addEvent = "INSERT INTO PhotographingEvent VALUES(@Start, @End, @SchoolSecretaryID, @PhotographerID)";

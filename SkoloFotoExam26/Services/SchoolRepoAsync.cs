@@ -51,18 +51,9 @@ namespace SkoloFotoExam26.Services
         public async Task<int> CountAsync()
         {
             throw new NotImplementedException();
-            //using (SqlConnection connection = new SqlConnection(connectionString))
-            //{
-            //    try
-            //    {
-            //        SqlCommand command = new SqlCommand(_countSchools, connection);
-            //        await connection.OpenAsync();
-            //        command.ex
-            //    }
-            //}
         }
 
-        public async Task DeleteAsync(int toDelete)
+        public async Task DeleteAsync(int toDelete)//Sofie kom til lave den lidt for tidligt
         {
             using(SqlConnection connection = new SqlConnection(connectionString))
             {

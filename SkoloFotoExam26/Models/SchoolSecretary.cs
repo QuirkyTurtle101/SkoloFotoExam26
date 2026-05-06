@@ -7,12 +7,15 @@
         public int SchoolSecretaryID { get; private set; }
 
         public string Initials { get; private set; }
-        public SchoolSecretary(string firstName, string lastName, string initials, string phoneNumber, string email) :
+
+        public School TheSchool { get; private set; }
+        public SchoolSecretary(string firstName, string lastName, string initials, string phoneNumber, string email, 
+            School theSchool) :
             base(firstName, lastName, phoneNumber, email)
         {
             //SchoolSecretaryID = _counter++;
             Initials = initials;
-
+            TheSchool = theSchool;
         }
 
 
