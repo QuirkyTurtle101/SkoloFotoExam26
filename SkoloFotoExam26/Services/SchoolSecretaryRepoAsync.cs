@@ -5,7 +5,7 @@ using System.Data;
 
 namespace SkoloFotoExam26.Services
 {
-    public class SchoolSecretaryRepoAsync : SofieConnectionString, IRepoAsync<SchoolSecretary, int>, ILoginableRepo
+    public class SchoolSecretaryRepoAsync : IRepoAsync<SchoolSecretary, int>, ILoginableRepo
     {
         #region SQL querys
         private string _addSchoolSecretary = "INSERT INTO SchoolSecretary VALUES(@FirstName, @LastName, @Email, @PhoneNumber, @Initials, @SchoolID)";
@@ -16,7 +16,7 @@ namespace SkoloFotoExam26.Services
 
         public async Task AddAsync(SchoolSecretary input)
         {
-            using (SqlConnection connection = new SqlConnection(connectionString))
+            using (SqlConnection connection = new SqlConnection(Secret.connectionString))
             {
                 try
                 {
@@ -63,7 +63,7 @@ namespace SkoloFotoExam26.Services
         public async Task<SchoolSecretary> GetAsync(int toGet)
         {
             SchoolSecretary secretary = null;
-            using (SqlConnection connection = new SqlConnection(connectionString))
+            using (SqlConnection connection = new SqlConnection(Secret.connectionString))
             {
                 try
                 {
@@ -81,6 +81,7 @@ namespace SkoloFotoExam26.Services
                         string phoneNumber = reader.GetString("PhoneNumber");
                         int schoolSecretaryID = reader.GetInt32("SchoolSecretaryID");
                         string initials = reader.GetString("Initials");
+                        int SchoolID = reader.GetInt32("SchoolID");
                         //secretary = new SchoolSecretary(firstName, lastName, initials, phoneNumber, email, );
                     }
                 }

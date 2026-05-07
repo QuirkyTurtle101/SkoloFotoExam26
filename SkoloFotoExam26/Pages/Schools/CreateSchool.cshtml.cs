@@ -9,16 +9,16 @@ namespace SkoloFotoExam26.Pages.Schools
     public class CreateSchoolModel : PageModel
     {
 
-        private ISchoolRepoAsync _schoolRepo;
+        private IRepoAsync<School, int> _schoolRepo;
 
         [BindProperty]
         public School NewSchool { get; set; }
 
-        public CreateSchoolModel(ISchoolRepoAsync repoAsync)
+        public CreateSchoolModel(IRepoAsync<School, int> schoolRepoAsync)
         {
-            _schoolRepo = repoAsync;
+            _schoolRepo = schoolRepoAsync;
         }
-
+        
         public void OnGet()
         {
         }

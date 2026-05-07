@@ -9,7 +9,7 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddRazorPages();
 
 builder.Services.AddTransient<IPhotographingEventRepoAsync, PhotographingEventRepoAsync>();
-builder.Services.AddTransient<ISchoolRepoAsync, SchoolRepoAsync>();
+builder.Services.AddTransient<IRepoAsync<School, int>, SchoolRepoAsync>();
 
 builder.Services.AddTransient<IRepoAsync<Administrator, int>, AdminRepoAsync>();
 builder.Services.AddTransient<IRepoAsync<Parent, int>, ParentRepoAsync>();

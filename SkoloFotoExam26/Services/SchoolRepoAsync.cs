@@ -6,7 +6,7 @@ using System.Data;
 
 namespace SkoloFotoExam26.Services
 {
-    public class SchoolRepoAsync : SofieConnectionString, ISchoolRepoAsync
+    public class SchoolRepoAsync : IRepoAsync<School, int>
     {
         #region QueryStrings
         private string _addSchool = "INSERT INTO School VALUES(@Name, @Street, @ZipCode, @SchoolType)";
@@ -20,7 +20,7 @@ namespace SkoloFotoExam26.Services
 
         public async Task AddAsync(School input)
         {
-            using (SqlConnection connection = new SqlConnection(connectionString))
+            using (SqlConnection connection = new SqlConnection(Secret.connectionString))
             {
                 try
                 {
@@ -56,7 +56,7 @@ namespace SkoloFotoExam26.Services
 
         public async Task DeleteAsync(int toDelete)//Sofie kom til lave den lidt for tidligt
         {
-            using(SqlConnection connection = new SqlConnection(connectionString))
+            using(SqlConnection connection = new SqlConnection(Secret.connectionString))
             {
                 try
                 {
@@ -106,7 +106,7 @@ namespace SkoloFotoExam26.Services
         public async Task<School> GetAsync(int toGet)
         {
             School school = null;
-            using (SqlConnection connection = new SqlConnection(connectionString))
+            using (SqlConnection connection = new SqlConnection(Secret.connectionString))
             {
                 try
                 {
@@ -121,8 +121,8 @@ namespace SkoloFotoExam26.Services
                         string name = reader.GetString("Name");
                         string street = reader.GetString("StreetName");
                         int zipCode = reader.GetInt32("ZipCode");
-                        string city = reader.GetString("City"); //
-                        int valueType = reader.GetInt32("SchoolType");// fejl ved debugging
+                        string city = reader.GetString("City"); 
+                        int valueType = reader.GetInt32("SchoolType");
                         SchoolType schoolType = (SchoolType)valueType;
                         //int schoolID = reader.GetInt32("SchoolID");
                         school = new School(name, street, city, zipCode, schoolType);
