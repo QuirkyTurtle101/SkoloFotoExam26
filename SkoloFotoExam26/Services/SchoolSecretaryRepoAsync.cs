@@ -9,8 +9,8 @@ namespace SkoloFotoExam26.Services
     {
         #region SQL querys
         private string _addSchoolSecretary = "INSERT INTO SchoolSecretary VALUES(@FirstName, @LastName, @Email, @PhoneNumber, @Initials, @SchoolID)";
-        private string _getAllSchoolSecretaries = "SELECT SchoolSecretary.FirstName, SchoolSecretary.LastName, SchoolSecretary.Email, SchoolSecretary.PhoneNumber, SchoolSecretary.Initials, School.Name, School.Street, School.ZipCode, School.SchoolType, ZipCodeLookup.City FROM SchoolSecretary JOIN School on School.SchoolID = SchoolSecretary.SchoolID JOIN ZipCodeLookup ON School.ZipCode = ZipCodeLookup.ZipCode";
-        private string _getSchoolSecretary = "SELECT SchoolSecretary.FirstName, SchoolSecretary.LastName, SchoolSecretary.Email, SchoolSecretary.PhoneNumber, SchoolSecretary.Initials, School.Name, School.Street, School.ZipCode, FROM SchoolSecretary JOIN School on School.SchoolID = SchoolSecretary.SchoolID WHERE SchoolSecretaryID = @SchoolSecretaryID";
+        private string _getAllSchoolSecretaries = "SELECT SchoolSecretary.FirstName, SchoolSecretary.LastName, SchoolSecretary.Email, SchoolSecretary.PhoneNumber, SchoolSecretary.Initials, School.SchoolID, School.Name, School.StreetName, School.ZipCode, School.SchoolType, ZipCodeLookup.City FROM SchoolSecretary JOIN School on School.SchoolID = SchoolSecretary.SchoolID JOIN ZipCodeLookup ON School.ZipCode = ZipCodeLookup.ZipCode";
+        private string _getSchoolSecretary = "SELECT SchoolSecretary.FirstName, SchoolSecretary.LastName, SchoolSecretary.Email, SchoolSecretary.PhoneNumber, SchoolSecretary.Initials, School.SchoolID, School.Name, School.StreetName, School.ZipCode, FROM SchoolSecretary JOIN School on School.SchoolID = SchoolSecretary.SchoolID WHERE SchoolSecretaryID = @SchoolSecretaryID";
         #endregion
 
 
@@ -75,13 +75,14 @@ namespace SkoloFotoExam26.Services
                         string phoneNumber = reader.GetString("PhoneNumber");
                         string email = reader.GetString("Email");
                         string name = reader.GetString("Name");
-                        string street = reader.GetString("Street");
+                        string street = reader.GetString("StreetName");
                         int zipCode = reader.GetInt32("ZipCode");
                         string city = reader.GetString("City");
                         int valueType = reader.GetInt32("SchoolType");
                         SchoolType schoolType = (SchoolType)valueType;
+                        int schoolID = reader.GetInt32("SchoolID");
 
-                        secretaries.Add(new SchoolSecretary(firstName, lastName, initials, phoneNumber, email, new School(name, street,city,zipCode, schoolType)));
+                        secretaries.Add(new SchoolSecretary(firstName, lastName, initials, phoneNumber, email, new School(schoolID, name, street,city,zipCode, schoolType)));
 
                     }
 
