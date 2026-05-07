@@ -5,7 +5,7 @@ using System.Data;
 
 namespace SkoloFotoExam26.Services
 {
-    public class SchoolSecretaryRepoAsync : SofieConnectionString, ISchoolSecretaryRepoAsync
+    public class SchoolSecretaryRepoAsync : SofieConnectionString, IRepoAsync<SchoolSecretary, int>, ILoginableRepo
     {
         #region SQL querys
         private string _addSchoolSecretary = "INSERT INTO SchoolSecretary VALUES(@FirstName, @LastName, @Email, @PhoneNumber, @Initials, @SchoolID)";
@@ -98,6 +98,11 @@ namespace SkoloFotoExam26.Services
                 }
             }
             return secretary;
+        }
+
+        public Task<User> GetForLogin(string email)
+        {
+            throw new NotImplementedException();
         }
 
         public Task UpdateAsync(SchoolSecretary toUpdate)

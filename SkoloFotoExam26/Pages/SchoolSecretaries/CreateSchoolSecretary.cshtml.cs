@@ -9,7 +9,7 @@ namespace SkoloFotoExam26.Pages.SchoolSecretaries
     public class CreateSchoolSecretaryModel : PageModel
     {
 
-        private ISchoolSecretaryRepoAsync _schoolSecRepo;
+        private IRepoAsync<SchoolSecretary, int> _schoolSecRepo;
         private ISchoolRepoAsync _schoolRepo;
 
         [BindProperty]
@@ -17,7 +17,7 @@ namespace SkoloFotoExam26.Pages.SchoolSecretaries
         [BindProperty]
         public int SchoolID { get; set; }// skal formentlig ændres i fremtiden.
 
-        public CreateSchoolSecretaryModel(ISchoolSecretaryRepoAsync schoolSecretaryAsync, ISchoolRepoAsync schoolRepoAsync)
+        public CreateSchoolSecretaryModel(IRepoAsync<SchoolSecretary, int> schoolSecretaryAsync, ISchoolRepoAsync schoolRepoAsync)
         {
             _schoolSecRepo = schoolSecretaryAsync;
             _schoolRepo = schoolRepoAsync;
@@ -31,7 +31,7 @@ namespace SkoloFotoExam26.Pages.SchoolSecretaries
         {
             try
             {
-                School
+                //School
                 await _schoolSecRepo.AddAsync(NewSchoolSecretary);
             }
             catch (SqlException sqlex)

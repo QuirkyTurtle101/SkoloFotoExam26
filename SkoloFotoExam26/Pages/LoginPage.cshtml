@@ -7,5 +7,11 @@
 <h1>Login</h1>
 
 <form method="post">
+    <div class="form-group">
+        <input asp-for="@Model.Attempt.Email" />
+    </div>
 
+    <div class="form-group">
+        <input asp-for="@Model.Attempt.Password" />
+    </div>
 </form>
