@@ -9,8 +9,8 @@ namespace SkoloFotoExam26.Services
     {
         #region SQL querys
         private string _addSchoolSecretary = "INSERT INTO SchoolSecretary VALUES(@FirstName, @LastName, @Email, @PhoneNumber, @Initials, @SchoolID)";
-
-        private string _getSchoolSecretary = "SELECT * FROM SchoolSecretary WHERE SchoolSecretaryID = @SchoolSecretaryID";
+        private string _getAllSchoolSecretaries = "SELECT SchoolSecretary.FirstName, SchoolSecretary.LastName, SchoolSecretary.Email, SchoolSecretary.PhoneNumber, SchoolSecretary.Initials, School.Name, School.Street, School.ZipCode, ZipCodeLookup.City FROM SchoolSecretary JOIN School on School.SchoolID = SchoolSecretary.SchoolID, JOIN ZipCodeLookup ON School.ZipCode = ZipCodeLookup.ZipCode";
+        private string _getSchoolSecretary = "SELECT SchoolSecretary.FirstName, SchoolSecretary.LastName, SchoolSecretary.Email, SchoolSecretary.PhoneNumber, SchoolSecretary.Initials, School.Name, School.Street, School.ZipCode, FROM SchoolSecretary JOIN School on School.SchoolID = SchoolSecretary.SchoolID WHERE SchoolSecretaryID = @SchoolSecretaryID";
         #endregion
 
 
@@ -54,10 +54,53 @@ namespace SkoloFotoExam26.Services
         {
             throw new NotImplementedException();
         }
-
-        public Task<List<SchoolSecretary>> GetAllAsync()
+        
+        public async Task<List<SchoolSecretary>> GetAllAsync()
         {
-            throw new NotImplementedException();
+            List<SchoolSecretary> secretaries = new List<SchoolSecretary>();
+            using(SqlConnection connection = new SqlConnection(Secret.connectionString))
+            {
+                try
+                {
+                    SqlCommand command = new SqlCommand(_getAllSchoolSecretaries, connection);
+                    await connection.OpenAsync();
+
+                    SqlDataReader reader = await command.ExecuteReaderAsync();
+
+                    while(reader.Read())
+                    {
+                        string firstName = reader.GetString("FirstName");
+                        string lastName = reader.GetString("LastName");
+                        string initials = reader.GetString("Initials");
+                        string phoneNumber = reader.GetString("PhoneNumber");
+                        string email = reader.GetString("Email");
+                        string name = reader.GetString("Name");
+                        string street = reader.GetString("Street");
+                        int zipCode = reader.GetInt32("ZipCode");
+                        string city = reader.GetString("City");
+                        int valueType = reader.GetInt32("SchoolType");
+                        SchoolType schoolType = (SchoolType)valueType;
+
+                        secretaries.Add(new SchoolSecretary(firstName, lastName, initials, phoneNumber, email, new School(name, street,city,zipCode, schoolType)));
+
+                    }
+
+
+                }
+                catch(SqlException sqlex)
+                {
+                    throw;
+                }
+                catch(Exception ex)
+                {
+                    throw;
+                }
+                finally
+                {
+                    await connection.CloseAsync();
+                }
+            }
+            return secretaries;
         }
 
         public async Task<SchoolSecretary> GetAsync(int toGet)
@@ -82,7 +125,9 @@ namespace SkoloFotoExam26.Services
                         int schoolSecretaryID = reader.GetInt32("SchoolSecretaryID");
                         string initials = reader.GetString("Initials");
                         int SchoolID = reader.GetInt32("SchoolID");
-                        //secretary = new SchoolSecretary(firstName, lastName, initials, phoneNumber, email, );
+
+
+                        secretary = new SchoolSecretary(firstName, lastName, initials, phoneNumber, email, new School());
                     }
                 }
                 catch (SqlException sqlex)
