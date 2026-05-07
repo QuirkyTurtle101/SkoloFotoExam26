@@ -1,0 +1,58 @@
+﻿@page
+@using SkoloFotoExam26.Models
+@model SkoloFotoExam26.Pages.Teachers.CreateTeacherModel
+@{
+    ViewData["Title"] = "Create New Teacher";
+}
+
+<h2>
+    Create Teacher
+</h2>
+
+
+<form method="post">
+    <div asp-validation-summary="All" class="text-danger"></div>
+    <div class="form-group">
+        <label asp-for="NewTeacher.Initials" class="control-label"></label>
+        <input asp-for="NewTeacher.Initials" class="form-control" />
+    </div>
+    <div class="form-group">
+        <label asp-for="NewTeacher.FirstName" class="control-label"> </label>
+        <input asp-for="NewTeacher.FirstName" class="form-control" />
+    </div>
+    <div class="form-group">
+        <label asp-for="NewTeacher.LastName" class="control-label"></label>
+        <input asp-for="NewTeacher.LastName" class="form-control"/>
+    </div>
+    <div class="form-group">
+        <label asp-for="NewTeacher.Email" class="control-label"></label>
+        <input asp-for="NewTeacher.Email" class="form-control"/>
+    </div>
+    <div class="form-group">
+        <label asp-for="NewTeacher.PhoneNumber" class="control-label"></label>
+        <input asp-for="NewTeacher.PhoneNumber" class="form-control"/>
+    </div>
+    <div class="form.group">
+        <label asp-for="NewTeacher.TeacherID"></label>
+    </div>
+
+    <div class="form.group">
+        <label asp-for="NewTeacher.TeacherID" class="control-label"></label>
+        <select asp-for="NewTeacher.TeacherID" class="form-control">
+        <option value=""> Select Teacher </option>
+            @foreach (School s in Model.SchoolList)
+            {
+                <option value="@s.SchoolID">
+                    @s.Name
+                </option>
+            }
+        </select>
+    </div>
+
+    <input type="submit" value="Create Teacher" class="btn btn-success"/>
+
+    <a asp-page="Index" class=" btn btn-warning">
+        Cancel
+    </a>
+
+</form>

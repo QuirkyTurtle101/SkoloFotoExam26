@@ -1,13 +1,36 @@
-﻿using SkoloFotoExam26.Interfaces;
+﻿using Microsoft.Data.SqlClient;
+using SkoloFotoExam26.Interfaces;
 using SkoloFotoExam26.Models;
+using System.Net.Http.Headers;
 
 namespace SkoloFotoExam26.Services
 {
-    public class TeacherRepoAsync : IRepoAsync<Teacher, int>, ILoginableRepo
+    public class TeacherRepoAsync : ConnectionString, IRepoAsync<Teacher, int>
     {
-        public Task AddAsync(Teacher input)
+        private string _addTeacher = "INSERT INTO Teacher VALUES(@FirstName, @LastName, @E-mail, @PhoneNumber, @Initials, @SchoolID)";
+
+        public async Task AddAsync(Teacher input)
         {
-            throw new NotImplementedException();
+            using SqlConnection connection = new SqlConnection(connectionString);
+            try
+            {
+                SqlCommand command = new SqlCommand(_addTeacher, connection);
+                await command.Connection.OpenAsync();
+                command.Parameters.AddWithValue("@FirstName", input.FirstName);
+                command.Parameters.AddWithValue("@LastName", input.LastName);
+                command.Parameters.AddWithValue("@E-mail", input.Email);
+                command.Parameters.AddWithValue("@PhoneNumber", input.PhoneNumber);
+                command.Parameters.AddWithValue("@Initials", input.Initials);
+                command.Parameters.AddWithValue("@SchoolID", input.TheSchool.SchoolID);
+            }
+            catch (SqlException sqlEx)
+    {
+                Console.WriteLine($"SQL exception message: {sqlEx.Message}");
+            }
+            catch(Exception ex)
+        {
+                Console.WriteLine($"Exception message: {ex.Message}");
+            }
         }
 
         public Task<int> CountAsync()

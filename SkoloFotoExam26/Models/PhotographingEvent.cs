@@ -1,12 +1,16 @@
-﻿namespace SkoloFotoExam26.Models
+﻿using System.ComponentModel.DataAnnotations;
+
+namespace SkoloFotoExam26.Models
 {
     public class PhotographingEvent
     {
         //private static int _counter = 1;
 
         public int PhotographingEventID { get; private set; }
-        public DateTime Start { get; private set; }
 
+        
+        public DateTime Start { get; private set; }
+        
         public DateTime End { get; private set; }
 
         public SchoolSecretary SchoolSecretary { get; private set; }

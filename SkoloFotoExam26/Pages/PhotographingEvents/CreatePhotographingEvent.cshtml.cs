@@ -1,5 +1,6 @@
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
+using Microsoft.AspNetCore.Mvc.Rendering;
 using SkoloFotoExam26.Interfaces;
 using SkoloFotoExam26.Models;
 
@@ -7,7 +8,7 @@ namespace SkoloFotoExam26.Pages
 {
     public class CreateSchoolSecretaryModel : PageModel
     {
-        private IPhotographingEventRepoAsync _eventRepo;
+        private IRepoAsync<PhotographingEvent, int> _eventRepo;
 
         private IRepoAsync<Photographer, int> _photographerRepo;
 
@@ -22,13 +23,26 @@ namespace SkoloFotoExam26.Pages
         [BindProperty]
         public int PhotographerID { get; set; }
 
-        public CreateSchoolSecretaryModel(IPhotographingEventRepoAsync photographingEventRepo, IRepoAsync<Photographer, int> photographerRepo,
+        public List<SchoolSecretary> SecretaryList { get; set; }
+
+        public List<Photographer> PhotographerList { get; set; }
+        
+
+        public CreateSchoolSecretaryModel(IRepoAsync<PhotographingEvent, int> photographingEventRepo, IRepoAsync<Photographer, int> photographerRepo,
             IRepoAsync<SchoolSecretary, int> secretaryRepo)
         {
             _eventRepo = photographingEventRepo;
             _photographerRepo = photographerRepo;
             _secretaryRepo = secretaryRepo;
         }
+
+        public async Task OnGetAsync()
+        {
+            SecretaryList = await _secretaryRepo.GetAllAsync();
+            PhotographerList = await _photographerRepo.GetAllAsync();
+
+        }
+
 
         public async Task<IActionResult> OnPostAsync()
         {
@@ -37,19 +51,21 @@ namespace SkoloFotoExam26.Pages
                 return Page();
             try
             {
-                PhotographingEvent newPhotographingEvent = new PhotographingEvent(NewPhotographingEvent.Start,
-                    NewPhotographingEvent.End, await _secretaryRepo.GetAsync(SchoolSecretaryID), 
-                    await _photographerRepo.GetAsync(PhotographerID));
+                SchoolSecretary schoolSecretary = await _secretaryRepo.GetAsync(SchoolSecretaryID);
+                Photographer photographer = await _photographerRepo.GetAsync(PhotographerID);
 
-                NewPhotographingEvent = newPhotographingEvent;
-                await _eventRepo.AddAsync(NewPhotographingEvent);
+                PhotographingEvent newPhotoEvent = new PhotographingEvent(NewPhotographingEvent.Start, NewPhotographingEvent.End,
+                    schoolSecretary, photographer);
+                await _eventRepo.AddAsync(newPhotoEvent);
 
+                return RedirectToPage("Index");
             }
             catch (Exception ex)
             {
                 ViewData["ErrorMessage"] = ex.Message;
+                return Page();
             }
-            return RedirectToPage("Index");
+            
         }
         
     }

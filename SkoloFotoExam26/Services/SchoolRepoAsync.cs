@@ -12,8 +12,8 @@ namespace SkoloFotoExam26.Services
         private string _addSchool = "INSERT INTO School VALUES(@Name, @Street, @ZipCode, @SchoolType)";
         private string _countSchools = "SELECT COUNT(*) FROM School";
         private string _deleteSchool = "Delete FROM School WHERE SchoolID = @SchoolID";
-        private string _getAllSchools = "SELECT * FROM  School";
-        private string _getSchool = "SELECT School.Name, School.streetName, School.SchoolType, School.ZipCode, ZipCodeLookup.City FROM School JOIN ZipCodeLookup on School.ZipCode = ZipCodeLookup.ZipCode WHERE SchoolID = @SchoolID";
+        private string _getAllSchools = "SELECT School.Name, School.Street, School.ZipCode, School.SchoolType,ZipCodeLookup.City FROM School JOIN ZipCodeLookup ON School.ZipCode = ZipCodeLookup.ZipCode";
+        private string _getSchool = "SELECT School.SchoolID, School.Name, School.streetName, School.SchoolType, School.ZipCode, ZipCodeLookup.City FROM School JOIN ZipCodeLookup on School.ZipCode = ZipCodeLookup.ZipCode WHERE SchoolID = @SchoolID";
 
         #endregion
 
@@ -37,11 +37,11 @@ namespace SkoloFotoExam26.Services
 
                     await connection.CloseAsync();
                 }
-                catch(SqlException sqlex)
+                catch (SqlException sqlex)
                 {
                     throw;
                 }
-                catch(Exception ex)
+                catch (Exception ex)
                 {
 
                     throw;
@@ -56,7 +56,7 @@ namespace SkoloFotoExam26.Services
 
         public async Task DeleteAsync(int toDelete)//Sofie kom til lave den lidt for tidligt
         {
-            using(SqlConnection connection = new SqlConnection(Secret.connectionString))
+            using (SqlConnection connection = new SqlConnection(Secret.connectionString))
             {
                 try
                 {
@@ -64,16 +64,16 @@ namespace SkoloFotoExam26.Services
                     await connection.OpenAsync();
 
                     command.Parameters.AddWithValue("@SchoolID", toDelete);
-                    
+
                     int noOfRowsEffected = await command.ExecuteNonQueryAsync();
 
                     await connection.CloseAsync();
                 }
-                catch(SqlException sqlex)
+                catch (SqlException sqlex)
                 {
                     throw;
                 }
-                catch(Exception ex)
+                catch (Exception ex)
                 {
                     throw;
                 }
@@ -84,23 +84,43 @@ namespace SkoloFotoExam26.Services
 
         public async Task<List<School>> GetAllAsync()
         {
-            //List<School> schools = new List<School>();
-            //using (SqlConnection connection = new SqlConnection())
-            //{
-            //    SqlCommand command = new SqlCommand(_getAllSchools, connection);
-            //    await connection.OpenAsync();
-            //    SqlDataReader reader = await command.ExecuteReaderAsync();
+            List<School> schools = new List<School>();
+            using (SqlConnection connection = new SqlConnection(Secret.connectionString))
+            {
+                try
+                {
+                    SqlCommand command = new SqlCommand(_getAllSchools, connection);
+                    await connection.OpenAsync();
+                    SqlDataReader reader = await command.ExecuteReaderAsync();
 
-            //    while (reader.Read())
-            //    {
-            //        string name = reader.GetString("Name");
-            //        string street = reader.GetString("Street");
-            //        string zipCode = reader.GetString("ZipCode");
-            //        SchoolType schooltype = Enum.Parse<SchoolType>reader.GetInt32("SchoolType");
-            //    }
-            //}
+                    while (reader.Read())
+                    {
+                        string name = reader.GetString("Name");
+                        string street = reader.GetString("Street");
+                        int zipCode = reader.GetInt32("ZipCode");
+                        string city = reader.GetString("City");
+                        int valueType = reader.GetInt32("SchoolType");
+                        int schoolID = reader.GetInt32("SchoolID");
+                        SchoolType schoolType = (SchoolType)valueType;
+                        schools.Add(new School(schoolID,name, street, city, zipCode, schoolType));
+                    }
+                }
 
-            throw new NotImplementedException();
+                catch (SqlException sqlex)
+                {
+                    throw;
+                }
+                catch (Exception ex)
+                {
+                    throw;
+                }
+                finally
+                {
+                    await connection.CloseAsync();
+                }
+            }
+            return schools;
+
         }
 
         public async Task<School> GetAsync(int toGet)
@@ -121,11 +141,11 @@ namespace SkoloFotoExam26.Services
                         string name = reader.GetString("Name");
                         string street = reader.GetString("StreetName");
                         int zipCode = reader.GetInt32("ZipCode");
-                        string city = reader.GetString("City"); 
+                        string city = reader.GetString("City");
                         int valueType = reader.GetInt32("SchoolType");
                         SchoolType schoolType = (SchoolType)valueType;
-                        //int schoolID = reader.GetInt32("SchoolID");
-                        school = new School(name, street, city, zipCode, schoolType);
+                        int schoolID = reader.GetInt32("SchoolID");
+                        school = new School(schoolID, name, street, city, zipCode, schoolType);
                     }
                 }
                 catch (SqlException sqlex)

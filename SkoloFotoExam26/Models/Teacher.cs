@@ -4,17 +4,22 @@
     {
         public int TeacherID { get; private set; }
 
+        public string Initials { get; private set; }
 
+        public School TheSchool { get; private set; }
 
-        public Teacher(int teacherID, string firstName, string lastName, string phoneNumber, string email) 
+        public Teacher(int teacherID, string initials, string firstName, string lastName, string phoneNumber, string email, 
+            School theSchool) 
             : base(firstName, lastName, phoneNumber, email)
         {
             TeacherID = teacherID;
+            Initials = initials;
+            TheSchool = theSchool;
         }
 
         public override string ToString()
         {
-            return $"TeacherID: {TeacherID}, {base.ToString()}";
+            return $"TeacherID: {TeacherID}, Initials: {Initials}, {base.ToString()}";
         }
     }
 }
