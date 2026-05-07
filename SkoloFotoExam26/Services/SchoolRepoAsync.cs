@@ -13,7 +13,7 @@ namespace SkoloFotoExam26.Services
         private string _countSchools = "SELECT COUNT(*) FROM School";
         private string _deleteSchool = "Delete FROM School WHERE SchoolID = @SchoolID";
         private string _getAllSchools = "SELECT * FROM  School";
-        private string _getSchool = "SELECT * FROM School WHERE SchoolID = @SchoolID";
+        private string _getSchool = "SELECT School.Name, School.streetName, School.SchoolType, School.ZipCode, ZipCodeLookup.City FROM School JOIN ZipCodeLookup on School.ZipCode = ZipCodeLookup.ZipCode WHERE SchoolID = @SchoolID";
 
         #endregion
 
@@ -119,13 +119,13 @@ namespace SkoloFotoExam26.Services
                     if (reader.Read())
                     {
                         string name = reader.GetString("Name");
-                        string streetName = reader.GetString("StreetName");
-                        string zipCode = reader.GetString("ZipCode");
+                        string street = reader.GetString("StreetName");
+                        int zipCode = reader.GetInt32("ZipCode");
                         string city = reader.GetString("City"); //
-                        int valueType = reader.GetInt32("SchoolType");
+                        int valueType = reader.GetInt32("SchoolType");// fejl ved debugging
                         SchoolType schoolType = (SchoolType)valueType;
-                        int schoolID = reader.GetInt32("SchoolID");
-                        school = new School(name, streetName, city, zipCode, schoolType);
+                        //int schoolID = reader.GetInt32("SchoolID");
+                        school = new School(name, street, city, zipCode, schoolType);
                     }
                 }
                 catch (SqlException sqlex)

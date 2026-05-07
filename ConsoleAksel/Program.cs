@@ -2,6 +2,7 @@
 using SkoloFotoExam26.Interfaces;
 using SkoloFotoExam26.Models;
 using SkoloFotoExam26.Services;
+Console.WriteLine();
 
 //SchoolSecretary schoolSecretary1 = new SchoolSecretary("F. L.", "FirstName", "LastName", "PhoneNumber", "Email");
 //Repo<int, SchoolSecretary> SchoolSecretaryRepo = new Repo<int, SchoolSecretary>();

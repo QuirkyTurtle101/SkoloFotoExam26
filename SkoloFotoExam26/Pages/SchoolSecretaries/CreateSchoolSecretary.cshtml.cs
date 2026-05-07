@@ -12,10 +12,22 @@ namespace SkoloFotoExam26.Pages.SchoolSecretaries
         private ISchoolSecretaryRepoAsync _schoolSecRepo;
         private ISchoolRepoAsync _schoolRepo;
 
-        [BindProperty]
-        public SchoolSecretary NewSchoolSecretary { get; set; }
+        //[BindProperty]
+        //public SchoolSecretary NewSchoolSecretary { get; set; }
         [BindProperty]
         public int SchoolID { get; set; }// skal formentlig ændres i fremtiden.
+
+        [BindProperty]
+        public string FirstName { get; set; }
+        [BindProperty]
+        public string LastName { get; set; }
+        [BindProperty]
+        public string Email { get; set; }
+        [BindProperty]
+        public string PhoneNumber { get; set; }
+        [BindProperty]
+        public string Initials { get; set; }
+
 
         public CreateSchoolSecretaryModel(ISchoolSecretaryRepoAsync schoolSecretaryAsync, ISchoolRepoAsync schoolRepoAsync)
         {
@@ -31,8 +43,9 @@ namespace SkoloFotoExam26.Pages.SchoolSecretaries
         {
             try
             {
-                School
-                await _schoolSecRepo.AddAsync(NewSchoolSecretary);
+                SchoolSecretary newSchoolSecretary = new SchoolSecretary(FirstName, LastName, Initials, PhoneNumber, Email, await _schoolRepo.GetAsync(SchoolID));
+                //NewSchoolSecretary = newSchoolSecretary;
+                await _schoolSecRepo.AddAsync(newSchoolSecretary);
             }
             catch (SqlException sqlex)
             {
