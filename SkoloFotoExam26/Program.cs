@@ -8,7 +8,7 @@ var builder = WebApplication.CreateBuilder(args);
 // Add services to the container.
 builder.Services.AddRazorPages();
 
-builder.Services.AddTransient<IPhotographingEventRepoAsync, PhotographingEventRepoAsync>();
+builder.Services.AddTransient<IRepoAsync<PhotographingEvent, int>, PhotographingEventRepoAsync>();
 builder.Services.AddTransient<IRepoAsync<School, int>, SchoolRepoAsync>();
 
 builder.Services.AddTransient<IRepoAsync<Administrator, int>, AdminRepoAsync>();
