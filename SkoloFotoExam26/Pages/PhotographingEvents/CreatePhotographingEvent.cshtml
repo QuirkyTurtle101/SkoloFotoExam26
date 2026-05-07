@@ -35,7 +35,7 @@
         <br />
         <div class="form-group">
             <label asp-for="PhotographerID"></label>
-            <input asp-for="PhotographerID" class="form-select"/>
+            <select asp-for="PhotographerID" class="form-select">
                 <option value=""> Select Photographer</option>
                 @foreach (Photographer p in Model.PhotographerList)
                 {
@@ -43,6 +43,7 @@
                         @p.FirstName @p.LastName
                     </option>
                 }
+            </select>
         </div>
         <br />
         
