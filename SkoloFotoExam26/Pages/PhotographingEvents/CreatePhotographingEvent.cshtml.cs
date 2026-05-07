@@ -8,7 +8,7 @@ namespace SkoloFotoExam26.Pages
 {
     public class CreateSchoolSecretaryModel : PageModel
     {
-        private IPhotographingEventRepoAsync _eventRepo;
+        private IRepoAsync<PhotographingEvent, int> _eventRepo;
 
         private IRepoAsync<Photographer, int> _photographerRepo;
 
@@ -28,8 +28,8 @@ namespace SkoloFotoExam26.Pages
         public List<Photographer> PhotographerList { get; set; }
         
 
-        public CreateSchoolSecretaryModel(IPhotographingEventRepoAsync photographingEventRepo, IPhotographerRepoAsync photographerRepo,
-            ISchoolSecretaryRepoAsync secretaryRepo)
+        public CreateSchoolSecretaryModel(IRepoAsync<PhotographingEvent, int> photographingEventRepo, IRepoAsync<Photographer, int> photographerRepo,
+            IRepoAsync<SchoolSecretary, int> secretaryRepo)
         {
             _eventRepo = photographingEventRepo;
             _photographerRepo = photographerRepo;

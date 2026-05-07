@@ -8,9 +8,9 @@ namespace SkoloFotoExam26.Pages.Teachers
     public class CreateTeacherModel : PageModel
     {
 
-        private ITeacherRepoAsync _teacherRepo;
+        private IRepoAsync<Teacher, int> _teacherRepo;
 
-        private ISchoolRepoAsync _schoolRepo;
+        private IRepoAsync<School, int> _schoolRepo;
 
         [BindProperty]
         public Teacher NewTeacher { get; set; }
@@ -20,7 +20,7 @@ namespace SkoloFotoExam26.Pages.Teachers
 
         public List<School> SchoolList; 
 
-        public CreateTeacherModel(ITeacherRepoAsync teacherRepo, ISchoolRepoAsync schoolRepo)
+        public CreateTeacherModel(IRepoAsync<Teacher, int> teacherRepo, IRepoAsync<School, int> schoolRepo)
         {
             _teacherRepo = teacherRepo;
             _schoolRepo = schoolRepo;

@@ -5,7 +5,7 @@ using System.Net.Http.Headers;
 
 namespace SkoloFotoExam26.Services
 {
-    public class TeacherRepoAsync : ConnectionString, ITeacherRepoAsync
+    public class TeacherRepoAsync : ConnectionString, IRepoAsync<Teacher, int>
     {
         private string _addTeacher = "INSERT INTO Teacher VALUES(@FirstName, @LastName, @E-mail, @PhoneNumber, @Initials, @SchoolID)";
 
