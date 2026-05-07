@@ -6,21 +6,21 @@ using System.Data;
 
 namespace SkoloFotoExam26.Services
 {
-    public class SchoolRepoAsync : SofieConnectionString, ISchoolRepoAsync
+    public class SchoolRepoAsync : IRepoAsync<School, int>
     {
         #region QueryStrings
         private string _addSchool = "INSERT INTO School VALUES(@Name, @Street, @ZipCode, @SchoolType)";
         private string _countSchools = "SELECT COUNT(*) FROM School";
         private string _deleteSchool = "Delete FROM School WHERE SchoolID = @SchoolID";
         private string _getAllSchools = "SELECT * FROM  School";
-        private string _getSchool = "SELECT * FROM School WHERE SchoolID = @SchoolID";
+        private string _getSchool = "SELECT School.Name, School.streetName, School.SchoolType, School.ZipCode, ZipCodeLookup.City FROM School JOIN ZipCodeLookup on School.ZipCode = ZipCodeLookup.ZipCode WHERE SchoolID = @SchoolID";
 
         #endregion
 
 
         public async Task AddAsync(School input)
         {
-            using (SqlConnection connection = new SqlConnection(connectionString))
+            using (SqlConnection connection = new SqlConnection(Secret.connectionString))
             {
                 try
                 {
@@ -30,7 +30,7 @@ namespace SkoloFotoExam26.Services
                     command.Parameters.AddWithValue("@Name", input.Name);
                     command.Parameters.AddWithValue("@Street", input.Street);
                     command.Parameters.AddWithValue("@ZipCode", input.ZipCode);
-                    command.Parameters.AddWithValue("@SchoolType", (int)input.SchoolType); //Skal lige forhøre mig hos Rosa.
+                    command.Parameters.AddWithValue("@SchoolType", (int)input.SchoolType); //Skal lige forhøre mig hos Rosa. //det er præcis sådan det gøres
                     command.Parameters.AddWithValue("@City", input.City);
 
                     int noOfRowsEffected = await command.ExecuteNonQueryAsync();
@@ -56,7 +56,7 @@ namespace SkoloFotoExam26.Services
 
         public async Task DeleteAsync(int toDelete)//Sofie kom til lave den lidt for tidligt
         {
-            using(SqlConnection connection = new SqlConnection(connectionString))
+            using(SqlConnection connection = new SqlConnection(Secret.connectionString))
             {
                 try
                 {
@@ -106,7 +106,7 @@ namespace SkoloFotoExam26.Services
         public async Task<School> GetAsync(int toGet)
         {
             School school = null;
-            using (SqlConnection connection = new SqlConnection(connectionString))
+            using (SqlConnection connection = new SqlConnection(Secret.connectionString))
             {
                 try
                 {
@@ -119,13 +119,13 @@ namespace SkoloFotoExam26.Services
                     if (reader.Read())
                     {
                         string name = reader.GetString("Name");
-                        string streetName = reader.GetString("StreetName");
-                        string zipCode = reader.GetString("ZipCode");
-                        string city = reader.GetString("City"); //
+                        string street = reader.GetString("StreetName");
+                        int zipCode = reader.GetInt32("ZipCode");
+                        string city = reader.GetString("City"); 
                         int valueType = reader.GetInt32("SchoolType");
                         SchoolType schoolType = (SchoolType)valueType;
-                        int schoolID = reader.GetInt32("SchoolID");
-                        school = new School(name, streetName, city, zipCode, schoolType);
+                        //int schoolID = reader.GetInt32("SchoolID");
+                        school = new School(name, street, city, zipCode, schoolType);
                     }
                 }
                 catch (SqlException sqlex)

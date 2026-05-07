@@ -24,11 +24,11 @@ namespace SkoloFotoExam26.Services
                 command.Parameters.AddWithValue("@SchoolID", input.TheSchool.SchoolID);
             }
             catch (SqlException sqlEx)
-            {
+    {
                 Console.WriteLine($"SQL exception message: {sqlEx.Message}");
             }
             catch(Exception ex)
-            {
+        {
                 Console.WriteLine($"Exception message: {ex.Message}");
             }
         }
@@ -49,6 +49,11 @@ namespace SkoloFotoExam26.Services
         }
 
         public Task<Teacher> GetAsync(int toGet)
+        {
+            throw new NotImplementedException();
+        }
+
+        public Task<User> GetForLogin(string email)
         {
             throw new NotImplementedException();
         }

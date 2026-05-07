@@ -9,15 +9,25 @@ namespace SkoloFotoExam26.Pages.SchoolSecretaries
     public class CreateSchoolSecretaryModel : PageModel
     {
 
-        private ISchoolSecretaryRepoAsync _schoolSecRepo;
-        private ISchoolRepoAsync _schoolRepo;
+        private IRepoAsync<SchoolSecretary, int> _schoolSecRepo;
+        private IRepoAsync<School, int> _schoolRepo;
 
-        [BindProperty]
-        public SchoolSecretary NewSchoolSecretary { get; set; }
+        //[BindProperty]
+        //public SchoolSecretary NewSchoolSecretary { get; set; }
         [BindProperty]
         public int SchoolID { get; set; }// skal formentlig ændres i fremtiden.
+        [BindProperty]
+        public string FirstName { get; set; }
+        [BindProperty]
+        public string LastName { get; set; }
+        [BindProperty]
+        public string Email { get; set; }
+        [BindProperty]
+        public string PhoneNumber { get; set; }
+        [BindProperty]
+        public string Initials { get; set; }
 
-        public CreateSchoolSecretaryModel(ISchoolSecretaryRepoAsync schoolSecretaryAsync, ISchoolRepoAsync schoolRepoAsync)
+        public CreateSchoolSecretaryModel(IRepoAsync<SchoolSecretary, int> schoolSecretaryAsync, IRepoAsync<School, int> schoolRepoAsync)
         {
             _schoolSecRepo = schoolSecretaryAsync;
             _schoolRepo = schoolRepoAsync;
@@ -31,8 +41,9 @@ namespace SkoloFotoExam26.Pages.SchoolSecretaries
         {
             try
             {
-                School
-                await _schoolSecRepo.AddAsync(NewSchoolSecretary);
+                //School
+
+                await _schoolSecRepo.AddAsync(new SchoolSecretary(FirstName,LastName,Initials,PhoneNumber,Email, await _schoolRepo.GetAsync(SchoolID)));
             }
             catch (SqlException sqlex)
             {

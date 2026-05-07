@@ -5,7 +5,7 @@ using System.Data;
 
 namespace SkoloFotoExam26.Services
 {
-    public class PhotographerRepoAsync : ConnectionString, IPhotographerRepoAsync
+    public class PhotographerRepoAsync : ConnectionString, IRepoAsync<Photographer, int>, ILoginableRepo
     {
 
         private string _getPhotographer = "SELECT * FROM Photographer WHERE PhotographerID = @PhotographerID";
@@ -72,6 +72,11 @@ namespace SkoloFotoExam26.Services
                 Console.WriteLine($"Exception message: {ex.Message}");
             }
             return photographer;
+        }
+
+        public Task<User> GetForLogin(string email)
+        {
+            throw new NotImplementedException();
         }
 
         public Task UpdateAsync(Photographer toUpdate)

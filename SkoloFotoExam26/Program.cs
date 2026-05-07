@@ -7,12 +7,16 @@ var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 builder.Services.AddRazorPages();
-builder.Services.AddSingleton<IPhotographingEventRepoAsync, PhotographingEventRepoAsync>();
 
-builder.Services.AddSingleton<ISchoolRepoAsync, SchoolRepoAsync>();
-builder.Services.AddSingleton<ISchoolSecretaryRepoAsync, SchoolSecretaryRepoAsync>();
-builder.Services.AddSingleton<IPhotographerRepoAsync, PhotographerRepoAsync>();
-builder.Services.AddSingleton<ITeacherRepoAsync, TeacherRepoAsync>();
+builder.Services.AddTransient<IPhotographingEventRepoAsync, PhotographingEventRepoAsync>();
+builder.Services.AddTransient<IRepoAsync<School, int>, SchoolRepoAsync>();
+
+builder.Services.AddTransient<IRepoAsync<Administrator, int>, AdminRepoAsync>();
+builder.Services.AddTransient<IRepoAsync<Parent, int>, ParentRepoAsync>();
+builder.Services.AddTransient<IRepoAsync<SchoolSecretary, int>, SchoolSecretaryRepoAsync>();
+builder.Services.AddTransient<IRepoAsync<Photographer, int>, PhotographerRepoAsync>();
+builder.Services.AddTransient<IRepoAsync<Teacher, int>, TeacherRepoAsync>();
+
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.

@@ -10,9 +10,9 @@ namespace SkoloFotoExam26.Pages
     {
         private IPhotographingEventRepoAsync _eventRepo;
 
-        private IPhotographerRepoAsync _photographerRepo;
+        private IRepoAsync<Photographer, int> _photographerRepo;
 
-        private ISchoolSecretaryRepoAsync _secretaryRepo;
+        private IRepoAsync<SchoolSecretary, int> _secretaryRepo;
 
         [BindProperty]
         public PhotographingEvent NewPhotographingEvent { get; set; }
