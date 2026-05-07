@@ -12,7 +12,7 @@ namespace SkoloFotoExam26.Services
         private string _addSchool = "INSERT INTO School VALUES(@Name, @Street, @ZipCode, @SchoolType)";
         private string _countSchools = "SELECT COUNT(*) FROM School";
         private string _deleteSchool = "Delete FROM School WHERE SchoolID = @SchoolID";
-        private string _getAllSchools = "SELECT School.Name, School.Street, School.ZipCode, School.SchoolType,ZipCodeLookup.City FROM School JOIN ZipCodeLookup ON School.ZipCode = ZipCodeLookup.ZipCode";
+        private string _getAllSchools = "SELECT schoolID, School.Name, School.StreetName, School.ZipCode, School.SchoolType,ZipCodeLookup.City FROM School JOIN ZipCodeLookup ON School.ZipCode = ZipCodeLookup.ZipCode";
         private string _getSchool = "SELECT School.SchoolID, School.Name, School.streetName, School.SchoolType, School.ZipCode, ZipCodeLookup.City FROM School JOIN ZipCodeLookup on School.ZipCode = ZipCodeLookup.ZipCode WHERE SchoolID = @SchoolID";
 
         #endregion
@@ -96,13 +96,13 @@ namespace SkoloFotoExam26.Services
                     while (reader.Read())
                     {
                         string name = reader.GetString("Name");
-                        string street = reader.GetString("Street");
+                        string street = reader.GetString("StreetName");
                         int zipCode = reader.GetInt32("ZipCode");
                         string city = reader.GetString("City");
                         int valueType = reader.GetInt32("SchoolType");
                         int schoolID = reader.GetInt32("SchoolID");
                         SchoolType schoolType = (SchoolType)valueType;
-                        schools.Add(new School(schoolID,name, street, city, zipCode, schoolType));
+                        schools.Add(new School(schoolID, name, street, city, zipCode, schoolType));
                     }
                 }
 
