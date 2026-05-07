@@ -9,8 +9,8 @@ namespace SkoloFotoExam26.Services
     {
         #region SQL querys
         private string _addSchoolSecretary = "INSERT INTO SchoolSecretary VALUES(@FirstName, @LastName, @Email, @PhoneNumber, @Initials, @SchoolID)";
-        private string _getAllSchoolSecretaries = "SELECT SchoolSecretary.FirstName, SchoolSecretary.LastName, SchoolSecretary.Email, SchoolSecretary.PhoneNumber, SchoolSecretary.Initials, School.SchoolID, School.Name, School.StreetName, School.ZipCode, School.SchoolType, ZipCodeLookup.City FROM SchoolSecretary JOIN School on School.SchoolID = SchoolSecretary.SchoolID JOIN ZipCodeLookup ON School.ZipCode = ZipCodeLookup.ZipCode";
-        private string _getSchoolSecretary = "SELECT SchoolSecretary.FirstName, SchoolSecretary.LastName, SchoolSecretary.Email, SchoolSecretary.PhoneNumber, SchoolSecretary.Initials, School.SchoolID, School.Name, School.StreetName, School.ZipCode, FROM SchoolSecretary JOIN School on School.SchoolID = SchoolSecretary.SchoolID WHERE SchoolSecretaryID = @SchoolSecretaryID";
+        private string _getAllSchoolSecretaries = "SELECT SchoolSecretary.FirstName, SchoolSecretary.LastName, SchoolSecretary.SchoolSecretaryID, SchoolSecretary.Email, SchoolSecretary.PhoneNumber, SchoolSecretary.Initials, School.SchoolID, School.Name, School.StreetName, School.ZipCode, School.SchoolType, ZipCodeLookup.City FROM SchoolSecretary JOIN School on School.SchoolID = SchoolSecretary.SchoolID JOIN ZipCodeLookup ON School.ZipCode = ZipCodeLookup.ZipCode";
+        private string _getSchoolSecretary = "SELECT SchoolSecretary.FirstName, SchoolSecretary.SchoolSecretaryID, SchoolSecretary.LastName, SchoolSecretary.Email, SchoolSecretary.PhoneNumber, SchoolSecretary.Initials, School.SchoolID, School.Name, School.StreetName, School.ZipCode, FROM SchoolSecretary JOIN School on School.SchoolID = SchoolSecretary.SchoolID WHERE SchoolSecretaryID = @SchoolSecretaryID";
         #endregion
 
 
@@ -81,8 +81,9 @@ namespace SkoloFotoExam26.Services
                         int valueType = reader.GetInt32("SchoolType");
                         SchoolType schoolType = (SchoolType)valueType;
                         int schoolID = reader.GetInt32("SchoolID");
+                        int schoolSecretaryID = reader.GetInt32("SchoolSecretaryID");
 
-                        secretaries.Add(new SchoolSecretary(firstName, lastName, initials, phoneNumber, email, new School(schoolID, name, street,city,zipCode, schoolType)));
+                        secretaries.Add(new SchoolSecretary(firstName, lastName, initials, phoneNumber, email, new School(schoolID, name, street,city,zipCode, schoolType), schoolSecretaryID));
 
                     }
 
@@ -127,8 +128,7 @@ namespace SkoloFotoExam26.Services
                         string initials = reader.GetString("Initials");
                         int SchoolID = reader.GetInt32("SchoolID");
 
-
-                        secretary = new SchoolSecretary(firstName, lastName, initials, phoneNumber, email, new School());
+                        secretary = new SchoolSecretary(firstName, lastName, initials, phoneNumber, email, new School(), schoolSecretaryID);
                     }
                 }
                 catch (SqlException sqlex)
