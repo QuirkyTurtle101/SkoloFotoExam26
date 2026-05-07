@@ -1,6 +1,8 @@
 ﻿using SkoloFotoExam26.Models;
 using SkoloFotoExam26.Helpers;
 using Microsoft.Data.SqlClient;
+using SkoloFotoExam26.Services;
+using SkoloFotoExam26.Interfaces;
 
 namespace SkoloFotoExam26.Services
 {
@@ -16,21 +18,33 @@ namespace SkoloFotoExam26.Services
             _toBeHandled = toBeHandled;
         }
 
-        public async Task<object> HandleLogin()
+        public async Task<object> HandleLoginAttempt()
         {
-            Task<(bool, string, UserType?)> passwordcheck = CheckPassword();
-            (bool result, string msg, UserType? type) = await passwordcheck;
-            if (result == true && type != null)
+            try
             {
-                //TODO finish this
-                //needs all User-derived models in place first
-                switch (type)
+                Task<(bool, string, UserType?)> passwordcheck = CheckPassword();
+                //space for extra stuff we can do before pwd check done here
+                (bool result, string msg, UserType? type) = await passwordcheck;
+                if (result == true && type != null)
                 {
-
+                    return type;
                 }
+                return msg;
             }
-            return msg;
+            catch (Exception e)
+            {
+                return e.Message;
+            }
         }
+
+        //todo finish this
+        public async Task<User> GetUser(ILoginableRepo repo)
+        {
+            User result = await repo.GetForLogin(_toBeHandled.Email);
+
+            return result;
+        }
+        
 
         private async Task<(bool, string, UserType?)> CheckPassword()
         {

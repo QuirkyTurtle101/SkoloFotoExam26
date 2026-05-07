@@ -105,5 +105,10 @@ namespace SkoloFotoExam26.Services
         {
             throw new NotImplementedException();
         }
+
+        public Task<User> GetForLogin(string email)
+        {
+            throw new NotImplementedException();
+        }
     }
 }

@@ -5,7 +5,7 @@ using System.Data;
 
 namespace SkoloFotoExam26.Services
 {
-    public class SchoolSecretaryRepoAsync : SofieConnectionString, ISchoolSecretaryRepoAsync
+    public class SchoolSecretaryRepoAsync : SofieConnectionString, IRepoAsync<SchoolSecretary, int>, ILoginableRepo
     {
         #region SQL querys
         private string _addSchoolSecretary = "INSERT INTO SchoolSecretary VALUES(@FirstName, @LastName, @Email, @PhoneNumber, @Initials, @SchoolID)";
@@ -23,11 +23,11 @@ namespace SkoloFotoExam26.Services
                     SqlCommand command = new SqlCommand(_addSchoolSecretary, connection);
                     await connection.OpenAsync();
 
-                    command.Parameters.AddWithValue("@Name", input.FirstName);
+                    command.Parameters.AddWithValue("@FirstName", input.FirstName);
                     command.Parameters.AddWithValue("@LastName", input.LastName);
                     command.Parameters.AddWithValue("@Email", input.Email);
                     command.Parameters.AddWithValue("@PhoneNumber", input.PhoneNumber); 
-                    command.Parameters.AddWithValue("@Initails", input.Initials);
+                    command.Parameters.AddWithValue("@Initials", input.Initials);
                     command.Parameters.AddWithValue("@SchoolID", input.TheSchool.SchoolID);
                     int noOfRowsEffected = await command.ExecuteNonQueryAsync();
 
@@ -98,6 +98,11 @@ namespace SkoloFotoExam26.Services
                 }
             }
             return secretary;
+        }
+
+        public Task<User> GetForLogin(string email)
+        {
+            throw new NotImplementedException();
         }
 
         public Task UpdateAsync(SchoolSecretary toUpdate)

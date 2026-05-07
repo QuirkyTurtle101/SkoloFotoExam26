@@ -8,7 +8,7 @@ namespace SkoloFotoExam26.Models
         public string Name { get; set; }
         public string Street { get; set; }
         public string City { get; set; }
-        public string ZipCode { get; set; }
+        public int ZipCode { get; set; }
         public SchoolType SchoolType { get; set; }
 
         public School()
@@ -16,7 +16,7 @@ namespace SkoloFotoExam26.Models
             
         }
 
-        public School(string name, string street, string city, string zipCode, SchoolType schoolType)
+        public School(string name, string street, string city, int zipCode, SchoolType schoolType)
         {
             Name = name;
             Street = street;
