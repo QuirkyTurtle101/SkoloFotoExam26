@@ -5,7 +5,7 @@ using System.Data;
 
 namespace SkoloFotoExam26.Services
 {
-    public class ParentRepoAsync : MartinConnectionString, IRepoAsync<Parent, int>
+    public class ParentRepoAsync : MartinConnectionString, IRepoAsync<Parent, int>, ILoginableRepo
     {
         private string _addParent = "INSERT INTO Parent Values (@FirstName, @LastName, @Email, @PhoneNumber, @Street, @ZipCode)";
         private string _getAllParent = "SELECT * FROM Parent";
@@ -102,6 +102,11 @@ namespace SkoloFotoExam26.Services
         }
 
         public Task DeleteAsync(int toDelete)
+        {
+            throw new NotImplementedException();
+        }
+
+        public Task<User> GetForLogin(string email)
         {
             throw new NotImplementedException();
         }

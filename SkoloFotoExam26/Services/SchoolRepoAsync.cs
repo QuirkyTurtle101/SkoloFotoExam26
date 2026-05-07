@@ -30,7 +30,7 @@ namespace SkoloFotoExam26.Services
                     command.Parameters.AddWithValue("@Name", input.Name);
                     command.Parameters.AddWithValue("@Street", input.Street);
                     command.Parameters.AddWithValue("@ZipCode", input.ZipCode);
-                    command.Parameters.AddWithValue("@SchoolType", (int)input.SchoolType); //Skal lige forhøre mig hos Rosa.
+                    command.Parameters.AddWithValue("@SchoolType", (int)input.SchoolType); //Skal lige forhøre mig hos Rosa. //det er præcis sådan det gøres
                     command.Parameters.AddWithValue("@City", input.City);
 
                     int noOfRowsEffected = await command.ExecuteNonQueryAsync();
