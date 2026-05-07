@@ -5,7 +5,7 @@ using System.Data;
 
 namespace SkoloFotoExam26.Services
 {
-    public class ParentRepoAsync : MartinConnectionString, IRepoAsync<Parent, int>, ILoginableRepo
+    public class ParentRepoAsync : IRepoAsync<Parent, int>
     {
         private string _addParent = "INSERT INTO Parent Values (@FirstName, @LastName, @Email, @PhoneNumber, @Street, @ZipCode)";
         private string _getAllParent = "SELECT * FROM Parent";
@@ -19,7 +19,7 @@ namespace SkoloFotoExam26.Services
 
         public async Task AddAsync(Parent input)
         {
-            using (SqlConnection connection = new SqlConnection(mConnectionString))
+            using (SqlConnection connection = new SqlConnection(Secret.connectionString))
             {
                 try
                 {
@@ -61,7 +61,7 @@ namespace SkoloFotoExam26.Services
         public async Task<List<Parent>> GetAllAsync()
         {
             List<Parent> parents = new List<Parent>();
-            using (SqlConnection connection = new SqlConnection(mConnectionString))
+            using (SqlConnection connection = new SqlConnection(Secret.connectionString))
             {
                 try
                 {
