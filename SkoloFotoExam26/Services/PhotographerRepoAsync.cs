@@ -9,6 +9,7 @@ namespace SkoloFotoExam26.Services
     {
 
         private string _getPhotographer = "SELECT * FROM Photographer WHERE PhotographerID = @PhotographerID";
+        private string _getAll = "SELECT * FROM Photographer";
 
         public Task AddAsync(Photographer input)
         {
@@ -25,9 +26,51 @@ namespace SkoloFotoExam26.Services
             throw new NotImplementedException();
         }
 
-        public Task<List<Photographer>> GetAllAsync()
+        public async Task<List<Photographer>> GetAllAsync()
         {
-            throw new NotImplementedException();
+            List<Photographer> photographers = new List<Photographer>();
+            using (SqlConnection connection = new SqlConnection(connectionString))
+            {
+                try
+                {
+                    SqlCommand command = new SqlCommand(_getAll, connection);
+                    await command.Connection.OpenAsync();
+                    SqlDataReader reader = await command.ExecuteReaderAsync();
+                    while (reader.Read())
+                    {
+                        string firstName = reader.GetString("FirstName");
+                        string lastName = reader.GetString("LastName");
+                        string email = reader.GetString("E-mail");
+                        string phoneNumber = reader.GetString("PhoneNumber");
+                        string website = reader.GetString("Website");
+                        string cvrNumber = reader.GetString("CVRNumber");
+                        string city = reader.GetString("City");
+                        //<<<<<<< HEAD
+                        string postCode = reader.GetString("PostCode");
+                        //=======
+                        string street = reader.GetString("Street");
+                        //>>>>>>> 241955fe52e1fe544a0a929281ca984e2ea46d2c
+                        int experienceInYears = reader.GetInt32("ExperienceInYears");
+                        int maxTravelRadiusInKm = reader.GetInt32("MaxTravelRadiusInKm");
+                        string instagram = reader.GetString("Instagram");
+                        string facebook = reader.GetString("Facebook");
+                        Photographer photographer = new Photographer(firstName, lastName, phoneNumber, email, website, cvrNumber, city, postCode,
+                            street, experienceInYears, maxTravelRadiusInKm, instagram, facebook);
+
+                        photographers.Add(photographer);
+                    }
+
+                }
+                catch (SqlException sqlEx)
+                {
+                    Console.WriteLine($"SQL Exception message: {sqlEx.Message}");
+                }
+                catch (Exception ex)
+                {
+                    Console.WriteLine($"Exception message: {ex.Message}");
+                }
+            }
+            return photographers;
         }
 
         public async Task<Photographer> GetAsync(int toGet)
