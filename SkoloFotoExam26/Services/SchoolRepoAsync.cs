@@ -12,7 +12,7 @@ namespace SkoloFotoExam26.Services
         private string _addSchool = "INSERT INTO School VALUES(@Name, @Street, @ZipCode, @SchoolType)";
         private string _countSchools = "SELECT COUNT(*) FROM School";
         private string _deleteSchool = "Delete FROM School WHERE SchoolID = @SchoolID";
-        private string _getAllSchools = "SELECT * FROM  School";
+        private string _getAllSchools = "SELECT School.Name, School.Street, School.ZipCode, ZipCodeLookup.City FROM  School ";
         private string _getSchool = "SELECT School.Name, School.streetName, School.SchoolType, School.ZipCode, ZipCodeLookup.City FROM School JOIN ZipCodeLookup on School.ZipCode = ZipCodeLookup.ZipCode WHERE SchoolID = @SchoolID";
 
         #endregion
@@ -84,21 +84,21 @@ namespace SkoloFotoExam26.Services
 
         public async Task<List<School>> GetAllAsync()
         {
-            //List<School> schools = new List<School>();
-            //using (SqlConnection connection = new SqlConnection())
-            //{
-            //    SqlCommand command = new SqlCommand(_getAllSchools, connection);
-            //    await connection.OpenAsync();
-            //    SqlDataReader reader = await command.ExecuteReaderAsync();
+            List<School> schools = new List<School>();
+            using (SqlConnection connection = new SqlConnection())
+            {
+                SqlCommand command = new SqlCommand(_getAllSchools, connection);
+                await connection.OpenAsync();
+                SqlDataReader reader = await command.ExecuteReaderAsync();
 
-            //    while (reader.Read())
-            //    {
-            //        string name = reader.GetString("Name");
-            //        string street = reader.GetString("Street");
-            //        string zipCode = reader.GetString("ZipCode");
-            //        SchoolType schooltype = Enum.Parse<SchoolType>reader.GetInt32("SchoolType");
-            //    }
-            //}
+                while (reader.Read())
+                {
+                    string name = reader.GetString("Name");
+                    string street = reader.GetString("Street");
+                    string zipCode = reader.GetString("ZipCode");
+                    
+                }
+            }
 
             throw new NotImplementedException();
         }
