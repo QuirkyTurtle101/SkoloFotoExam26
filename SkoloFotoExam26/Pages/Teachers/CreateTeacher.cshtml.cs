@@ -39,8 +39,9 @@ namespace SkoloFotoExam26.Pages.Teachers
             }
             try
             {
-
-
+                School school = await _schoolRepo.GetAsync(SchoolID);
+                Teacher newTeacher = new Teacher(NewTeacher.TeacherID, NewTeacher.Initials, NewTeacher.FirstName, 
+                    NewTeacher.LastName, NewTeacher.PhoneNumber, NewTeacher.Email, school);
             }
             catch (Exception ex)
             {
