@@ -1,4 +1,6 @@
-﻿namespace SkoloFotoExam26.Models
+﻿using SkoloFotoExam26.Helpers;
+
+namespace SkoloFotoExam26.Models
 {
     /// <summary>
     /// Model for handling login info pulled from the database. Used for LoginRepo.
@@ -16,6 +18,11 @@
             TheUserType = theUserType;
         }
 
-
+        public LoginInfo(string email, string passwordHash, UserType theUserType)
+        {
+            Email = email;
+            PasswordHash = HashHelper.HashPassword(passwordHash);
+            TheUserType = theUserType;
+        }
     }
 }
