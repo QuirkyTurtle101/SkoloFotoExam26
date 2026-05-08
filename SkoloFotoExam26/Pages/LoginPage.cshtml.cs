@@ -10,9 +10,10 @@ namespace SkoloFotoExam26.Pages
     {
         [BindProperty]
         public LoginAttempt Attempt { get; set; }
-        Dictionary<UserType, IRepoAsync> repositories;
+        private Dictionary<UserType, IRepoAsync> repositories;
+        private IRepoAsync<LoginInfo, string> _loginRepo;
 
-        public LoginPageModel(IRepoAsync<Administrator, int> adminRepo, IRepoAsync<Parent, int> parentRepo, IRepoAsync<Photographer, int> photographerRepo, IRepoAsync<SchoolSecretary, int> schoolSecretaryRepo, IRepoAsync<Teacher, int> teacherRepo)
+        public LoginPageModel(IRepoAsync<LoginInfo, string> loginRepo, IRepoAsync<Administrator, int> adminRepo, IRepoAsync<Parent, int> parentRepo, IRepoAsync<Photographer, int> photographerRepo, IRepoAsync<SchoolSecretary, int> schoolSecretaryRepo, IRepoAsync<Teacher, int> teacherRepo)
         {
             repositories = new Dictionary<UserType, IRepoAsync>();
             repositories.Add(UserType.Administrator, adminRepo);
@@ -20,6 +21,7 @@ namespace SkoloFotoExam26.Pages
             repositories.Add(UserType.Photographer, photographerRepo);
             repositories.Add(UserType.SchoolSecretary, schoolSecretaryRepo);
             repositories.Add(UserType.Teacher, teacherRepo);
+            _loginRepo = loginRepo;
         }
 
         public void OnGet()
@@ -32,7 +34,7 @@ namespace SkoloFotoExam26.Pages
             {
                 return Page();
             }
-            LoginHandler handler = new LoginHandler(Attempt);
+            LoginHandler handler = new LoginHandler(Attempt, _loginRepo);
             Task<object> handled = handler.HandleLoginAttempt();
             var result = await handled;
             //TODO finish
