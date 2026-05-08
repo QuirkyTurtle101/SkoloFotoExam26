@@ -27,14 +27,18 @@ namespace SkoloFotoExam26.Pages.SchoolSecretaries
         [BindProperty]
         public string Initials { get; set; }
 
+        [BindProperty]
+        public List<School> Schools { get; set; }
+
         public CreateSchoolSecretaryModel(IRepoAsync<SchoolSecretary, int> schoolSecretaryAsync, IRepoAsync<School, int> schoolRepoAsync)
         {
             _schoolSecRepo = schoolSecretaryAsync;
             _schoolRepo = schoolRepoAsync;
         }
 
-        public void OnGet()
+        public async Task OnGet()
         {
+            Schools = await _schoolRepo.GetAllAsync();
         }
 
         public async Task<IActionResult> OnPostAsync()
