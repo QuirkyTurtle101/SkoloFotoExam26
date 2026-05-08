@@ -47,7 +47,7 @@ namespace SkoloFotoExam26.Pages.SchoolSecretaries
             }
             catch (SqlException sqlex)
             {
-                ViewData["ErrorMessage"] = sqlex.Message;
+                ViewData["ErrorMessage"] = "fejl ved oprettelse, prøv igen.";
                 return Page();
             }
             catch (Exception ex)

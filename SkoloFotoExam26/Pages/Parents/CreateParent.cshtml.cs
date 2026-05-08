@@ -4,21 +4,17 @@ using Microsoft.Data.SqlClient;
 using SkoloFotoExam26.Interfaces;
 using SkoloFotoExam26.Models;
 
-namespace SkoloFotoExam26.Pages.Schools
+namespace SkoloFotoExam26.Pages.Parents
 {
-    public class CreateSchoolModel : PageModel
+    public class CreateParentModel : PageModel
     {
-
-        private IRepoAsync<School, int> _schoolRepo;
-
+        private IRepoAsync<Parent, int> _parentRepo;
         [BindProperty]
-        public School NewSchool { get; set; }
-
-        public CreateSchoolModel(IRepoAsync<School, int> schoolRepoAsync)
+        public Parent NewParent { get; set; }
+        public CreateParentModel(IRepoAsync<Parent, int> parentRepoAsync)
         {
-            _schoolRepo = schoolRepoAsync;
+            _parentRepo = parentRepoAsync;
         }
-        
         public void OnGet()
         {
         }
@@ -26,11 +22,11 @@ namespace SkoloFotoExam26.Pages.Schools
         {
             try
             {
-                await _schoolRepo.AddAsync(NewSchool);
+                await _parentRepo.AddAsync(NewParent);
             }
             catch(SqlException sqlex)
             {
-                ViewData["ErrorMessage"] = "Fejl ved oprettelse";
+                ViewData["ErrorMessage"] = sqlex.Message;
                 return Page();
             }
             catch(Exception ex)

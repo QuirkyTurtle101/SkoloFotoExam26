@@ -1,0 +1,45 @@
+﻿@page
+@model SkoloFotoExam26.Pages.Parents.CreateParentModel
+@{
+    ViewData["Title"] = "Opret forældre";
+}
+
+<h1>Opret forældre</h1>
+
+<form method="="post>
+    <div asp-validation-summary="All" class="text-danger"></div>
+
+    <div class="post">
+        <label asp-for="@Model.NewParent.FirstName" class="control-label"></label>
+        <input asp-for="@Model.NewParent.FirstName" class="form-control" />
+    </div>
+    <div class="post">
+        <label asp-for="@Model.NewParent.LastName" class="control-label"></label>
+        <input asp-for="@Model.NewParent.LastName" class="form-control" />
+    </div>
+    <div class="post">
+        <label asp-for="@Model.NewParent.Email" class="control-label"></label>
+        <input asp-for="@Model.NewParent.Email" class="form-control" />
+    </div>
+    <div class="post">
+        <label asp-for="@Model.NewParent.Street" class="control-label"></label>
+        <input asp-for="@Model.NewParent.Street" class="form-control" />
+    </div>
+    <div class="post">
+        <label asp-for="@Model.NewParent.ZipCode" class="control-label"></label>
+        <input asp-for="@Model.NewParent.ZipCode" class="form-control" />
+    </div>
+    <div class="post">
+        <label asp-for="@Model.NewParent.City" class="control-label"></label>
+        <input asp-for="@Model.NewParent.City" class="form-control" />
+    </div>
+    <br />
+    <div class="form-group">
+        <input type="submit" value="Opret forældre" class="btn-primary"/>
+    </div>
+
+    <div>
+        <a asp-page="index">Annuler</a>
+    </div>
+
+</form>

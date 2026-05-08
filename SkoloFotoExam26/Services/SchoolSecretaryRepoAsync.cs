@@ -42,6 +42,10 @@ namespace SkoloFotoExam26.Services
 
                     throw;
                 }
+                finally
+                {
+                    await connection.CloseAsync();
+                }
             }
         }
 
