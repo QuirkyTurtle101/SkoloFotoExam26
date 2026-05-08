@@ -5,7 +5,7 @@ using System.Data;
 
 namespace SkoloFotoExam26.Services
 {
-    public class PhotographerRepoAsync : ConnectionString, IRepoAsync<Photographer, int>, ILoginableRepo
+    public class PhotographerRepoAsync : IRepoAsync<Photographer, int>, ILoginableRepo
     {
 
         private string _getPhotographer = "SELECT * FROM Photographer WHERE PhotographerID = @PhotographerID";
@@ -29,7 +29,7 @@ namespace SkoloFotoExam26.Services
         public async Task<List<Photographer>> GetAllAsync()
         {
             List<Photographer> photographers = new List<Photographer>();
-            using (SqlConnection connection = new SqlConnection(connectionString))
+            using (SqlConnection connection = new SqlConnection(Secret.connectionString))
             {
                 try
                 {
@@ -76,7 +76,7 @@ namespace SkoloFotoExam26.Services
         public async Task<Photographer> GetAsync(int toGet)
         {
             Photographer photographer = null;
-            using SqlConnection connection = new SqlConnection(connectionString);
+            using SqlConnection connection = new SqlConnection(Secret.connectionString);
             try
             {
                 using SqlCommand command = new SqlCommand(_getPhotographer, connection);

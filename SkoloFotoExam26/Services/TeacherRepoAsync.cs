@@ -5,13 +5,13 @@ using System.Net.Http.Headers;
 
 namespace SkoloFotoExam26.Services
 {
-    public class TeacherRepoAsync : ConnectionString, IRepoAsync<Teacher, int>
+    public class TeacherRepoAsync : IRepoAsync<Teacher, int>
     {
         private string _addTeacher = "INSERT INTO Teacher VALUES(@FirstName, @LastName, @E-mail, @PhoneNumber, @Initials, @SchoolID)";
 
         public async Task AddAsync(Teacher input)
         {
-            using SqlConnection connection = new SqlConnection(connectionString);
+            using SqlConnection connection = new SqlConnection(Secret.connectionString);
             try
             {
                 SqlCommand command = new SqlCommand(_addTeacher, connection);

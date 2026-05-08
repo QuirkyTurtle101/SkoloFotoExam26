@@ -4,14 +4,14 @@ using SkoloFotoExam26.Models;
 
 namespace SkoloFotoExam26.Services
 {
-    public class PhotographingEventRepoAsync : ConnectionString, IRepoAsync<PhotographingEvent, int>
+    public class PhotographingEventRepoAsync : IRepoAsync<PhotographingEvent, int>
     {
 
         private string _addEvent = "INSERT INTO PhotographingEvent VALUES(@Start, @End, @SchoolSecretaryID, @PhotographerID)";
 
         public async Task AddAsync(PhotographingEvent input)
         {
-            using (SqlConnection connection = new SqlConnection(connectionString))
+            using (SqlConnection connection = new SqlConnection(Secret.connectionString))
             {
                 try
                 {
