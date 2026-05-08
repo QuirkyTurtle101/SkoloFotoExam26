@@ -9,27 +9,46 @@ namespace SkoloFotoExam26.Pages.Parents
     public class CreateParentModel : PageModel
     {
         private IRepoAsync<Parent, int> _parentRepo;
+
         [BindProperty]
-        public Parent NewParent { get; set; }
+        public int ParentID { get; set; }
+        [BindProperty]
+        public string FirstName { get; set; }
+        [BindProperty]
+        public string LastName { get; set; }
+        [BindProperty]
+        public string Email { get; set; }
+        [BindProperty]
+        public string PhoneNumber { get; set; }
+        [BindProperty]
+        public string Street { get; set; }
+        [BindProperty]
+        public int ZipCode { get; set; }
+        [BindProperty]
+        public string City { get; set; }
+
+
         public CreateParentModel(IRepoAsync<Parent, int> parentRepoAsync)
         {
             _parentRepo = parentRepoAsync;
         }
+
         public void OnGet()
         {
         }
         public async Task<IActionResult> OnPostAsync()
         {
             try
-            {
-                await _parentRepo.AddAsync(NewParent);
+            {        
+                await _parentRepo.AddAsync(new Parent(FirstName, LastName, Email, PhoneNumber, Street, ZipCode, City));
+                //await _parentRepo.GetAsync(ParentID)
             }
-            catch(SqlException sqlex)
+            catch (SqlException sqlex)
             {
                 ViewData["ErrorMessage"] = sqlex.Message;
                 return Page();
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 ViewData["ErrorMessage"] = ex.Message;
                 return Page();

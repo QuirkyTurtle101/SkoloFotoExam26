@@ -6,40 +6,43 @@
 
 <h1>Opret forældre</h1>
 
-<form method="="post>
+<form method="post">
+
     <div asp-validation-summary="All" class="text-danger"></div>
 
-    <div class="post">
-        <label asp-for="@Model.NewParent.FirstName" class="control-label"></label>
-        <input asp-for="@Model.NewParent.FirstName" class="form-control" />
+    <div class="form-group">
+        <label asp-for="@Model.FirstName" class="control-label"></label>
+        <input asp-for="@Model.FirstName" class="form-control" />
     </div>
-    <div class="post">
-        <label asp-for="@Model.NewParent.LastName" class="control-label"></label>
-        <input asp-for="@Model.NewParent.LastName" class="form-control" />
+    <div class="form-group">
+        <label asp-for="@Model.LastName" class="control-label"></label>
+        <input asp-for="@Model.LastName" class="form-control" />
     </div>
-    <div class="post">
-        <label asp-for="@Model.NewParent.Email" class="control-label"></label>
-        <input asp-for="@Model.NewParent.Email" class="form-control" />
+    <div class="form-group">
+        <label asp-for="@Model.Email" class="control-label"></label>
+        <input asp-for="@Model.Email" class="form-control" />
     </div>
-    <div class="post">
-        <label asp-for="@Model.NewParent.Street" class="control-label"></label>
-        <input asp-for="@Model.NewParent.Street" class="form-control" />
+    <div class="form-group">
+        <label asp-for="@Model.PhoneNumber" class="control-label"></label>
+        <input asp-for="@Model.PhoneNumber" class="form-control" />
     </div>
-    <div class="post">
-        <label asp-for="@Model.NewParent.ZipCode" class="control-label"></label>
-        <input asp-for="@Model.NewParent.ZipCode" class="form-control" />
+    <div class="form-group">
+        <label asp-for="@Model.Street" class="control-label"></label>
+        <input asp-for="@Model.Street" class="form-control" />
     </div>
-    <div class="post">
-        <label asp-for="@Model.NewParent.City" class="control-label"></label>
-        <input asp-for="@Model.NewParent.City" class="form-control" />
+    <div class="form-group">
+        <label asp-for="@Model.ZipCode" class="control-label"></label>
+        <input asp-for="@Model.ZipCode" class="form-control" />
+    </div>
+    <div class="form-group">
+        <label asp-for="@Model.City" class="control-label"></label>
+        <input asp-for="@Model.City" class="form-control" />
     </div>
     <br />
     <div class="form-group">
-        <input type="submit" value="Opret forældre" class="btn-primary"/>
+        <input type="submit" value="Opret forældre" class="btn btn-primary"/>
     </div>
 
-    <div>
-        <a asp-page="index">Annuler</a>
-    </div>
+    <a></a> type="submit" class="btn btn-warning" value="Annuller" </a>
 
 </form>
