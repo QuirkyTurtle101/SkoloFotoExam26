@@ -3,7 +3,7 @@ using SkoloFotoExam26.Interfaces;
 
 namespace SkoloFotoExam26.Services
 {
-    public class LoginRepo : IRepoAsync<LoginInfo, string>
+    public class LoginRepoAsync : IRepoAsync<LoginInfo, string>
     {
         public Task AddAsync(LoginInfo input)
         {
