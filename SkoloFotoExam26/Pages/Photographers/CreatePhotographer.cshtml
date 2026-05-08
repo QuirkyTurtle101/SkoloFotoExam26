@@ -1,0 +1,81 @@
+﻿@page
+@model SkoloFotoExam26.Pages.Photographers.CreatePhotographerModel
+@{
+    ViewData["Title"] = "Oprettelse af en Fotograf";
+}
+
+<h3>Opret en fotograf</h3>
+
+<form method="post">
+    <div asp-validation-summary="All" class="text-danger"></div>
+
+    <div class="form-group">
+        <label asp-for="@Model.FirstName" class="control-label"></label>
+        <input asp-for="@Model.FirstName" class="form-control" />
+    </div>
+
+    <div class="form-group">
+        <label asp-for="@Model.LastName" class="control-label"></label>
+        <input asp-for="@Model.LastName" class="form-control" />
+    </div>
+
+    <div class="form-group">
+        <label asp-for="@Model.Email" class="control-label"></label>
+        <input asp-for="@Model.Email" class="form-control" />
+    </div>
+
+    <div class="form-group">
+        <label asp-for="@Model.PhoneNumber" class="control-label"></label>
+        <input asp-for="@Model.PhoneNumber" class="form-control" />
+    </div>
+
+    <div class="form-group">
+        <label asp-for="@Model.Street" class="control-label"></label>
+        <input asp-for="@Model.Street" class="form-control" />
+    </div>
+        <div class="form-group">
+        <label asp-for="@Model.City" class="control-label"></label>
+        <input asp-for="@Model.City" class="form-control" />
+    </div>
+    <div class="form-group">
+        <label asp-for="@Model.ZipCode" class="control-label"></label>
+        <input asp-for="@Model.ZipCode" class="form-control" />
+    </div>
+    <div class="form-group">
+        <label asp-for="@Model.CVRNumber" class="control-label"></label>
+        <input asp-for="@Model.CVRNumber" class="form-control" />
+    </div>
+
+    <div class="form-group">
+        <label asp-for="@Model.Website" class="control-label"></label>
+        <input asp-for="@Model.Website" class="form-control" />
+    </div>
+
+    <div class="form-group">
+        <label asp-for="@Model.ExperienceInYears" class="control-label"></label>
+        <input asp-for="@Model.ExperienceInYears" class="form-control" />
+    </div>
+
+    <div class="form-group">
+        <label asp-for="@Model.MaxTravelRadiusInKm" class="control-label"></label>
+        <input asp-for="@Model.MaxTravelRadiusInKm" class="form-control" />
+    </div>
+
+    <div class="form-group">
+        <label asp-for="@Model.Instagram" class="control-label"></label>
+        <input asp-for="@Model.Instagram" class="form-control" />
+    </div>
+
+    <div class="form-group">
+        <label asp-for="@Model.Facebook" class="control-label"></label>
+        <input asp-for="@Model.Facebook" class="form-control" />
+    </div>
+    <br />
+    <div class="form-group">
+        <input type="submit" value="Create a school secretary" class="btn-primary" />
+    </div>
+
+    <div>
+        <a asp-page="index">Annuler</a>
+    </div>
+</form>

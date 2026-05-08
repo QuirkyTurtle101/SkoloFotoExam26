@@ -12,7 +12,7 @@
 
         public string City { get; private set; }
 
-        public string PostCode { get; private set; }
+        public int ZipCode { get; private set; }
         public int ExperienceInYears { get; private set; }
 
         public int MaxTravelRadiusInKm { get; private set; }
@@ -26,14 +26,14 @@
             
         }
         public Photographer(string firstName, string lastName, string phoneNumber, string email, string website, string cvrNumber,
-            string city, string postCode, string street, int experienceInYears, int maxTravelRadiusInKm, string instagram,
+            string city, int zipCode, string street, int experienceInYears, int maxTravelRadiusInKm, string instagram,
             string facebook) 
             : base(firstName, lastName, phoneNumber, email)
         {
             Website = website;
             CVRNumber = cvrNumber;
             City = city;
-            PostCode = postCode;
+            ZipCode = zipCode;
             Street = street;
             ExperienceInYears = experienceInYears;
             MaxTravelRadiusInKm = maxTravelRadiusInKm;
@@ -43,7 +43,7 @@
         }
 
         public Photographer(int photographerID, string firstName, string lastName, string phoneNumber, string email, string website, string cvrNumber,
-            string city, string postCode, string street, int experienceInYears, int maxTravelRadiusInKm, string instagram,
+            string city, int zipCode, string street, int experienceInYears, int maxTravelRadiusInKm, string instagram,
             string facebook)
             : base(firstName, lastName, phoneNumber, email)
         {
@@ -51,7 +51,7 @@
             Website = website;
             CVRNumber = cvrNumber;
             City = city;
-            PostCode = postCode;
+            ZipCode = zipCode;
             Street = street;
             ExperienceInYears = experienceInYears;
             MaxTravelRadiusInKm = maxTravelRadiusInKm;
@@ -63,7 +63,7 @@
         public override string ToString()
         {
             return $"PhotographerID: {PhotographerID}, {base.ToString()}, WebPage: {Website}, CVRNumber: {CVRNumber}, " +
-                $"City: {City}, PostCode: {PostCode}, TheAddress: {Street}, ExperienceInYears: {ExperienceInYears}, " +
+                $"City: {City}, PostCode: {ZipCode}, TheAddress: {Street}, ExperienceInYears: {ExperienceInYears}, " +
                 $"MaxTravelRadiusInKm: {MaxTravelRadiusInKm}, Instagram: {Instagram}, Facebook: {Facebook}";
         }
 
