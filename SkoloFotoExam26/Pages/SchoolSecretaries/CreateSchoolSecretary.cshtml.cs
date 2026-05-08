@@ -15,7 +15,7 @@ namespace SkoloFotoExam26.Pages.SchoolSecretaries
         //[BindProperty]
         //public SchoolSecretary NewSchoolSecretary { get; set; }
         [BindProperty]
-        public int SchoolID { get; set; }// skal formentlig ændres i fremtiden.
+        public int ChosenSchoolID { get; set; }// skal formentlig ændres i fremtiden.
         [BindProperty]
         public string FirstName { get; set; }
         [BindProperty]
@@ -47,7 +47,7 @@ namespace SkoloFotoExam26.Pages.SchoolSecretaries
             {
                 //School
 
-                await _schoolSecRepo.AddAsync(new SchoolSecretary(FirstName,LastName,Initials,PhoneNumber,Email, await _schoolRepo.GetAsync(SchoolID)));
+                await _schoolSecRepo.AddAsync(new SchoolSecretary(FirstName,LastName,Initials,PhoneNumber,Email, await _schoolRepo.GetAsync(ChosenSchoolID)));
             }
             catch (SqlException sqlex)
             {

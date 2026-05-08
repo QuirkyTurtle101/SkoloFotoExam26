@@ -1,4 +1,5 @@
 ﻿@page
+@using SkoloFotoExam26.Models
 @model SkoloFotoExam26.Pages.SchoolSecretaries.IndexModel
 @{
     ViewData["Title"] = "Sekretærer";
@@ -10,3 +11,36 @@
     <a asp-page="CreateSchoolSecretary"> Opret en ny skolesekretær </a>
 </p>
 
+
+<h2>Skolesekretærer i systemet</h2>
+
+<form method="get">
+    <table class="table">
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Fornavn<th>
+                <th>Efternavn</th>
+                <th>Initialer</th>
+                <th>Email</th>
+                <th>Telefonnummer</th>
+                <th>Skolens navn</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (SchoolSecretary item in Model.Secretaries)
+            {
+                <tr>
+                    <td>@item.SchoolSecretaryID</td>
+                    <td>@item.FirstName</td>
+                    <td>@item.LastName</td>
+                    <td>@item.Initials</td>
+                    <td>@item.Email</td>
+                    <td>@item.PhoneNumber</td>
+                    <td>@item.TheSchool.Name</td>
+                </tr>
+            }
+        </tbody>
+    </table>
+
+</form>
