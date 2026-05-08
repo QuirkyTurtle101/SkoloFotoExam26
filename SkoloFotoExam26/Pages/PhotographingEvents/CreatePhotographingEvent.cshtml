@@ -19,9 +19,9 @@
             <label asp-for="NewPhotographingEvent.End" class="control-label" ></label>
             <input asp-for ="NewPhotographingEvent.End" class="form-control" />
         </div>
-        <br />
+        
         <div class="form-group">
-            <label asp-for="SchoolSecretaryID"></label>
+            <label asp-for="SchoolSecretaryID"> Choose a Secretary </label>
             <select asp-for="SchoolSecretaryID" class="form-select">
                 <option value= ""> Select Secretary</option>
                 @foreach (SchoolSecretary s in @Model.SecretaryList)
@@ -32,9 +32,8 @@
                         }
             </select>
         </div>
-        <br />
         <div class="form-group">
-            <label asp-for="PhotographerID"></label>
+            <label asp-for="PhotographerID"> Choose a Photographer</label>
             <select asp-for="PhotographerID" class="form-select">
                 <option value=""> Select Photographer</option>
                 @foreach (Photographer p in Model.PhotographerList)

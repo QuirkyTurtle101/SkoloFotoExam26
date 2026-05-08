@@ -23,6 +23,12 @@ namespace SkoloFotoExam26.Pages
         [BindProperty]
         public int PhotographerID { get; set; }
 
+        //[BindProperty]
+        //public SchoolSecretary TheSchoolSecretary { get; set; }
+
+        //[BindProperty]
+        //public Photographer ThePhotographer { get; set; }
+
         public List<SchoolSecretary> SecretaryList { get; set; }
 
         public List<Photographer> PhotographerList { get; set; }

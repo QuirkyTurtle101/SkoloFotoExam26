@@ -15,7 +15,7 @@ namespace SkoloFotoExam26.Pages.SchoolSecretaries
         //[BindProperty]
         //public SchoolSecretary NewSchoolSecretary { get; set; }
         [BindProperty]
-        public int SchoolID { get; set; }// skal formentlig ændres i fremtiden.
+        public int ChosenSchoolID { get; set; }// skal formentlig ændres i fremtiden.
         [BindProperty]
         public string FirstName { get; set; }
         [BindProperty]
@@ -27,14 +27,18 @@ namespace SkoloFotoExam26.Pages.SchoolSecretaries
         [BindProperty]
         public string Initials { get; set; }
 
+        [BindProperty]
+        public List<School> Schools { get; set; }
+
         public CreateSchoolSecretaryModel(IRepoAsync<SchoolSecretary, int> schoolSecretaryAsync, IRepoAsync<School, int> schoolRepoAsync)
         {
             _schoolSecRepo = schoolSecretaryAsync;
             _schoolRepo = schoolRepoAsync;
         }
 
-        public void OnGet()
+        public async Task OnGet()
         {
+            Schools = await _schoolRepo.GetAllAsync();
         }
 
         public async Task<IActionResult> OnPostAsync()
@@ -43,11 +47,11 @@ namespace SkoloFotoExam26.Pages.SchoolSecretaries
             {
                 //School
 
-                await _schoolSecRepo.AddAsync(new SchoolSecretary(FirstName,LastName,Initials,PhoneNumber,Email, await _schoolRepo.GetAsync(SchoolID)));
+                await _schoolSecRepo.AddAsync(new SchoolSecretary(FirstName,LastName,Initials,PhoneNumber,Email, await _schoolRepo.GetAsync(ChosenSchoolID)));
             }
             catch (SqlException sqlex)
             {
-                ViewData["ErrorMessage"] = "fejl ved oprettelse, prøv igen.";
+                ViewData["ErrorMessage"] = "Fejl ved oprettelse, prøv igen.";
                 return Page();
             }
             catch (Exception ex)

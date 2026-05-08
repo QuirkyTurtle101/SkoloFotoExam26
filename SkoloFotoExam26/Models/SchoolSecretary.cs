@@ -16,12 +16,23 @@
         }
 
         public SchoolSecretary(string firstName, string lastName, string initials, string phoneNumber, string email, 
+            School theSchool, int schoolSecretaryID) :
+            base(firstName, lastName, phoneNumber, email)
+        {
+
+            Initials = initials;
+            TheSchool = theSchool;
+            SchoolSecretaryID = schoolSecretaryID;
+        }
+
+        public SchoolSecretary(string firstName, string lastName, string initials, string phoneNumber, string email,
             School theSchool) :
             base(firstName, lastName, phoneNumber, email)
         {
-            //SchoolSecretaryID = _counter++;
+
             Initials = initials;
             TheSchool = theSchool;
+            
         }
 
 

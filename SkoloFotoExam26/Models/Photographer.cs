@@ -21,7 +21,10 @@
 
         public string Facebook { get; private set; }
 
-
+        public Photographer()
+        {
+            
+        }
         public Photographer(string firstName, string lastName, string phoneNumber, string email, string website, string cvrNumber,
             string city, string postCode, string street, int experienceInYears, int maxTravelRadiusInKm, string instagram,
             string facebook) 
@@ -37,6 +40,24 @@
             Instagram = instagram;
             Facebook = facebook;
                 
+        }
+
+        public Photographer(int photographerID, string firstName, string lastName, string phoneNumber, string email, string website, string cvrNumber,
+            string city, string postCode, string street, int experienceInYears, int maxTravelRadiusInKm, string instagram,
+            string facebook)
+            : base(firstName, lastName, phoneNumber, email)
+        {
+            PhotographerID = photographerID;
+            Website = website;
+            CVRNumber = cvrNumber;
+            City = city;
+            PostCode = postCode;
+            Street = street;
+            ExperienceInYears = experienceInYears;
+            MaxTravelRadiusInKm = maxTravelRadiusInKm;
+            Instagram = instagram;
+            Facebook = facebook;
+
         }
 
         public override string ToString()
