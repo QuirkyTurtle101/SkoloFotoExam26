@@ -11,6 +11,18 @@ namespace SkoloFotoExam26.Services
     {
 
         private string _getAll = "SELECT * FROM Booking";
+
+
+        private IRepoAsync<PhotographingEvent, int> _photographingEventRepo;
+
+        private IRepoAsync<Teacher, int> _teacherRepo;
+
+        public BookingRepoAsync(IRepoAsync<PhotographingEvent, int> photographingEventRepo, IRepoAsync<Teacher, int> teacherRepo)
+        {
+            _photographingEventRepo = photographingEventRepo;
+            _teacherRepo = teacherRepo;
+        }
+
         public Task AddAsync(Booking input)
         {
             throw new NotImplementedException();
@@ -38,9 +50,15 @@ namespace SkoloFotoExam26.Services
                     SqlDataReader reader = await command.ExecuteReaderAsync();
                     while (reader.Read())
                     {
+                        int bookingID = reader.GetInt32("BookingID");
                         DateTime start = reader.GetDateTime("Start");
                         DateTime end = reader.GetDateTime("End");
-                        
+                        int photographingEventID = reader.GetInt32("PhotographingEventID");
+                        int teacherID = reader.GetInt32("TeacherID");
+                        PhotographingEvent photographingEvent = await _photographingEventRepo.GetAsync(photographingEventID);
+                        Teacher teacher = await _teacherRepo.GetAsync(teacherID);
+
+                        //Booking booking = new Booking(start, end, photographingEvent, teacher, /*bookingID*/)
                         //Booking booking = new Booking(start, end, new PhotographingEvent(), 
                         //    new Photographer(), new SchoolClass());
 

@@ -4,7 +4,6 @@ namespace SkoloFotoExam26.Models
 {
     public class PhotographingEvent
     {
-        //private static int _counter = 1;
 
         public int PhotographingEventID { get; private set; }
 
@@ -29,7 +28,14 @@ namespace SkoloFotoExam26.Models
             SchoolSecretary = schoolSecretary;
             Photographer = photographer;
         }
-
+        public PhotographingEvent(int photographingEventID, DateTime start, DateTime end, SchoolSecretary schoolSecretary, Photographer photographer)
+        {
+            PhotographingEventID = photographingEventID;
+            Start = start;
+            End = end;
+            SchoolSecretary = schoolSecretary;
+            Photographer = photographer;
+        }
         public override string ToString()
         {
             return $"SchoolSecretaryID: {PhotographingEventID}, Start: {Start}, End: {End}, SchoolSecretaryID: " +
