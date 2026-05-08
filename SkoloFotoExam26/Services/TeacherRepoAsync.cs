@@ -1,6 +1,7 @@
 ﻿using Microsoft.Data.SqlClient;
 using SkoloFotoExam26.Interfaces;
 using SkoloFotoExam26.Models;
+using System.Data;
 using System.Net.Http.Headers;
 
 namespace SkoloFotoExam26.Services
@@ -8,7 +9,15 @@ namespace SkoloFotoExam26.Services
     public class TeacherRepoAsync : IRepoAsync<Teacher, int>
     {
         private string _addTeacher = "INSERT INTO Teacher VALUES(@FirstName, @LastName, @E-mail, @PhoneNumber, @Initials, @SchoolID)";
+        private string _getAll = "SELECT * FROM Teacher";
+        private string _getTeacher = "SELECT * FROM Teacher WHERE TeacherID = @TeacherID";
 
+
+        private IRepoAsync<School, int> _schoolRepo;
+        public TeacherRepoAsync(IRepoAsync<School, int> schoolRepo)
+        {
+            _schoolRepo = schoolRepo;
+        }
         public async Task AddAsync(Teacher input)
         {
             using SqlConnection connection = new SqlConnection(Secret.connectionString);
@@ -24,11 +33,11 @@ namespace SkoloFotoExam26.Services
                 command.Parameters.AddWithValue("@SchoolID", input.TheSchool.SchoolID);
             }
             catch (SqlException sqlEx)
-    {
+            {
                 Console.WriteLine($"SQL exception message: {sqlEx.Message}");
             }
             catch(Exception ex)
-        {
+            { 
                 Console.WriteLine($"Exception message: {ex.Message}");
             }
         }
@@ -43,14 +52,77 @@ namespace SkoloFotoExam26.Services
             throw new NotImplementedException();
         }
 
-        public Task<List<Teacher>> GetAllAsync()
+        public async Task<List<Teacher>> GetAllAsync()
         {
-            throw new NotImplementedException();
-        }
+            List<Teacher> teachers = new List<Teacher>();
+            using (SqlConnection connection = new SqlConnection(Secret.connectionString))
+            {
+                try
+                {
+                    SqlCommand command = new SqlCommand(_getAll, connection);
+                    await command.Connection.OpenAsync();
+                    SqlDataReader reader = await command.ExecuteReaderAsync();
+                    while (reader.Read())
+                    {
+                        int teacherID = reader.GetInt32("TeacherID");
+                        string initials = reader.GetString("Initials");
+                        string firstName = reader.GetString("FirstName");
+                        string lastName = reader.GetString("LastName");
+                        string phoneNumber = reader.GetString("PhoneNumber");
+                        string email = reader.GetString("Email");
+                        int schoolID = reader.GetInt32("SchoolID");
+                        School school = await _schoolRepo.GetAsync(schoolID);
+                        Teacher teacher = new Teacher(teacherID, initials, firstName, lastName, phoneNumber, email, school);
+                        teachers.Add(teacher);
+                    }
 
-        public Task<Teacher> GetAsync(int toGet)
+                }
+                catch (SqlException sqlEx)
+                {
+                    Console.WriteLine($"SQL Exception message: {sqlEx.Message}");
+                }
+                catch (Exception ex)
+                {
+                    Console.WriteLine($"Exception message: {ex.Message}");
+                }
+            }
+            return teachers;
+        }
+        
+
+        public async Task<Teacher> GetAsync(int toGet)
         {
-            throw new NotImplementedException();
+            Teacher teacher = null;
+            using SqlConnection connection = new SqlConnection(Secret.connectionString);
+            try
+            {
+                using SqlCommand command = new SqlCommand(_getTeacher, connection);
+                await command.Connection.OpenAsync();
+                command.Parameters.AddWithValue("@TeacherID", toGet);
+                SqlDataReader reader = await command.ExecuteReaderAsync();
+
+                if (reader.Read())
+                {
+                    int teacherID = reader.GetInt32("TeacherID");
+                    string initials = reader.GetString("Initials");
+                    string firstName = reader.GetString("FirstName");
+                    string lastName = reader.GetString("LastName");
+                    string phoneNumber = reader.GetString("PhoneNumber");
+                    string email = reader.GetString("Email");
+                    int schoolID = reader.GetInt32("SchoolID");
+                    School school = await _schoolRepo.GetAsync(schoolID);
+                    teacher = new Teacher(teacherID, initials, firstName, lastName, phoneNumber, email, school);
+                }
+            }
+            catch (SqlException sqlEx)
+            {
+                Console.WriteLine($"SQL Exception message: {sqlEx.Message}");
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"Exception message: {ex.Message}");
+            }
+            return teacher;
         }
 
         public Task<User> GetForLogin(string email)
