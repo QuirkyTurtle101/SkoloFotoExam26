@@ -18,6 +18,10 @@ namespace SkoloFotoExam26.Services
             _toBeHandled = toBeHandled;
         }
 
+        /// <summary>
+        /// Async public method to handle login attempts.
+        /// </summary>
+        /// <returns>A task which returns either a UserType corresponding to the user who logged in, or an error message string.</returns>
         public async Task<object> HandleLoginAttempt()
         {
             try
@@ -37,7 +41,11 @@ namespace SkoloFotoExam26.Services
             }
         }
 
-        //todo finish this
+        /// <summary>
+        /// Method to pull user data from the SQL database. Needs to be its own public method separate from HandleLoginAttempt so we can inject our repo.
+        /// </summary>
+        /// <param name="repo">The ILoginableRepo to pull our user data from.</param>
+        /// <returns>A task which returns the User object with the data for the user that's logged in.</returns>
         public async Task<User> GetUser(ILoginableRepo repo)
         {
             User result = await repo.GetForLogin(_toBeHandled.Email);
