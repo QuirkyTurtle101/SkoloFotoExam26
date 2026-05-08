@@ -7,13 +7,52 @@ namespace SkoloFotoExam26.Services
 {
     public class PhotographerRepoAsync : IRepoAsync<Photographer, int>, ILoginableRepo
     {
+        #region Querys
 
+        private string _addPhotographer = "INSERT INTO Photographer VALUES(@FirstName, @LastName, @Email, @PhoneNumber,@WebSite, @CVRNumber, @StreetName, @ExperienceInYears, @MaxTravelRadiusInKm, @Instagram, @Facebook)";
         private string _getPhotographer = "SELECT * FROM Photographer WHERE PhotographerID = @PhotographerID";
         private string _getAll = "SELECT * FROM Photographer";
 
-        public Task AddAsync(Photographer input)
+        #endregion
+        public async Task AddAsync(Photographer input)
         {
-            throw new NotImplementedException();
+            using (SqlConnection connection = new SqlConnection(Secret.connectionString))
+            {
+                try
+                {
+                    SqlCommand command = new SqlCommand(_addPhotographer, connection);
+                    await connection.OpenAsync();
+
+                    command.Parameters.AddWithValue("@FirstName", input.FirstName);
+                    command.Parameters.AddWithValue("@LastName", input.LastName);
+                    command.Parameters.AddWithValue("@Email", input.Email);
+                    command.Parameters.AddWithValue("@PhoneNumber", input.PhoneNumber);
+                    command.Parameters.AddWithValue("@StreetName", input.Street);
+                    command.Parameters.AddWithValue("@WebSite", input.Website);
+                    command.Parameters.AddWithValue("@CVRNumber", input.CVRNumber);
+                    command.Parameters.AddWithValue("@ExperienceInYears", input.ExperienceInYears);
+                    command.Parameters.AddWithValue("@MaxTravelRadiusInKm", input.MaxTravelRadiusInKm);
+                    command.Parameters.AddWithValue("@Instagram", input.Instagram);
+                    command.Parameters.AddWithValue("@Facebook", input.Facebook);
+
+                    int noOfRowsEffected = await command.ExecuteNonQueryAsync();
+
+                    await connection.CloseAsync();
+                }
+                catch (SqlException sqlex)
+                {
+                    throw;
+                }
+                catch (Exception ex)
+                {
+
+                    throw;
+                }
+                finally
+                {
+                    await connection.CloseAsync();
+                }
+            }
         }
 
         public Task<int> CountAsync()
