@@ -96,7 +96,7 @@ namespace SkoloFotoExam26.Services
                         int maxTravelRadiusInKm = reader.GetInt32("MaxTravelRadiusInKm");
                         string instagram = reader.GetString("Instagram");
                         string facebook = reader.GetString("Facebook");
-                        Photographer photographer = new Photographer(photographerID, firstName, lastName, phoneNumber, email, website, cvrNumber, city, postCode,
+                        Photographer photographer = new Photographer(photographerID, firstName, lastName, phoneNumber, email, website, cvrNumber, city, zipCode,
                             street, experienceInYears, maxTravelRadiusInKm, instagram, facebook);
 
                         photographers.Add(photographer);
@@ -144,7 +144,7 @@ namespace SkoloFotoExam26.Services
                     int maxTravelRadiusInKm = reader.GetInt32("MaxTravelRadiusInKm");
                     string instagram = reader.GetString("Instagram");
                     string facebook = reader.GetString("Facebook");
-                    photographer = new Photographer(photographerID, firstName, lastName, phoneNumber, email, website, cvrNumber, city, postCode,
+                    photographer = new Photographer(photographerID, firstName, lastName, phoneNumber, email, website, cvrNumber, city, zipCode,
                         street, experienceInYears, maxTravelRadiusInKm, instagram, facebook);
                 }
             }
