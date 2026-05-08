@@ -33,10 +33,10 @@ namespace SkoloFotoExam26.Pages.Teachers
 
         public async Task<IActionResult> OnPost()
         {
-            if (!ModelState.IsValid)
-            {
-                return Page();
-            }
+            //if (!ModelState.IsValid)
+            //{
+            //    return Page();
+            //}
             try
             {
                 School school = await _schoolRepo.GetAsync(SchoolID);
