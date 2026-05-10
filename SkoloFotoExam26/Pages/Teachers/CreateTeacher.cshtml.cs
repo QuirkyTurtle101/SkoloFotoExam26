@@ -18,7 +18,7 @@ namespace SkoloFotoExam26.Pages.Teachers
         [BindProperty]
         public int SchoolID { get; set; }
 
-        public List<School> SchoolList; 
+        public List<School> SchoolList { get; set; } 
 
         public CreateTeacherModel(IRepoAsync<Teacher, int> teacherRepo, IRepoAsync<School, int> schoolRepo)
         {
@@ -42,6 +42,7 @@ namespace SkoloFotoExam26.Pages.Teachers
                 School school = await _schoolRepo.GetAsync(SchoolID);
                 Teacher newTeacher = new Teacher(NewTeacher.TeacherID, NewTeacher.Initials, NewTeacher.FirstName, 
                     NewTeacher.LastName, NewTeacher.PhoneNumber, NewTeacher.Email, school);
+                await _teacherRepo.AddAsync(newTeacher);
             }
             catch (Exception ex)
             {

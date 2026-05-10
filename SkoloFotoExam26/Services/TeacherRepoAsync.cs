@@ -8,7 +8,7 @@ namespace SkoloFotoExam26.Services
 {
     public class TeacherRepoAsync : IRepoAsync<Teacher, int>
     {
-        private string _addTeacher = "INSERT INTO Teacher VALUES(@FirstName, @LastName, @E-mail, @PhoneNumber, @Initials, @SchoolID)";
+        private string _addTeacher = "INSERT INTO Teacher VALUES(@FirstName, @LastName, @Email, @PhoneNumber, @Initials, @SchoolID)";
         private string _getAll = "SELECT * FROM Teacher";
         private string _getTeacher = "SELECT * FROM Teacher WHERE TeacherID = @TeacherID";
 
@@ -25,12 +25,14 @@ namespace SkoloFotoExam26.Services
             {
                 SqlCommand command = new SqlCommand(_addTeacher, connection);
                 await command.Connection.OpenAsync();
+                
                 command.Parameters.AddWithValue("@FirstName", input.FirstName);
                 command.Parameters.AddWithValue("@LastName", input.LastName);
-                command.Parameters.AddWithValue("@E-mail", input.Email);
+                command.Parameters.AddWithValue("@Email", input.Email);
                 command.Parameters.AddWithValue("@PhoneNumber", input.PhoneNumber);
                 command.Parameters.AddWithValue("@Initials", input.Initials);
                 command.Parameters.AddWithValue("@SchoolID", input.TheSchool.SchoolID);
+                await command.ExecuteNonQueryAsync();
             }
             catch (SqlException sqlEx)
             {

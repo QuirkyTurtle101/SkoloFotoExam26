@@ -1,9 +1,40 @@
 ﻿@page
+@using SkoloFotoExam26.Models
 @model SkoloFotoExam26.Pages.Bookings.IndexModel
 @{
     ViewData["Title"] = "Bookings";
 }
 
+<h1>Bookings</h1>
+
 <a asp-page="CreateBooking">
     Create a new booking
 </a>
+
+<form>
+    <table class="table">
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Start</th>
+                <th>End</th>
+                <th>Photographing Event</th>
+                <th>School Class</th>
+                <th>Teacher</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (Booking b in Model.BookingList)
+                {
+                    <tr>
+                        <td>@b.BookingID</td>
+                        <td>@b.Start</td>
+                        <td>@b.End</td>
+                        <td>@b.ThePhotographingEvent</td>
+                        <td>@b.TheSchoolClass</td>
+                        <td>@b.TheTeacher.FirstName @b.TheTeacher.LastName</td>
+                    </tr>
+                }
+        </tbody>
+    </table>
+</form>

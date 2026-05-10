@@ -14,9 +14,9 @@ namespace SkoloFotoExam26.Interfaces
 
         V Get(K theKey);
 
-        public bool Update(K theKey, V theValue);
+        bool Update(K theKey, V theValue);
 
-        public void PrintAll();
+        void PrintAll();
 
 
     }
