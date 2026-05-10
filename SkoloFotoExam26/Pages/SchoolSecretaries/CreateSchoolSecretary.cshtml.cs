@@ -15,7 +15,7 @@ namespace SkoloFotoExam26.Pages.SchoolSecretaries
         //[BindProperty]
         //public SchoolSecretary NewSchoolSecretary { get; set; }
         [BindProperty]
-        public int ChosenSchoolID { get; set; }// skal formentlig ændres i fremtiden.
+        public int ChosenSchoolID { get; set; }
         [BindProperty]
         public string FirstName { get; set; }
         [BindProperty]
@@ -26,7 +26,6 @@ namespace SkoloFotoExam26.Pages.SchoolSecretaries
         public string PhoneNumber { get; set; }
         [BindProperty]
         public string Initials { get; set; }
-
         [BindProperty]
         public List<School> Schools { get; set; }
 

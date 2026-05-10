@@ -36,6 +36,8 @@
                     <td>@item.ZipCode</td>
                     <td>@item.City</td>
                     <td>@item.SchoolType</td>
+                    <td><a asp-page="EditSchool" asp-route-sailNumber="@item.SchoolID">Edit</a> |
+                        <a asp-page="DeleteSchool" asp-route-sailNumber="@item.SchoolID">Delete</a></td>
                 </tr>
             }
         </tbody>
