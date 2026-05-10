@@ -5,6 +5,10 @@ namespace SkoloFotoExam26.Services
 {
     public class SchoolClassRepoAsync : IRepoAsync<SchoolClass, int>
     {
+        #region Querys
+
+        #endregion
+
         public Task AddAsync(SchoolClass input)
         {
             throw new NotImplementedException();

@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.Data.SqlClient;
 using SkoloFotoExam26.Interfaces;
 using SkoloFotoExam26.Models;
+using SkoloFotoExam26.Services;
 
 namespace SkoloFotoExam26.Pages.SchoolSecretaries
 {
@@ -11,6 +12,7 @@ namespace SkoloFotoExam26.Pages.SchoolSecretaries
 
         private IRepoAsync<SchoolSecretary, int> _schoolSecRepo;
         private IRepoAsync<School, int> _schoolRepo;
+        private IRepoAsync<LoginInfo, string> _loginInfoRepo;
 
         //[BindProperty]
         //public SchoolSecretary NewSchoolSecretary { get; set; }
@@ -28,11 +30,17 @@ namespace SkoloFotoExam26.Pages.SchoolSecretaries
         public string Initials { get; set; }
         [BindProperty]
         public List<School> Schools { get; set; }
+        [BindProperty]
+        public string Password { get; set; }
+        [BindProperty]
+        public UserType UserType { get; set; }
 
-        public CreateSchoolSecretaryModel(IRepoAsync<SchoolSecretary, int> schoolSecretaryAsync, IRepoAsync<School, int> schoolRepoAsync)
+
+        public CreateSchoolSecretaryModel(IRepoAsync<SchoolSecretary, int> schoolSecretaryAsync, IRepoAsync<School, int> schoolRepoAsync, IRepoAsync<LoginInfo, string> loginInfoRepo)
         {
             _schoolSecRepo = schoolSecretaryAsync;
             _schoolRepo = schoolRepoAsync;
+            _loginInfoRepo = loginInfoRepo;
         }
 
         public async Task OnGet()
@@ -44,7 +52,7 @@ namespace SkoloFotoExam26.Pages.SchoolSecretaries
         {
             try
             {
-                //School
+                await _loginInfoRepo.AddAsync(new LoginInfo(Email, Password, UserType));
 
                 await _schoolSecRepo.AddAsync(new SchoolSecretary(FirstName,LastName,Initials,PhoneNumber,Email, await _schoolRepo.GetAsync(ChosenSchoolID)));
             }
