@@ -3,7 +3,7 @@ using SkoloFotoExam26.Models;
 
 namespace SkoloFotoExam26.Services
 {
-    public class SchoolClassAsync : IRepoAsync<SchoolClass, int>
+    public class SchoolClassRepoAsync : IRepoAsync<SchoolClass, int>
     {
         public Task AddAsync(SchoolClass input)
         {
