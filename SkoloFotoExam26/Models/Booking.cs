@@ -10,23 +10,37 @@
 
         public PhotographingEvent ThePhotographingEvent { get; private set; }
 
-        public Photographer ThePhotographer { get; private set; }
+        public Teacher TheTeacher { get; private set; }
 
-        public SchoolClass TheSchoolClass;
+        public SchoolClass TheSchoolClass { get; private set; }
 
-        public Booking(DateTime start, DateTime end, PhotographingEvent thePhotographingEvent, Photographer thePhotographer, 
+        public Booking()
+        {
+            
+        }
+        public Booking(DateTime start, DateTime end, PhotographingEvent thePhotographingEvent, Teacher theTeacher,
             SchoolClass theSchoolClass)
         {
             Start = start;
             End = end;
             ThePhotographingEvent = thePhotographingEvent;
-            ThePhotographer = thePhotographer;
+            TheTeacher = theTeacher;
             TheSchoolClass = theSchoolClass;
+        }
+
+        public Booking(DateTime start, DateTime end, PhotographingEvent thePhotographingEvent, SchoolClass theSchoolClass, Teacher theTeacher, int id)
+        {
+            Start = start;
+            End = end;
+            ThePhotographingEvent = thePhotographingEvent;
+            TheSchoolClass = theSchoolClass;
+            TheTeacher = theTeacher;
+            BookingID = id;
         }
 
         public override string ToString()
         {
-            return $"Start: {Start}, End: {End}";
+            return $"BookingID: {BookingID}, Start: {Start}, End: {End}";
         }
     }
 }

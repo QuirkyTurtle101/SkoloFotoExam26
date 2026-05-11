@@ -12,10 +12,12 @@ namespace SkoloFotoExam26.Services
     public class LoginHandler
     {
         private LoginAttempt _toBeHandled;
+        private IRepoAsync<LoginInfo, string> _loginRepo;
 
-        public LoginHandler(LoginAttempt toBeHandled)
+        public LoginHandler(LoginAttempt toBeHandled, IRepoAsync<LoginInfo, string> loginRepo)
         {
             _toBeHandled = toBeHandled;
+            _loginRepo = loginRepo;
         }
 
         /// <summary>
@@ -56,6 +58,7 @@ namespace SkoloFotoExam26.Services
 
         private async Task<(bool, string, UserType?)> CheckPassword()
         {
+            //TODO rewrite using LoginRepo and LoginInfo model
             using (SqlConnection connection = new SqlConnection("placeholder, replace with connection string"))
             {
                 try

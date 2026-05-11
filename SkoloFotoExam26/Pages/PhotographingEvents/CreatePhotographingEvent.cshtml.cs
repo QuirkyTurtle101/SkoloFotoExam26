@@ -53,8 +53,8 @@ namespace SkoloFotoExam26.Pages
         public async Task<IActionResult> OnPostAsync()
         {
 
-            if (!ModelState.IsValid)
-                return Page();
+            //if (!ModelState.IsValid)
+            //    return Page();
             try
             {
                 SchoolSecretary schoolSecretary = await _secretaryRepo.GetAsync(SchoolSecretaryID);

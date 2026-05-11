@@ -9,7 +9,7 @@ namespace SkoloFotoExam26.Pages.Bookings
     {
         private IRepoAsync<Booking, int> _bookingRepo;
 
-        public Booking BookingList { get; set; }
+        public List<Booking> BookingList { get; set; }
 
         public IndexModel(IRepoAsync<Booking, int> bookingRepo)
         {
@@ -17,7 +17,7 @@ namespace SkoloFotoExam26.Pages.Bookings
         }
         public async Task OnGetAsync()
         {
-            //BookingList = await _bookingRepo.GetAllAsync();
+            BookingList = await _bookingRepo.GetAllAsync();
         }
     }
 }

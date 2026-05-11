@@ -32,14 +32,14 @@
         <label asp-for="NewTeacher.PhoneNumber" class="control-label"></label>
         <input asp-for="NewTeacher.PhoneNumber" class="form-control"/>
     </div>
-    <div class="form.group">
+    <div class="form-group">
         <label asp-for="NewTeacher.TeacherID"></label>
     </div>
 
     <div class="form.group">
         <label asp-for="SchoolID">Choose a School</label>
         <select asp-for="SchoolID" class="form-control">
-        <option value=""> Select Teacher </option>
+            <option value=""> Select School </option>
             @foreach (School s in Model.SchoolList)
             {
                 <option value="@s.SchoolID">

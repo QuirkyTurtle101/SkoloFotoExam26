@@ -1,4 +1,5 @@
 ﻿@page
+@using SkoloFotoExam26.Models
 @model SkoloFotoExam26.Pages.Teachers.IndexModel
 @{
     ViewData["Title"] = "Teachers";
@@ -6,3 +7,33 @@
 <p>
     <a asp-page="CreateTeacher"> Create a new teacher </a>
 </p>
+
+<form>
+    <table class="table">
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>FirstName</th>
+                <th>LastName</th>
+                <th>Initials</th>
+                <th>Email</th>
+                <th>PhoneNumber</th>
+                <th>School Name</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (Teacher t in Model.TeacherList)
+            {
+                <tr>
+                    <td>@t.TeacherID</td>
+                    <td>@t.FirstName</td>
+                    <td>@t.LastName</td>
+                    <td>@t.Initials</td>
+                    <td>@t.Email</td>
+                    <td>@t.PhoneNumber</td>
+                    <td>@t.TheSchool.Name</td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</form>

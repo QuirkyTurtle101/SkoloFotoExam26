@@ -1,0 +1,50 @@
+﻿@page
+@using SkoloFotoExam26.Models
+@model SkoloFotoExam26.Pages.Photographers.IndexModel
+@{
+    ViewData["Title"] = "Fotografer";
+}
+
+<h1>Fotografer</h1>
+
+<p>
+    <a asp-page="CreatePhotographer"> Opret en ny fotograf </a>
+</p>
+
+<h2>Fotografer i systemet</h2>
+
+<form method="get">
+    <table class="table">
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Fornavn</th>
+                <th>Efternavn</th>
+                <th>Vej</th>
+                <th>By</th>
+                <th>Postnummer</th>
+                <th>Telefonnummer</th>
+                <th>Email</th>
+                <th>Radius</th>
+
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (Photographer item in Model.Photographers)
+            {
+                <tr>
+                    <td>@item.PhotographerID</td>
+                    <td>@item.FirstName</td>
+                    <td>@item.LastName</td>
+                    <td>@item.Street</td>
+                    <td>@item.City</td>
+                    <td>@item.ZipCode</td>
+                    <td>@item.PhoneNumber</td>
+                    <td>@item.Email</td>
+                    <td>@item.MaxTravelRadiusInKm</td>
+                </tr>
+            }
+        </tbody>
+    </table>
+
+</form>

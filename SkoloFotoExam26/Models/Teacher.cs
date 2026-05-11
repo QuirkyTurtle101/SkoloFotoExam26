@@ -8,11 +8,22 @@
 
         public School TheSchool { get; private set; }
 
+        public Teacher()
+        {
+            
+        }
         public Teacher(int teacherID, string initials, string firstName, string lastName, string phoneNumber, string email, 
             School theSchool) 
             : base(firstName, lastName, phoneNumber, email)
         {
             TeacherID = teacherID;
+            Initials = initials;
+            TheSchool = theSchool;
+        }
+        public Teacher(string initials, string firstName, string lastName, string phoneNumber, string email,
+            School theSchool)
+            : base(firstName, lastName, phoneNumber, email)
+        {
             Initials = initials;
             TheSchool = theSchool;
         }

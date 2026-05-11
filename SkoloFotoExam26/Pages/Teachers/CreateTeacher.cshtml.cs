@@ -18,7 +18,7 @@ namespace SkoloFotoExam26.Pages.Teachers
         [BindProperty]
         public int SchoolID { get; set; }
 
-        public List<School> SchoolList; 
+        public List<School> SchoolList { get; set; } 
 
         public CreateTeacherModel(IRepoAsync<Teacher, int> teacherRepo, IRepoAsync<School, int> schoolRepo)
         {
@@ -33,15 +33,16 @@ namespace SkoloFotoExam26.Pages.Teachers
 
         public async Task<IActionResult> OnPost()
         {
-            if (!ModelState.IsValid)
-            {
-                return Page();
-            }
+            //if (!ModelState.IsValid)
+            //{
+            //    return Page();
+            //}
             try
             {
                 School school = await _schoolRepo.GetAsync(SchoolID);
                 Teacher newTeacher = new Teacher(NewTeacher.TeacherID, NewTeacher.Initials, NewTeacher.FirstName, 
                     NewTeacher.LastName, NewTeacher.PhoneNumber, NewTeacher.Email, school);
+                await _teacherRepo.AddAsync(newTeacher);
             }
             catch (Exception ex)
             {
