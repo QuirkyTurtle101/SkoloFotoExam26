@@ -24,9 +24,8 @@ namespace SkoloFotoExam26.Services
                 try
                 {
                     SqlCommand command = new SqlCommand(_addParent, connection);
-
                     await command.Connection.OpenAsync();
-                    command.Parameters.AddWithValue("@ParentID", input.ParentID);
+
                     command.Parameters.AddWithValue("@FirstName", input.FirstName);
                     command.Parameters.AddWithValue("@LastName", input.LastName);
                     command.Parameters.AddWithValue("@Email", input.Email);
@@ -79,18 +78,20 @@ namespace SkoloFotoExam26.Services
                         string street = reader.GetString("Street");
                         int zipCode = reader.GetInt32("ZipCode");
                         string city = reader.GetString("City");
-                        Parent input = new Parent(parentID, firstName, lastName, email, phoneNumber, street, zipCode, city);
-                        parents.Add(input);
+                        parents.Add(new Parent(firstName, lastName, email, phoneNumber, street, zipCode, city, parentID));
                     }
-                    reader.Close();
                 }
                 catch (SqlException sqlExp)
                 {
-                    Console.WriteLine("Database error" + sqlExp.Message);
+                    throw;
                 }
                 catch (Exception exp)
                 {
-                    Console.WriteLine("Generic database error" + exp.Message);
+                    throw;
+                }
+                finally
+                {
+                    await connection.CloseAsync();
                 }
             }
             return parents;
