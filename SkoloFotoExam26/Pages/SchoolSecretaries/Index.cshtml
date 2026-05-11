@@ -39,6 +39,10 @@
                     <td>@item.Email</td>
                     <td>@item.PhoneNumber</td>
                     <td>@item.TheSchool.Name</td>
+                    <td><a asp-page="EditSchoolSecretary" asp-route-schoolSecretaryID="@item.SchoolSecretaryID">Edit</a> |
+                        <a asp-page="DeleteSchoolSecretary" asp-route-schoolSecretaryID="@item.SchoolSecretaryID">Delete</a>
+                    </td>
+
                 </tr>
             }
         </tbody>

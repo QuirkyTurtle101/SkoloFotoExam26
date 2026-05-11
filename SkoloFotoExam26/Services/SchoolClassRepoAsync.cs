@@ -7,7 +7,7 @@ namespace SkoloFotoExam26.Services
 {
     public class SchoolClassRepoAsync : IRepoAsync<SchoolClass, int>
     {
-        #region Querys
+        #region Query strings
         private string _addSchoolClass = "INSERT INTO SchoolClass VALUES(@ClassName, @SchoolID)";
         private string _getAll = "SELECT * FROM SchoolClass";
         private string _getSchoolClass = "SELECT * FROM SchoolClass WHERE SchoolClassID = @SchoolClassID";

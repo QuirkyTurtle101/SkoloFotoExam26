@@ -30,7 +30,7 @@ namespace SkoloFotoExam26.Services
                     command.Parameters.AddWithValue("@Name", input.Name);
                     command.Parameters.AddWithValue("@Street", input.Street);
                     command.Parameters.AddWithValue("@ZipCode", input.ZipCode);
-                    command.Parameters.AddWithValue("@SchoolType", (int)input.SchoolType); //Skal lige forhøre mig hos Rosa. //det er præcis sådan det gøres
+                    command.Parameters.AddWithValue("@SchoolType", (int)input.SchoolType); //Skal lige forhøre mig hos Rosa. //det er præcis sådan det gøres //Det var godt :-)
                     command.Parameters.AddWithValue("@City", input.City);
 
                     int noOfRowsEffected = await command.ExecuteNonQueryAsync();
@@ -51,10 +51,31 @@ namespace SkoloFotoExam26.Services
 
         public async Task<int> CountAsync()
         {
-            throw new NotImplementedException();
+            int countOfSchools;
+            using (SqlConnection connection = new SqlConnection(Secret.connectionString))
+            {
+                try
+                {
+                    SqlCommand command = new SqlCommand(_countSchools, connection);
+                    await connection.OpenAsync();
+
+                    countOfSchools = Convert.ToInt32(await command.ExecuteScalarAsync());
+
+                    await connection.CloseAsync();
+                }
+                catch (SqlException sqlex)
+                {
+                    throw;
+                }
+                catch (Exception ex)
+                {
+                    throw;
+                }
+                return countOfSchools;
+            }
         }
 
-        public async Task DeleteAsync(int toDelete)//Sofie kom til lave den lidt for tidligt
+        public async Task DeleteAsync(int toDelete)
         {
             using (SqlConnection connection = new SqlConnection(Secret.connectionString))
             {
@@ -67,7 +88,6 @@ namespace SkoloFotoExam26.Services
 
                     int noOfRowsEffected = await command.ExecuteNonQueryAsync();
 
-                    await connection.CloseAsync();
                 }
                 catch (SqlException sqlex)
                 {
@@ -76,6 +96,10 @@ namespace SkoloFotoExam26.Services
                 catch (Exception ex)
                 {
                     throw;
+                }
+                finally
+                {
+                    await connection.CloseAsync();
                 }
 
             }
