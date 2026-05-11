@@ -1,0 +1,43 @@
+﻿@page
+@using SkoloFotoExam26.Models
+@model SkoloFotoExam26.Pages.Students.IndexModel
+@{
+    ViewData["Titel"] = "Liste af børn";
+}
+
+<h1>Informationer</h1>
+
+<p>
+    <a asp-page="CreateStudent" class="btn btn-primary">Opret børneprofil</a>
+</p>
+
+<table class="table">
+    <thead>
+        <tr>
+            <form method"get">
+            <th>
+                <button type="submit" class="btn btn-link" name="SortBy" value="BørneID">ID</button>
+            </th>
+            </form>
+            <th>Fornavn</th>
+            <th>Mellemnavn</th>
+            <th>Efternavn</th>
+            <th>ForældreID</th>
+            <th>SkoleID</th>
+            <th>Skoleklasse</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (Student item in @Model.Students)
+        {
+            <tr>
+                <th>Fornavn</th>
+                <th>Mellemnavn</th>
+                <th>Efternavn</th>
+                <th>ForældreID</th>
+                <th>SkoleID</th>
+                <th>Skoleklasse</th>
+            </tr>
+        }
+    </tbody>
+</table>

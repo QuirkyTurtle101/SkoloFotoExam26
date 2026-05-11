@@ -42,6 +42,15 @@
         <label asp-for="@Model.City" class="control-label"></label>
         <input asp-for="@Model.City" class="form-control" />
     </div>
+
+    <div>
+        <input type="hidden" name="UserType" value="Parent">
+    </div>
+    <div class="form-group">
+        <label asp-for="@Model.Password" class="control-label"></label>
+        <input asp-for="@Model.Password" class="form-control" />
+    </div>
+
     <br />
     <div class="form-group">
         <input type="submit" value="Opret forældre" class="btn btn-primary"/>
