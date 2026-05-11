@@ -70,11 +70,19 @@
         <label asp-for="@Model.Facebook" class="control-label"></label>
         <input asp-for="@Model.Facebook" class="form-control" />
     </div>
-    <br />
-    <div class="form-group">
-        <input type="submit" value="Create a school secretary" class="btn-primary" />
+
+    <div>
+        <input type="hidden" name="UserType" value="Photographer">
     </div>
 
+    <div class="form-group">
+        <label asp-for="@Model.Password" class="control-label"></label>
+        <input asp-for="@Model.Password" class="form-control" />
+    </div>
+
+    <div class="form-group">
+        <input type="submit" value="Create a pjotographer" class="btn-primary" />
+    </div>
     <div>
         <a asp-page="index">Annuler</a>
     </div>

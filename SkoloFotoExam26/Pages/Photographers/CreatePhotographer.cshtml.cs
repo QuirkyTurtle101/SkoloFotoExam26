@@ -8,7 +8,9 @@ namespace SkoloFotoExam26.Pages.Photographers
 {
     public class CreatePhotographerModel : PageModel
     {
-        private IRepoAsync<Photographer, int> _photographerRepoAsync;
+        private IRepoAsync<Photographer, int> _photographerRepo;
+        private IRepoAsync<LoginInfo, string> _loginInfoRepo;
+
 
         [BindProperty]
         public string FirstName { get; set; }
@@ -36,10 +38,16 @@ namespace SkoloFotoExam26.Pages.Photographers
         public string Instagram { get; set; }
         [BindProperty]
         public string Facebook { get; set; }
+        [BindProperty]
+        public string Password { get; set; }
+        [BindProperty]
+        public UserType UserType { get; set; }
 
-        public CreatePhotographerModel(IRepoAsync<Photographer, int> photographerRepoAsync)
+
+        public CreatePhotographerModel(IRepoAsync<Photographer, int> photographerRepoAsync, IRepoAsync<LoginInfo, string> loginInfoRepo)
         {
-            _photographerRepoAsync = photographerRepoAsync;
+            _photographerRepo = photographerRepoAsync;
+            _loginInfoRepo = loginInfoRepo;
         }
 
         public void OnGet()
@@ -50,7 +58,8 @@ namespace SkoloFotoExam26.Pages.Photographers
         {
             try
             {
-                _photographerRepoAsync.AddAsync(new Photographer(FirstName, LastName, PhoneNumber, Email, Website, CVRNumber, City, ZipCode, Street, ExperienceInYears, MaxTravelRadiusInKm, Instagram, Facebook));
+                _loginInfoRepo.AddAsync(new LoginInfo(Email, Password, UserType));
+                _photographerRepo.AddAsync(new Photographer(FirstName, LastName, PhoneNumber, Email, Website, CVRNumber, City, ZipCode, Street, ExperienceInYears, MaxTravelRadiusInKm, Instagram, Facebook));
             }
             catch(SqlException sqlex)
             {
