@@ -1,3 +1,4 @@
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using SkoloFotoExam26.Interfaces;
@@ -12,18 +13,37 @@ namespace SkoloFotoExam26.Pages.Teachers
 
         private IRepoAsync<School, int> _schoolRepo;
 
-        [BindProperty]
+        private IRepoAsync<LoginInfo, string> _loginInfoRepo;
+
+
         public Teacher NewTeacher { get; set; }
 
         [BindProperty]
         public int SchoolID { get; set; }
+        [BindProperty]
+        public string Initials { get; set; }
+        [BindProperty]
+        public string FirstName { get; set; }
+        [BindProperty]
+        public string LastName { get; set; }
+        [BindProperty]
+        public string PhoneNumber { get; set; }
+        [BindProperty]
+        public string Email { get; set; }
+        
+        public List<School> SchoolList { get; set; }
 
-        public List<School> SchoolList { get; set; } 
+        [BindProperty]
+        public string Password { get; set; }
+        [BindProperty]
+        public UserType UserType { get; set; }
 
-        public CreateTeacherModel(IRepoAsync<Teacher, int> teacherRepo, IRepoAsync<School, int> schoolRepo)
+        public CreateTeacherModel(IRepoAsync<Teacher, int> teacherRepo, IRepoAsync<School, int> schoolRepo, IRepoAsync<LoginInfo, string> loginInfoRepo)
         {
             _teacherRepo = teacherRepo;
             _schoolRepo = schoolRepo;
+            _loginInfoRepo = loginInfoRepo;
+
         }
 
         public async Task OnGet()
@@ -39,10 +59,12 @@ namespace SkoloFotoExam26.Pages.Teachers
             //}
             try
             {
+
+                await _loginInfoRepo.AddAsync(new LoginInfo(Email, Password, UserType));
+
                 School school = await _schoolRepo.GetAsync(SchoolID);
-                Teacher newTeacher = new Teacher(NewTeacher.TeacherID, NewTeacher.Initials, NewTeacher.FirstName, 
-                    NewTeacher.LastName, NewTeacher.PhoneNumber, NewTeacher.Email, school);
-                await _teacherRepo.AddAsync(newTeacher);
+                NewTeacher = new Teacher(Initials, FirstName, LastName, PhoneNumber, Email, school);
+                await _teacherRepo.AddAsync(NewTeacher);
             }
             catch (Exception ex)
             {

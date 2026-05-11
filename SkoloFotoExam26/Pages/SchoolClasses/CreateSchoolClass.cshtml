@@ -1,0 +1,33 @@
+﻿@page
+@using SkoloFotoExam26.Models
+@model SkoloFotoExam26.Pages.SchoolClasses.CreateSchoolClassModel
+@{
+    ViewData["Title"] = "Create School Class";
+}
+<h2>
+    Create School Class
+</h2>
+
+<form method="post">
+    <div>
+    <label asp-for="ClassName" class="control-label"></label>
+    <input asp-for="ClassName" class="form-control"/>
+    </div>
+    <div class="form-group"> 
+    <label asp-for="SchoolID">Choose a School</label>
+    <select asp-for="SchoolID" class="form-control"> 
+            <option value="">Select School</option>
+            @foreach (School s in Model.SchoolList)
+                    {
+                        <option value="@s.SchoolID">
+                            @s.Name
+                        </option>
+                    }
+    </select>
+</div>
+    <br />
+    <input type="submit" value="Create Class" class="btn btn-success" />
+    <a asp-page="Index" class="btn btn-warning">
+        Cancel
+    </a>
+</form>

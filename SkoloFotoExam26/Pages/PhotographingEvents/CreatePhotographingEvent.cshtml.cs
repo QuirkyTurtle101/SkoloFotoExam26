@@ -15,6 +15,11 @@ namespace SkoloFotoExam26.Pages
         private IRepoAsync<SchoolSecretary, int> _secretaryRepo;
 
         [BindProperty]
+        public DateTime Start { get; set; } = DateTime.Today;
+        [BindProperty]
+        public DateTime End { get; set; } = DateTime.Today;
+
+        [BindProperty]
         public PhotographingEvent NewPhotographingEvent { get; set; }
 
         [BindProperty]
@@ -60,8 +65,7 @@ namespace SkoloFotoExam26.Pages
                 SchoolSecretary schoolSecretary = await _secretaryRepo.GetAsync(SchoolSecretaryID);
                 Photographer photographer = await _photographerRepo.GetAsync(PhotographerID);
 
-                PhotographingEvent newPhotoEvent = new PhotographingEvent(NewPhotographingEvent.Start, NewPhotographingEvent.End,
-                    schoolSecretary, photographer);
+                PhotographingEvent newPhotoEvent = new PhotographingEvent(Start, End, schoolSecretary, photographer);
                 await _eventRepo.AddAsync(newPhotoEvent);
 
                 return RedirectToPage("Index");

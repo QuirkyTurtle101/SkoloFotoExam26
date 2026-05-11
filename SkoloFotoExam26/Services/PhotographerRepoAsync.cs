@@ -10,7 +10,7 @@ namespace SkoloFotoExam26.Services
         #region Querys
 
         private string _addPhotographer = "INSERT INTO Photographer VALUES(@FirstName, @LastName, @Email, @PhoneNumber, @WebSite, @CVRNumber, @StreetName, @ExperienceInYears, @MaxTravelRadiusInKm, @Instagram, @Facebook, @ZipCode)";
-        private string _getPhotographer = "SELECT * FROM Photographer WHERE PhotographerID = @PhotographerID";
+        private string _getPhotographer = "SELECT * FROM Photographer JOIN ZipCodeLookup ON Photographer.ZipCode=ZipCodeLookup.ZipCode WHERE PhotographerID = @PhotographerID";
         private string _getAll = "SELECT * FROM Photographer JOIN ZipCodeLookup ON Photographer.ZipCode=ZipCodeLookup.ZipCode";
 
         #endregion
@@ -131,7 +131,7 @@ namespace SkoloFotoExam26.Services
                     int photographerID = reader.GetInt32("PhotographerID");
                     string firstName = reader.GetString("FirstName");
                     string lastName = reader.GetString("LastName");
-                    string email = reader.GetString("E-mail");
+                    string email = reader.GetString("Email");
                     string phoneNumber = reader.GetString("PhoneNumber");
                     string website = reader.GetString("Website");
                     string cvrNumber = reader.GetString("CVRNumber");
@@ -139,7 +139,7 @@ namespace SkoloFotoExam26.Services
 //<<<<<<< HEAD
                     int zipCode = reader.GetInt32("ZipCode");
 //=======
-                    string street = reader.GetString("Street");
+                    string street = reader.GetString("StreetName");
                     int experienceInYears = reader.GetInt32("ExperienceInYears");
                     int maxTravelRadiusInKm = reader.GetInt32("MaxTravelRadiusInKm");
                     string instagram = reader.GetString("Instagram");

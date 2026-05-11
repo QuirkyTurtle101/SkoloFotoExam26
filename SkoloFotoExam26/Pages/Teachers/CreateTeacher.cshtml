@@ -13,30 +13,27 @@
 <form method="post">
     <div asp-validation-summary="All" class="text-danger"></div>
     <div class="form-group">
-        <label asp-for="NewTeacher.Initials" class="control-label"></label>
-        <input asp-for="NewTeacher.Initials" class="form-control" />
+        <label asp-for="Initials" class="control-label"></label>
+        <input asp-for="Initials" class="form-control" />
     </div>
     <div class="form-group">
-        <label asp-for="NewTeacher.FirstName" class="control-label"> </label>
-        <input asp-for="NewTeacher.FirstName" class="form-control" />
+        <label asp-for="FirstName" class="control-label"> </label>
+        <input asp-for="FirstName" class="form-control" />
     </div>
     <div class="form-group">
-        <label asp-for="NewTeacher.LastName" class="control-label"></label>
-        <input asp-for="NewTeacher.LastName" class="form-control"/>
+        <label asp-for="LastName" class="control-label"></label>
+        <input asp-for="LastName" class="form-control"/>
     </div>
     <div class="form-group">
-        <label asp-for="NewTeacher.Email" class="control-label"></label>
-        <input asp-for="NewTeacher.Email" class="form-control"/>
+        <label asp-for="Email" class="control-label"></label>
+        <input asp-for="Email" class="form-control"/>
     </div>
     <div class="form-group">
-        <label asp-for="NewTeacher.PhoneNumber" class="control-label"></label>
-        <input asp-for="NewTeacher.PhoneNumber" class="form-control"/>
-    </div>
-    <div class="form-group">
-        <label asp-for="NewTeacher.TeacherID"></label>
+        <label asp-for="PhoneNumber" class="control-label"></label>
+        <input asp-for="PhoneNumber" class="form-control"/>
     </div>
 
-    <div class="form.group">
+    <div class="form-group">
         <label asp-for="SchoolID">Choose a School</label>
         <select asp-for="SchoolID" class="form-control">
             <option value=""> Select School </option>
@@ -48,9 +45,17 @@
             }
         </select>
     </div>
+    <div>
+        <input type="hidden" name="UserType" value="Teacher">
+    </div>
+    <div class="form-group">
+        <label asp-for="@Model.Password" class="control-label"></label>
+        <input asp-for="@Model.Password" class="form-control" />
+    </div>
 
+    <br />
     <input type="submit" value="Create Teacher" class="btn btn-success"/>
-
+    
     <a asp-page="Index" class=" btn btn-warning">
         Cancel
     </a>

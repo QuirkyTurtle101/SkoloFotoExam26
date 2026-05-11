@@ -35,7 +35,7 @@ namespace SkoloFotoExam26.Services
                     command.Parameters.AddWithValue("@SchoolSecretaryID", input.SchoolSecretary.SchoolSecretaryID);
                     command.Parameters.AddWithValue("@PhotographerID", input.Photographer.PhotographerID);
 
-                   
+                    await command.ExecuteNonQueryAsync();
                 }
                 catch (SqlException sqlExc)
                 {

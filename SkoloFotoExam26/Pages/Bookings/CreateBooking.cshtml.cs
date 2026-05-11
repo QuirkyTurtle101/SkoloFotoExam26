@@ -19,9 +19,9 @@ namespace SkoloFotoExam26.Pages.Bookings
         public PhotographingEvent TheEvent { get; set; }
 
         [BindProperty]
-        public DateTime Start { get; set; }
+        public DateTime Start { get; set; } = DateTime.Today;
         [BindProperty]
-        public DateTime End { get; set; }
+        public DateTime End { get; set; } = DateTime.Today;
         
         [BindProperty]
         public int TeacherID { get; set; }
