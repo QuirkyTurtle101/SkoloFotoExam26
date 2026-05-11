@@ -71,7 +71,7 @@ namespace SkoloFotoExam26.Services
 
                     SqlDataReader reader = await command.ExecuteReaderAsync();
 
-                    while(reader.Read())
+                    while(await reader.ReadAsync())
                     {
                         string firstName = reader.GetString("FirstName");
                         string lastName = reader.GetString("LastName");
@@ -90,8 +90,6 @@ namespace SkoloFotoExam26.Services
                         secretaries.Add(new SchoolSecretary(firstName, lastName, initials, phoneNumber, email, new School(schoolID, name, street,city,zipCode, schoolType), schoolSecretaryID));
 
                     }
-
-
                 }
                 catch(SqlException sqlex)
                 {
