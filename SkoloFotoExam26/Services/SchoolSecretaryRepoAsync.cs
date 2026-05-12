@@ -112,7 +112,7 @@ namespace SkoloFotoExam26.Services
                         int schoolID = reader.GetInt32("SchoolID");
                         int schoolSecretaryID = reader.GetInt32("SchoolSecretaryID");
 
-                        secretaries.Add(new SchoolSecretary(firstName, lastName, initials, phoneNumber, email, new School(schoolID, name, street,city,zipCode, schoolType), schoolSecretaryID));
+                        secretaries.Add(new SchoolSecretary(schoolSecretaryID, firstName, lastName, initials, phoneNumber, email, new School(schoolID, name, street,city,zipCode, schoolType)));
 
                     }
                 }
@@ -155,7 +155,7 @@ namespace SkoloFotoExam26.Services
                         string initials = reader.GetString("Initials");
                         int SchoolID = reader.GetInt32("SchoolID");
 
-                        secretary = new SchoolSecretary(firstName, lastName, initials, phoneNumber, email, new School(), schoolSecretaryID);
+                        secretary = new SchoolSecretary(schoolSecretaryID, firstName, lastName, initials, phoneNumber, email, new School());
                     }
                 }
                 catch (SqlException sqlex)

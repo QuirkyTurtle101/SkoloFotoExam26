@@ -23,6 +23,13 @@
             Email = email;
 
         }
+        protected User(int id, string firstName, string lastName,string phoneNumber, string email)
+        {
+            ID = id;
+            FirstName = firstName;
+            LastName = lastName;
+            Email = email;
+        }
 
         public override string ToString()
         {

@@ -24,21 +24,19 @@
             //SchoolSecretaryID = schoolSecretaryID;
         }
 
-        public SchoolSecretary(string firstName, string lastName, string initials, string phoneNumber, string email,
-            School theSchool) :
-            base(firstName, lastName, phoneNumber, email)
+        public SchoolSecretary(int id, string firstName, string lastName, string initials, string phoneNumber, string email,
+            School theSchool) : 
+            base(id, firstName,lastName, phoneNumber, email)
         {
-
             Initials = initials;
             TheSchool = theSchool;
-            
         }
 
 
 
         public override string ToString()
         {
-            return $"ID: {SchoolSecretaryID}, Initials: {Initials}, {base.ToString()}";
+            return $"ID: {ID}, Initials: {Initials}, {base.ToString()}";
         }
     }
 }
