@@ -10,6 +10,7 @@ namespace SkoloFotoExam26.Models
         public string MiddleName { get; set; }
         public string LastName { get; set; }
         public Parent Parent { get; set; }
+        public School School { get; set; }
         public SchoolClass SchoolClass { get; set; }
 
         public Student()
@@ -23,20 +24,22 @@ namespace SkoloFotoExam26.Models
             MiddleName = middleName;
             LastName = lastName;
             Parent = parent;
+            School = school;
             SchoolClass = schoolClass;
         }
-        public Student(string firstName, string middleName, string lastName, Parent parent, SchoolClass schoolClass)//Denne konstructør bruges når man opretter en elev
+        public Student(string firstName, string middleName, string lastName, Parent parent,School school, SchoolClass schoolClass)//Denne konstructør bruges når man opretter en elev
         {
             FirstName = firstName;
             MiddleName = middleName;
             LastName = lastName;
             Parent = parent;
+            School = school;
             SchoolClass = schoolClass;
         }
 
         public override string ToString()
         {
-            return $"StudentID: {StudentID}, First name: {FirstName}, MiddleName: {MiddleName}, LastName: {LastName}, Parent: {Parent}, SchoolClass: {SchoolClass}";
+            return $"StudentID: {StudentID}, First name: {FirstName}, MiddleName: {MiddleName}, LastName: {LastName}, Parent: {Parent}, School: {School}, SchoolClass: {SchoolClass}";
         }
     }
 }
