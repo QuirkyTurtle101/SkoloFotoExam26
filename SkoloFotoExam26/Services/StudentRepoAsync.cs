@@ -1,72 +1,109 @@
-﻿using Microsoft.Data.SqlClient;
-using SkoloFotoExam26.Interfaces;
-using SkoloFotoExam26.Models;
+﻿//using Microsoft.Data.SqlClient;
+//using SkoloFotoExam26.Interfaces;
+//using SkoloFotoExam26.Models;
+//using System.Data;
 
-namespace SkoloFotoExam26.Services
-{
-    public class StudentRepoAsync : IRepoAsync<Student, int>
-    {
-        #region Querys
+//namespace SkoloFotoExam26.Services
+//{
+//    public class StudentRepoAsync : IRepoAsync<Student, int>
+//    {
+//        #region Querys
 
-        private string _addStudent = "INSERT INTO Student VALUES (@FirstName, @MiddleName, @LastName, @ParentID, @SchoolClassID)";
+//        private string _addStudent = "INSERT INTO Student VALUES (@FirstName, @MiddleName, @LastName, @ParentID, @SchoolClassID)";
+//        private string _getAllStudent = "SELECT s.StudentID, s.FirstName, s.MiddleName, s.LastName, s.ParentID, s.SchoolClassID, c.ClassName, sch.SchoolName FROM Student s JOIN SchoolClass c ON s.SchoolClassID = c.SchoolClassID JOIN School sch ON c.SchoolID = sch.SchoolID";
 
-        #endregion
+//        #endregion
 
-        public async Task AddAsync(Student input)
-        {
-            using (SqlConnection connection = new SqlConnection(Secret.connectionString))
-            {
-                try
-                {
-                    SqlCommand command = new SqlCommand(_addStudent, connection);
-                    await connection.OpenAsync();
+//        public Task<int> CountAsync()
+//        {
+//            throw new NotImplementedException();
+//        }
 
-                    command.Parameters.AddWithValue("@FirstName", input.FirstName);
-                    command.Parameters.AddWithValue("@MiddleName", input.MiddleName);
-                    command.Parameters.AddWithValue("@LastName", input.LastName);
-                    command.Parameters.AddWithValue("@ParentID", input.Parent.ParentID);
-                    command.Parameters.AddWithValue("@SchoolClassID", input.SchoolClass.SchoolClassID);
+//        public async Task AddAsync(Student input)
+//        {
+//            using (SqlConnection connection = new SqlConnection(Secret.connectionString))
+//            {
+//                try
+//                {
+//                    SqlCommand command = new SqlCommand(_addStudent, connection);
+//                    await connection.OpenAsync();
 
-                    int noOfRowsEffected = await command.ExecuteNonQueryAsync();
+//                    command.Parameters.AddWithValue("@FirstName", input.FirstName);
+//                    command.Parameters.AddWithValue("@MiddleName", input.MiddleName);
+//                    command.Parameters.AddWithValue("@LastName", input.LastName);
+//                    command.Parameters.AddWithValue("@ParentID", input.Parent.ParentID);
+//                    command.Parameters.AddWithValue("@SchoolClassID", input.SchoolClass.SchoolClassID);
 
-                    await connection.CloseAsync();
-                }
-                catch (SqlException sqlex)
-                {
-                    throw;
-                }
-                catch (Exception ex)
-                {
+//                    int noOfRowsEffected = await command.ExecuteNonQueryAsync();
 
-                    throw;
-                }
-            }
-        }
-        
+//                    await connection.CloseAsync();
+//                }
+//                catch (SqlException sqlex)
+//                {
+//                    throw;
+//                }
+//                catch (Exception ex)
+//                {
 
-        public Task<int> CountAsync()
-        {
-            throw new NotImplementedException();
-        }
+//                    throw;
+//                }
+//            }
+//        }
 
-        public Task DeleteAsync(int toDelete)
-        {
-            throw new NotImplementedException();
-        }
+//        public Task<Student> GetAsync(int toGet)
+//        {
+//            throw new NotImplementedException();
+//        }
 
-        public Task<List<Student>> GetAllAsync()
-        {
-            throw new NotImplementedException();
-        }
+//        public async Task<List<Student>> GetAllAsync()
+//        {
+//            List<Student> students = new List<Student>();
+//            using (SqlConnection connection = new SqlConnection(Secret.connectionString))
+//            {
+//                try
+//                {
+//                    SqlCommand command = new SqlCommand(_getAllStudent, connection);
+//                    await command.Connection.OpenAsync();
 
-        public Task<Student> GetAsync(int toGet)
-        {
-            throw new NotImplementedException();
-        }
+//                    SqlDataReader reader = await command.ExecuteReaderAsync();
+//                    while (reader.Read())
+//                    {
+//                        int studentID = reader.GetInt32("StudentID");
+//                        string firstName = reader.GetString("FirstName");
+//                        string middleName = reader.GetString("MiddleName");
+//                        string lastName = reader.GetString("LastName");
+//                        int parent = reader.GetInt32("ParentID");
+//                        string schoolName = reader.GetString("SchoolName");
+//                        string className = reader.GetString("ClassName");
 
-        public Task UpdateAsync(Student toUpdate)
-        {
-            throw new NotImplementedException();
-        }
-    }
-}
+//                        students.Add(new Student(firstName, middleName, lastName, parentID, schoolName, className));
+//                    }
+//                }
+//                catch (SqlException sqlExp)
+//                {
+//                    throw;
+//                }
+//                catch (Exception exp)
+//                {
+//                    throw;
+//                }
+//                finally
+//                {
+//                    await connection.CloseAsync();
+//                }
+//            }
+//            return students;
+//        }
+
+//        public Task DeleteAsync(int toDelete)
+//        {
+//            throw new NotImplementedException();
+//        }
+
+
+//        public Task UpdateAsync(Student toUpdate)
+//        {
+//            throw new NotImplementedException();
+//        }
+//    }
+//}
