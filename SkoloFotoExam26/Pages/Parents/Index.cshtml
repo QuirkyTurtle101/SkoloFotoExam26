@@ -10,7 +10,12 @@
 <div class="form-group">
     <a asp-page="CreateParent" class="btn btn-primary">Opret forældreprofil</a>
 
-    <a asp-page="CreateStudent" class="btn btn-primary">Opret dit barn</a>
+    @* <a asp-page="CreateStudent" class="btn btn-primary">Opret dit barn</a> *@
+
+    <li class="nav-item">
+        <a class="nav-link text-dark" asp-area="" asp-page="/Students/Index">Børn</a>
+    </li>
+
 </div>
 
 @*Maybe create a Filter here*@

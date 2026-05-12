@@ -7,10 +7,10 @@ namespace SkoloFotoExam26.Services
 {
     public class ParentRepoAsync : IRepoAsync<Parent, int>
     {
-        private string _addParent = "INSERT INTO Parent Values (@FirstName, @LastName, @Email, @PhoneNumber, @Street, @ZipCode)";
-        private string _getAllParent = "SELECT * FROM Parent";
+        private string _addParent = "INSERT INTO Parent Values (@FirstName, @LastName, @Email, @PhoneNumber, @StreetName, @ZipCode)";
+        private string _getAllParent = "SELECT p.ParentID, p.FirstName, p.LastName, p.Email, p.PhoneNumber, p.StreetName, p.ZipCode, z.City FROM Parent p JOIN ZipCodeLookup z ON p.ZipCode = z.ZipCode";
         private string _searchParent = "SELECT * FROM Parent WHERE ParentID = @ParentID";
-        private string _updateParent = "Update Parent SET @ParentID, @FirstName, @LastName, @Email, @PhoneNumber, @Street, @ZipCode WHERE ParentID = @ParentID";
+        //private string _updateParent = "UPDATE Parent SET FirstName=@FirstName, LastBane=@LastName, Email=@Email, PhoneNumber=@PhoneNumber, StreetName=@StreetName, ZipCode=@ZipCode, City=@City, WHERE ParentID = @ParentID";
 
         public Task<int> CountAsync()
         {
@@ -30,9 +30,8 @@ namespace SkoloFotoExam26.Services
                     command.Parameters.AddWithValue("@LastName", input.LastName);
                     command.Parameters.AddWithValue("@Email", input.Email);
                     command.Parameters.AddWithValue("@PhoneNumber", input.PhoneNumber);
-                    command.Parameters.AddWithValue("@Street", input.Street);
+                    command.Parameters.AddWithValue("@StreetName", input.Street);
                     command.Parameters.AddWithValue("@ZipCode", input.ZipCode);
-                    command.Parameters.AddWithValue("@City", input.City);
 
                     int noOfRows = await command.ExecuteNonQueryAsync();
                     await command.Connection.CloseAsync();
@@ -75,9 +74,10 @@ namespace SkoloFotoExam26.Services
                         string lastName = reader.GetString("LastName");
                         string email = reader.GetString("Email");
                         string phoneNumber = reader.GetString("PhoneNumber");
-                        string street = reader.GetString("Street");
+                        string street = reader.GetString("StreetName");
                         int zipCode = reader.GetInt32("ZipCode");
                         string city = reader.GetString("City");
+
                         parents.Add(new Parent(firstName, lastName, email, phoneNumber, street, zipCode, city, parentID));
                     }
                 }
