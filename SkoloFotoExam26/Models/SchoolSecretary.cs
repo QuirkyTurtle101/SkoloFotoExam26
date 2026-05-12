@@ -4,7 +4,7 @@
     {
 
         //private static int _counter = 1;
-        public int SchoolSecretaryID { get; private set; }
+        ////public int SchoolSecretaryID { get; private set; }
 
         public string Initials { get; private set; }
 
@@ -16,13 +16,13 @@
         }
 
         public SchoolSecretary(string firstName, string lastName, string initials, string phoneNumber, string email, 
-            School theSchool, int schoolSecretaryID) :
+            School theSchool) :
             base(firstName, lastName, phoneNumber, email)
         {
 
             Initials = initials;
             TheSchool = theSchool;
-            SchoolSecretaryID = schoolSecretaryID;
+            //SchoolSecretaryID = schoolSecretaryID;
         }
 
         public SchoolSecretary(string firstName, string lastName, string initials, string phoneNumber, string email,

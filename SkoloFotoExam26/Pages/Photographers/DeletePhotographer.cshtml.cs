@@ -36,7 +36,7 @@ namespace SkoloFotoExam26.Pages.Photographers
             }
             catch(SqlException sqlex)
             {
-                ViewData["ErrorMessage"] = "Fejl ved sletning - der er afhængigheder af denne fotograf i systemet, så denne kan ikke slettes";
+                ViewData["ErrorMessage"] = "Fejl ved sletning - fotografen kan ikke slettes, da der er andre data, som er knyttet til denne";
                 return Page();
             }
             catch(Exception ex)

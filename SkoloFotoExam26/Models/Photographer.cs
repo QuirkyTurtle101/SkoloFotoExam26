@@ -2,7 +2,7 @@
 {
     public class Photographer : User
     {
-        public int PhotographerID { get; private set; }
+        //public int PhotographerID { get; private set; }
 
         public string Website { get; private set; }
 

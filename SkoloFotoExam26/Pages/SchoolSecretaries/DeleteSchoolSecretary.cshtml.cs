@@ -38,7 +38,7 @@ namespace SkoloFotoExam26.Pages.SchoolSecretaries
             }
             catch(SqlException sqlex)
             {
-                ViewData["ErrorMessage"] = "Skolesekretæren kan ikke slettes, da der andre, som er afhængige af denne skolesekretær";
+                ViewData["ErrorMessage"] = "Denne kan ikke slettes, da der er andre data, som er knyttet til denne";
                 return Page();
             }
             catch(Exception ex)
