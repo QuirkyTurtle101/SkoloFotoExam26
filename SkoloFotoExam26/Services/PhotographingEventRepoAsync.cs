@@ -32,8 +32,8 @@ namespace SkoloFotoExam26.Services
                     await command.Connection.OpenAsync();
                     command.Parameters.AddWithValue("@Start", input.Start);
                     command.Parameters.AddWithValue("@End", input.End);
-                    command.Parameters.AddWithValue("@SchoolSecretaryID", input.SchoolSecretary.SchoolSecretaryID);
-                    command.Parameters.AddWithValue("@PhotographerID", input.Photographer.PhotographerID);
+                    command.Parameters.AddWithValue("@SchoolSecretaryID", input.SchoolSecretary.ID);
+                    command.Parameters.AddWithValue("@PhotographerID", input.Photographer.ID);
 
                     await command.ExecuteNonQueryAsync();
                 }

@@ -33,7 +33,7 @@
             @foreach (Photographer item in Model.Photographers)
             {
                 <tr>
-                    <td>@item.PhotographerID</td>
+                    <td>@item.ID</td>
                     <td>@item.FirstName</td>
                     <td>@item.LastName</td>
                     <td>@item.Street</td>
@@ -42,8 +42,8 @@
                     <td>@item.PhoneNumber</td>
                     <td>@item.Email</td>
                     <td>@item.MaxTravelRadiusInKm</td>
-                    <td><a asp-page="EditPhotographer" asp-route-PhotographerID="@item.PhotographerID">Edit</a> |
-                        <a asp-page="DeletePhotographer" asp-route-PhotographerID="@item.PhotographerID">Delete</a>
+                    <td><a asp-page="EditPhotographer" asp-route-PhotographerID="@item.ID">Edit</a> |
+                        <a asp-page="DeletePhotographer" asp-route-PhotographerID="@item.ID">Delete</a>
                     </td>
 
                 </tr>
