@@ -4,7 +4,6 @@ namespace SkoloFotoExam26.Models
 {
     public class Student
     {
-
         public string FirstName { get; set; }
         public string MiddleName { get; set; }
         public string LastName { get; set; }
@@ -14,10 +13,10 @@ namespace SkoloFotoExam26.Models
 
         public Student()
         {
-            
+
         }
-        
-        public Student(string firstName, string middleName, string lastName, Parent parent,School schoolName, SchoolClass className)//Denne konstructør bruges når man opretter en elev
+
+        public Student(string firstName, string middleName, string lastName, Parent parent, School schoolName, SchoolClass className)//Denne konstructør bruges når man opretter en elev
         {
             FirstName = firstName;
             MiddleName = middleName;

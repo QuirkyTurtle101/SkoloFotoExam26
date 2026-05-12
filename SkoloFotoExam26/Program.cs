@@ -19,7 +19,7 @@ builder.Services.AddTransient<IRepoAsync<SchoolSecretary, int>, SchoolSecretaryR
 builder.Services.AddTransient<IRepoAsync<Photographer, int>, PhotographerRepoAsync>();
 builder.Services.AddTransient<IRepoAsync<Teacher, int>, TeacherRepoAsync>();
 builder.Services.AddTransient<IRepoAsync<LoginInfo, string>, LoginRepoAsync>();
-//builder.Services.AddTransient<IRepoAsync<Student, int>, StudentRepoAsync>();
+builder.Services.AddTransient<IRepoAsync<Student, int>, StudentRepoAsync>();
 
 var app = builder.Build();
 

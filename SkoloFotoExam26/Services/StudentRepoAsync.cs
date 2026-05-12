@@ -68,15 +68,13 @@
 //                    SqlDataReader reader = await command.ExecuteReaderAsync();
 //                    while (reader.Read())
 //                    {
-//                        int studentID = reader.GetInt32("StudentID");
 //                        string firstName = reader.GetString("FirstName");
 //                        string middleName = reader.GetString("MiddleName");
 //                        string lastName = reader.GetString("LastName");
-//                        int parent = reader.GetInt32("ParentID");
 //                        string schoolName = reader.GetString("SchoolName");
 //                        string className = reader.GetString("ClassName");
 
-//                        students.Add(new Student(firstName, middleName, lastName, parentID, schoolName, className));
+//                        students.Add(new Student(firstName, middleName, lastName, schoolName, className));
 //                    }
 //                }
 //                catch (SqlException sqlExp)
