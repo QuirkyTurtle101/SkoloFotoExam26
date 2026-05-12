@@ -13,7 +13,7 @@ namespace SkoloFotoExam26.Services
         private string _getPhotographer = "SELECT * FROM Photographer JOIN ZipCodeLookup ON Photographer.ZipCode=ZipCodeLookup.ZipCode WHERE PhotographerID = @PhotographerID";
         private string _getAll = "SELECT * FROM Photographer JOIN ZipCodeLookup ON Photographer.ZipCode=ZipCodeLookup.ZipCode";
         private string _deletePhotographer = "DELETE FROM Photographer WHERE PhotographerID = @PhotographerID";
-        private string _updatePhotographer = "UPDATE Photographer SET FirstName = @FirstName, LastName = @LastName, PhoneNumber = @PhoneNumber, StreetName = @StreetName, ZipCode  = @ZipCode, WebSite = @WebSite, CVRNumber = @CVRNumber, ExperienceInYears = @ExperienceInYears, MaxTravelRadiusInKm = @MaxTravelRadiusInKm, Instagram = @Instagram, Facebook = @Facebook";
+        private string _updatePhotographer = "UPDATE Photographer SET FirstName = @FirstName, LastName = @LastName, PhoneNumber = @PhoneNumber, StreetName = @StreetName, ZipCode  = @ZipCode, WebSite = @WebSite, CVRNumber = @CVRNumber, ExperienceInYears = @ExperienceInYears, MaxTravelRadiusInKm = @MaxTravelRadiusInKm, Instagram = @Instagram, Facebook = @Facebook WHERE PhotographerID = @ID";
 
         #endregion
         public async Task AddAsync(Photographer input)
@@ -211,6 +211,7 @@ namespace SkoloFotoExam26.Services
                     command.Parameters.AddWithValue("@MaxTravelRadiusInKm", toUpdate.MaxTravelRadiusInKm);
                     command.Parameters.AddWithValue("@Instagram", toUpdate.Instagram);
                     command.Parameters.AddWithValue("@Facebook", toUpdate.Facebook);
+                    command.Parameters.AddWithValue("@ID", toUpdate.ID);
 
                     await command.ExecuteNonQueryAsync();
 

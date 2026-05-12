@@ -12,7 +12,7 @@ namespace SkoloFotoExam26.Services
         private string _getAllSchoolSecretaries = "SELECT SchoolSecretary.FirstName, SchoolSecretary.LastName, SchoolSecretary.SchoolSecretaryID, SchoolSecretary.Email, SchoolSecretary.PhoneNumber, SchoolSecretary.Initials, School.SchoolID, School.Name, School.StreetName, School.ZipCode, School.SchoolType, ZipCodeLookup.City FROM SchoolSecretary JOIN School on School.SchoolID = SchoolSecretary.SchoolID JOIN ZipCodeLookup ON School.ZipCode = ZipCodeLookup.ZipCode";
         private string _getSchoolSecretary = "SELECT SchoolSecretary.FirstName, SchoolSecretary.SchoolSecretaryID, SchoolSecretary.LastName, SchoolSecretary.Email, SchoolSecretary.PhoneNumber, SchoolSecretary.Initials, School.SchoolID, School.Name, School.StreetName, School.ZipCode FROM SchoolSecretary JOIN School on School.SchoolID = SchoolSecretary.SchoolID WHERE SchoolSecretaryID = @SchoolSecretaryID";
         private string _deleteSchoolSecretary = "Delete FROM School WHERE SchoolSecretaryID = @SchoolSecretaryID ";
-        private string _updateSchoolSecretary = "UPDATE SchoolSecretary SET FirstName = @FirstName, LastName = @LastName, PhoneNumber = @PhoneNumber, Initials = @Initials, SchoolID = @SchoolID";
+        private string _updateSchoolSecretary = "UPDATE SchoolSecretary SET FirstName = @FirstName, LastName = @LastName, PhoneNumber = @PhoneNumber, Initials = @Initials, SchoolID = @SchoolSecretaryID WHERE SchoolID = @ID";
         
         #endregion
 
@@ -195,17 +195,17 @@ namespace SkoloFotoExam26.Services
                     command.Parameters.AddWithValue("@PhoneNumber", toUpdate.PhoneNumber);
                     command.Parameters.AddWithValue("@Initials", toUpdate.Initials);
                     command.Parameters.AddWithValue("@SchoolID", toUpdate.TheSchool.SchoolID);
-
+                    command.Parameters.AddWithValue("@SchoolSecretaryID", toUpdate.ID);
                     await command.ExecuteNonQueryAsync();
 
                 }
                 catch (SqlException sqlex)
                 {
-                    Console.WriteLine("sql fejl: " + sqlex.Message);
+                    throw;
                 }
                 catch (Exception ex)
                 {
-                    Console.WriteLine("Generel fejl: " + ex.Message);
+                    throw;
                 }
                 finally
                 {

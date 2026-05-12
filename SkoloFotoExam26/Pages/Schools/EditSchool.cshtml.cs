@@ -9,7 +9,7 @@ namespace SkoloFotoExam26.Pages.Schools
     public class EditSchoolModel : PageModel
     {
         IRepoAsync<School, int> _schoolRepo;
-
+        [BindProperty]
         public School SchoolToBeUpdated { get; set; }
 
         public EditSchoolModel(IRepoAsync<School, int> schoolRepo)
@@ -21,13 +21,13 @@ namespace SkoloFotoExam26.Pages.Schools
             SchoolToBeUpdated = await _schoolRepo.GetAsync(schoolID);
         }
 
-        public async Task<IActionResult> OnPostAsyncUpdate(int schoolID)
+        public async Task<IActionResult> OnPostAsync()
         {
             try
             {
-                School school = await _schoolRepo.GetAsync(schoolID);
+                //School school = await _schoolRepo.GetAsync(schoolID);
 
-                await _schoolRepo.UpdateAsync(school);
+                await _schoolRepo.UpdateAsync(SchoolToBeUpdated);
             }
             catch (SqlException sqlex)
             {
