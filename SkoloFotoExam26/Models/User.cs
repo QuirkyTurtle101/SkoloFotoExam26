@@ -23,6 +23,7 @@
             ID = id;
             FirstName = firstName;
             LastName = lastName;
+            PhoneNumber = phoneNumber;
             Email = email;
         }
 
