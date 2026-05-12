@@ -1,0 +1,23 @@
+﻿@page
+@model SkoloFotoExam26.Pages.Photographers.DeletePhotographerModel
+@{
+    ViewData["Title"] = "Slet fotograf";
+}
+
+
+<h1>Slet skole</h1>
+
+<form method="post">
+    <div class="form-group">
+        <label>Fotografens ID</label> : @Model.PhotographerToBeDeleted.PhotographerID<br>
+        <label>Fornavn</label> : @Model.PhotographerToBeDeleted.FirstName<br>
+        <label>Efternavn</label> : @Model.PhotographerToBeDeleted.LastName<br>
+        <label>Vej</label> : @Model.PhotographerToBeDeleted.Street<br>
+        <label>Postnummer</label> : @Model.PhotographerToBeDeleted.ZipCode<br>
+        <label>By </label> : @Model.PhotographerToBeDeleted.City<br>
+        <label>Email</label> : @Model.PhotographerToBeDeleted.Email<br>
+        <label>Telefonnummer </label> : @Model.PhotographerToBeDeleted.PhoneNumber<br>
+        <input type="submit" value="Slet fotograf" asp-page-handler="Delete" asp-route-photographerID="@Model.PhotographerToBeDeleted.PhotographerID" class="btn-danger" onclick="return confirm('Er du sikker på at slette fotografen?')" />
+        <input type="submit" value="Anuller" asp-page-handler="Cancel" class="btn-warning" />
+    </div>
+</form>
