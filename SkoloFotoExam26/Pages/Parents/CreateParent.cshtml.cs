@@ -3,12 +3,14 @@ using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.Data.SqlClient;
 using SkoloFotoExam26.Interfaces;
 using SkoloFotoExam26.Models;
+using System.Threading.Tasks;
 
 namespace SkoloFotoExam26.Pages.Parents
 {
     public class CreateParentModel : PageModel
     {
         private IRepoAsync<Parent, int> _parentRepo;
+        private IRepoAsync<LoginInfo, string> _loginInfoRepo;
 
         [BindProperty]
         public int ParentID { get; set; }
@@ -26,26 +28,34 @@ namespace SkoloFotoExam26.Pages.Parents
         public int ZipCode { get; set; }
         [BindProperty]
         public string City { get; set; }
+        [BindProperty]
+        public List<Parent> Parents { get; set; }
+        [BindProperty]
+        public string Password { get; set; }
+        [BindProperty]
+        public UserType UserType { get; set; }
 
 
-        public CreateParentModel(IRepoAsync<Parent, int> parentRepoAsync)
+        public CreateParentModel(IRepoAsync<Parent, int> parentRepoAsync, IRepoAsync<LoginInfo, string> loginInfoRepo)
         {
             _parentRepo = parentRepoAsync;
+            _loginInfoRepo = loginInfoRepo;
         }
 
-        public void OnGet()
+        public async Task OnGet()
         {
+            Parents = await _parentRepo.GetAllAsync();
         }
         public async Task<IActionResult> OnPostAsync()
         {
             try
-            {        
+            {
+                await _loginInfoRepo.AddAsync(new LoginInfo(Email, Password, UserType));
                 await _parentRepo.AddAsync(new Parent(FirstName, LastName, Email, PhoneNumber, Street, ZipCode, City));
-                //await _parentRepo.GetAsync(ParentID)
             }
             catch (SqlException sqlex)
             {
-                ViewData["ErrorMessage"] = sqlex.Message;
+                ViewData["ErrorMessage"] = "Fejl ved oprettelse, prøv igen";
                 return Page();
             }
             catch (Exception ex)

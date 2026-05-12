@@ -8,6 +8,9 @@
         public string Email { get { return _emailEntered; } set { _emailEntered = value; } }
         public string Password { get { return _passwordEntered; } set { _passwordEntered = value; } }
 
+        public LoginAttempt()
+        {
+        }
         public LoginAttempt(string email, string password)
         {
             _emailEntered = email;
