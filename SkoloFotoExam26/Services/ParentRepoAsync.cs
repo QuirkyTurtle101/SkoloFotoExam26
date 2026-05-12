@@ -9,7 +9,7 @@ namespace SkoloFotoExam26.Services
     {
         private string _addParent = "INSERT INTO Parent Values (@FirstName, @LastName, @Email, @PhoneNumber, @StreetName, @ZipCode)";
         private string _getAllParent = "SELECT p.ParentID, p.FirstName, p.LastName, p.Email, p.PhoneNumber, p.StreetName, p.ZipCode, z.City FROM Parent p JOIN ZipCodeLookup z ON p.ZipCode = z.ZipCode";
-        private string _searchParent = "SELECT * FROM Parent WHERE ParentID = @ParentID";
+        private string _readParent = "SELECT * FROM Parent WHERE ParentID = @ParentID";
         //private string _updateParent = "UPDATE Parent SET FirstName=@FirstName, LastBane=@LastName, Email=@Email, PhoneNumber=@PhoneNumber, StreetName=@StreetName, ZipCode=@ZipCode, City=@City, WHERE ParentID = @ParentID";
 
         public Task<int> CountAsync()

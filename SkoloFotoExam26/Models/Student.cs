@@ -16,18 +16,19 @@ namespace SkoloFotoExam26.Models
         {
             
         }
-        public Student(int studentID, string firstName, string middleName ,string lastName, Parent parent, School school, SchoolClass schoolClass)//Denne konstructør bruges når f.eks. at finde en elev
+        
+        public Student(string firstName, string middleName, string lastName, Parent parent,School schoolName, SchoolClass className)//Denne konstructør bruges når man opretter en elev
         {
-            StudentID = studentID;
             FirstName = firstName;
             MiddleName = middleName;
             LastName = lastName;
             Parent = parent;
-            School = school;
-            SchoolClass = schoolClass;
+            School = schoolName;
+            SchoolClass = className;
         }
-        public Student(string firstName, string middleName, string lastName, Parent parent,School school, SchoolClass schoolClass)//Denne konstructør bruges når man opretter en elev
+        public Student(int studentID, string firstName, string middleName, string lastName, Parent parent, School school, SchoolClass schoolClass)//Denne konstructør bruges når f.eks. at finde en elev
         {
+            StudentID = studentID;
             FirstName = firstName;
             MiddleName = middleName;
             LastName = lastName;
