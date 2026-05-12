@@ -28,6 +28,11 @@ namespace SkoloFotoExam26.Pages
         {
         }
 
+        public void OnGetLogout()
+        {
+            HttpContext.Session.Clear();
+        }
+
         public async Task<IActionResult> OnPostAsync()
         {
             if (!ModelState.IsValid)
@@ -42,8 +47,9 @@ namespace SkoloFotoExam26.Pages
             {
                 IRepoAsync repoToUse = repositories[(UserType)result];
                 User user = await handler.GetUser((ILoginableRepo)repoToUse);
-                //DO SOMETHING WITH THE USER HERE!!! maybe have a singleton that carries the information about the user from page to page? ideas, ideas...
-                //for now though it compiles so what the hell right?
+                HttpContext.Session.SetString("UserName", $"{user.FirstName} {user.LastName}");
+                HttpContext.Session.SetInt32("UserType", (int)result);  
+                HttpContext.Session.SetInt32("UserID", user.ID);
                 return RedirectToPage("Index");
             }
             else if (result is string)
