@@ -39,10 +39,13 @@ namespace SkoloFotoExam26.Pages.Photographers
                 ViewData["ErrorMessage"] = ex.Message;
                 return Page();
             }
-
             return RedirectToPage("Index");
-
         }
 
+
+        public IActionResult OnPostCancel()
+        {
+            return RedirectToPage("Index");
+        }
     }
 }

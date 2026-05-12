@@ -189,9 +189,36 @@ namespace SkoloFotoExam26.Services
             return school;
         }
 
-        public Task UpdateAsync(School toUpdate)
+        public async Task UpdateAsync(School toUpdate)
         {
-            throw new NotImplementedException();
+            using (SqlConnection connection = new SqlConnection(Secret.connectionString))
+            using (SqlCommand command = new SqlCommand(_updateSchool, connection))
+            {
+                try
+                {
+                    await command.Connection.OpenAsync();
+
+                    command.Parameters.AddWithValue("@Name", toUpdate.Name);
+                    command.Parameters.AddWithValue("@StreetName", toUpdate.Street);
+                    command.Parameters.AddWithValue("@PhoneNumber", toUpdate.ZipCode);
+                    command.Parameters.AddWithValue("@SchoolType", (int)toUpdate.SchoolType);                  
+                    
+                    await command.ExecuteNonQueryAsync();
+
+                }
+                catch (SqlException sqlex)
+                {
+                    Console.WriteLine("sql fejl: " + sqlex.Message);
+                }
+                catch (Exception ex)
+                {
+                    Console.WriteLine("Generel fejl: " + ex.Message);
+                }
+                finally
+                {
+                    await command.Connection.CloseAsync();
+                }
+            }
         }
     }
 }

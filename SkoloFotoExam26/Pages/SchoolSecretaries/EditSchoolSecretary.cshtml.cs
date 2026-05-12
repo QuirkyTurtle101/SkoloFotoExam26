@@ -45,5 +45,10 @@ namespace SkoloFotoExam26.Pages.SchoolSecretaries
             return RedirectToPage("Index");
         }
 
+        public IActionResult OnPostCancel()
+        {
+            return RedirectToPage("Index");
+        }
+
     }
 }
