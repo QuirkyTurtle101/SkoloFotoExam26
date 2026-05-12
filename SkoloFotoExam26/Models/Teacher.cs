@@ -15,7 +15,7 @@
             School theSchool) 
             : base(firstName, lastName, phoneNumber, email)
         {
-            TeacherID = teacherID;
+            
             Initials = initials;
             TheSchool = theSchool;
         }
@@ -29,7 +29,7 @@
 
         public override string ToString()
         {
-            return $"TeacherID: {TeacherID}, Initials: {Initials}, {base.ToString()}";
+            return $"Initials: {Initials}, {base.ToString()}";
         }
     }
 }

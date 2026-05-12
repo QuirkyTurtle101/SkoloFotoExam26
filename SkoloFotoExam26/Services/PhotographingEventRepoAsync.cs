@@ -11,6 +11,8 @@ namespace SkoloFotoExam26.Services
         private string _addEvent = "INSERT INTO PhotographingEvent VALUES(@Start, @End, @SchoolSecretaryID, @PhotographerID)";
         private string _getAll = "SELECT * FROM PhotographingEvent";
         private string _getEvent = "SELECT * FROM PhotographingEvent WHERE PhotographingEventID = @PhotographingEventID";
+        private string _delete = "DELETE FROM PhotographingEvent WHERE PhotographingEventID = @PhotographingEventID";
+        private string _update = "UPDATE PhotographingEvent SET Start = @Start, End = @End, SchoolSecretaryID = @SchoolSecretaryID, PhotographerID = @PhotographerID WHERE PhotographingEventID = @PhotographingEventID";
 
         //private string _getAll = "SELECT SchoolSecretary.FirstName, SchoolSecretary.LastName, SchoolSecretary.SchoolSecretaryID, SchoolSecretary.Email, SchoolSecretary.PhoneNumber, SchoolSecretary.Initials, School.SchoolID, School.Name, School.StreetName, School.ZipCode, School.SchoolType, ZipCodeLookup.City FROM SchoolSecretary JOIN School on School.SchoolID = SchoolSecretary.SchoolID JOIN ZipCodeLookup ON School.ZipCode = ZipCodeLookup.ZipCode";
 
@@ -32,8 +34,8 @@ namespace SkoloFotoExam26.Services
                     await command.Connection.OpenAsync();
                     command.Parameters.AddWithValue("@Start", input.Start);
                     command.Parameters.AddWithValue("@End", input.End);
-                    command.Parameters.AddWithValue("@SchoolSecretaryID", input.SchoolSecretary.SchoolSecretaryID);
-                    command.Parameters.AddWithValue("@PhotographerID", input.Photographer.PhotographerID);
+                    command.Parameters.AddWithValue("@SchoolSecretaryID", input.SchoolSecretary.ID);
+                    command.Parameters.AddWithValue("@PhotographerID", input.Photographer.ID);
 
                     await command.ExecuteNonQueryAsync();
                 }
@@ -54,9 +56,24 @@ namespace SkoloFotoExam26.Services
             throw new NotImplementedException();
         }
 
-        public Task DeleteAsync(int toDelete)
+        public async Task DeleteAsync(int toDelete)
         {
-            throw new NotImplementedException();
+            using SqlConnection connection = new SqlConnection(Secret.connectionString);
+            try
+            {
+                SqlCommand command = new SqlCommand(_delete, connection);
+                await command.Connection.OpenAsync();
+                command.Parameters.AddWithValue("@PhotographingEventID", toDelete);
+                await command.ExecuteNonQueryAsync();
+            }
+            catch (SqlException sqlEx)
+            {
+                Console.WriteLine($"SQL exception: {sqlEx.Message}");
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"Exception message: {ex.Message}");
+            }
         }
 
         public async Task<List<PhotographingEvent>> GetAllAsync()
@@ -69,7 +86,7 @@ namespace SkoloFotoExam26.Services
                     SqlCommand command = new SqlCommand(_getAll, connection);
                     await command.Connection.OpenAsync();
                     SqlDataReader reader = await command.ExecuteReaderAsync();
-                    while (reader.Read())
+                    while (await reader.ReadAsync())
                     {
                         int photographingEventID = reader.GetInt32("PhotographingEventID");
                         DateTime start = reader.GetDateTime("Start");
@@ -109,7 +126,7 @@ namespace SkoloFotoExam26.Services
                 command.Parameters.AddWithValue("@PhotographingEventID", toGet);
                 SqlDataReader reader = await command.ExecuteReaderAsync();
 
-                if (reader.Read())
+                if (await reader.ReadAsync())
                 {
                     int photographingEventID = reader.GetInt32("PhotographingEventID");
                     DateTime start = reader.GetDateTime("Start");
@@ -135,9 +152,28 @@ namespace SkoloFotoExam26.Services
             return photographingEvent;
         }
 
-        public Task UpdateAsync(PhotographingEvent toUpdate)
+        public async Task UpdateAsync(PhotographingEvent toUpdate)
         {
-            throw new NotImplementedException();
+            using SqlConnection connection = new SqlConnection(Secret.connectionString);
+            try
+            {
+                SqlCommand command = new SqlCommand(_update, connection);
+                await command.Connection.OpenAsync();
+                command.Parameters.AddWithValue("@Start", toUpdate.Start);
+                command.Parameters.AddWithValue("@End", toUpdate.End);
+                command.Parameters.AddWithValue("@SchoolSecretaryID", toUpdate.SchoolSecretary.ID);
+                command.Parameters.AddWithValue("@PhotographerID", toUpdate.Photographer.ID);
+                command.Parameters.AddWithValue("@PhotographingEventID", toUpdate.PhotographingEventID);
+                await command.ExecuteNonQueryAsync();
+            }
+            catch (SqlException sqlEx)
+            {
+                Console.WriteLine($"SQL Exception message: {sqlEx.Message}");
+            }
+            catch(Exception ex)
+            {
+                Console.WriteLine($"Exception message: {ex.Message}");
+            }
         }
     }
 }

@@ -26,7 +26,7 @@
                 <option value= ""> Select Secretary</option>
                 @foreach (SchoolSecretary s in @Model.SecretaryList)
                         {
-                            <option value="@s.SchoolSecretaryID">
+                            <option value="@s.ID">
                                 @s.FirstName @s.LastName
                             </option>
                         }
@@ -38,7 +38,7 @@
                 <option value=""> Select Photographer</option>
                 @foreach (Photographer p in Model.PhotographerList)
                 {
-                    <option value="@p.PhotographerID">
+                    <option value="@p.ID">
                         @p.FirstName @p.LastName
                     </option>
                 }
