@@ -4,7 +4,6 @@
     {
 
         //private static int _counter = 1;
-        public int SchoolSecretaryID { get; private set; }
 
         public string Initials { get; private set; }
 
