@@ -7,7 +7,7 @@ namespace SkoloFotoExam26.Pages.Bookings
 {
     public class CreateBookingModel : PageModel
     {
-        //    private IRepoAsync<Booking, int> _bookingRepo;
+        private IRepoAsync<Booking, int> _bookingRepo;
 
         private IRepoAsync<PhotographingEvent, int> _photographingEventRepo;
 
@@ -26,16 +26,16 @@ namespace SkoloFotoExam26.Pages.Bookings
         [BindProperty]
         public int TeacherID { get; set; }
         [BindProperty]
-        public int SchoolClassID { get; set; }
+        public int SelectedSchoolClassID { get; set; }
 
         public List<Teacher> TeacherList { get; set; }
 
         public List<SchoolClass> SchoolClassList { get; set; }
 
-        public CreateBookingModel(/*IRepoAsync<Booking, int> bookingRepo,*/ IRepoAsync<PhotographingEvent, int> photographingEventRepo,
+        public CreateBookingModel(IRepoAsync<PhotographingEvent, int> photographingEventRepo, IRepoAsync<Booking, int> bookingRepo,
             IRepoAsync<Teacher, int> teacherRepo, IRepoAsync<SchoolClass, int> schoolClassRepo)
         {
-            //_bookingRepo = bookingRepo;
+            _bookingRepo = bookingRepo;
             _photographingEventRepo = photographingEventRepo;
             _teacherRepo = teacherRepo;
             _schoolClassRepo = schoolClassRepo;
@@ -48,14 +48,16 @@ namespace SkoloFotoExam26.Pages.Bookings
             SchoolClassList = await _schoolClassRepo.GetAllAsync();
         }
 
-        public async Task<IActionResult> OnPostAsync()
+        public async Task<IActionResult> OnPostAsync(int id)
         {
             try
             {
 
                 Teacher teacher = await _teacherRepo.GetAsync(TeacherID);
-                SchoolClass schoolClass = await _schoolClassRepo.GetAsync(SchoolClassID);
+                TheEvent = await _photographingEventRepo.GetAsync(id);
+                SchoolClass schoolClass = await _schoolClassRepo.GetAsync(SelectedSchoolClassID);
                 Booking booking = new Booking(Start, End, TheEvent, teacher, schoolClass);
+                await _bookingRepo.AddAsync(booking);
             }
             catch (Exception ex)
             {

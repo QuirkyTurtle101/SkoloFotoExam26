@@ -1,9 +1,35 @@
 ﻿@page
+@using SkoloFotoExam26.Models
 @model SkoloFotoExam26.Pages.PhotographingEvents.IndexModel
 @{
     ViewData["Title"] = "Photographing Events";
 }
 
+<h¨2>
+    Liste af events
+</h¨2>
+
 <p>
     <a asp-page="CreatePhotographingEvent"> Create a new photographing event </a>
 </p>
+
+<form method="get">
+    <table class="table">
+        <th> ID </th>
+        <th> Start </th>
+        <th> End </th>
+        <th> Photographer </th>
+        <tbody>
+            @foreach (PhotographingEvent p in @Model.PhotographingEvents)
+            {
+                <tr>
+                    <td> @p.PhotographingEventID </td>
+                    <td> @p.Start </td>
+                    <td> @p.End </td>
+                    <td> @p.Photographer.FirstName @p.Photographer.LastName</td>
+                </tr>
+            }
+
+        </tbody>
+    </table>
+</form>

@@ -68,16 +68,16 @@ namespace SkoloFotoExam26.Pages
                 PhotographingEvent newPhotoEvent = new PhotographingEvent(Start, End, schoolSecretary, photographer);
                 await _eventRepo.AddAsync(newPhotoEvent);
 
-                return RedirectToPage("Index");
             }
             catch (Exception ex)
             {
                 ViewData["ErrorMessage"] = ex.Message;
                 return Page();
             }
-            
+            return RedirectToPage("Index");
+
         }
-        
+
     }
 
 

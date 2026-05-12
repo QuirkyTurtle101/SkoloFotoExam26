@@ -12,7 +12,7 @@ namespace SkoloFotoExam26.Services
 
         private string _getAll = "SELECT * FROM Booking";
 
-        private string _addBooking = "INSERT INTO Booking VALUES(@Start, @End, @SchoolClassID, @PhotographingEventID, @TeacherID";
+        private string _addBooking = "INSERT INTO Booking VALUES(@Start, @End, @SchoolClassID, @PhotographingEventID, @TeacherID)";
 
         private string _getBooking = "SELECT * FROM Booking WHERE BookingID = @BookingID";
 
@@ -41,9 +41,9 @@ namespace SkoloFotoExam26.Services
 
                 command.Parameters.AddWithValue("@Start", input.Start);
                 command.Parameters.AddWithValue("@End", input.End);
-                command.Parameters.AddWithValue("@PhotographingEventID", input.ThePhotographingEvent);
-                command.Parameters.AddWithValue("@TeacherID", input.TheTeacher);
-                command.Parameters.AddWithValue("@SchoolClassID", input.TheSchoolClass);
+                command.Parameters.AddWithValue("@PhotographingEventID", input.ThePhotographingEvent.PhotographingEventID);
+                command.Parameters.AddWithValue("@TeacherID", input.TheTeacher.TeacherID);
+                command.Parameters.AddWithValue("@SchoolClassID", input.TheSchoolClass.SchoolClassID);
                 await command.ExecuteNonQueryAsync();
             }
             catch (SqlException sqlEx)

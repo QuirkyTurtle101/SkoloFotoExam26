@@ -8,12 +8,16 @@
     Create booking
 </h1>
 
-<div class="form-group">
+<div> 
+    ID: @Model.TheEvent.PhotographingEventID
 </div>
-ID: TheEvent.PhotographingEventID
-Start: TheEvent.Start
-End: TheEvent.End
-Photographer: TheEvent.Photographer.FirstName TheEvent.Photographer.LastName
+<div>
+    Start: @Model.TheEvent.Start
+</div>
+    End: @Model.TheEvent.End
+<div> 
+    Photographer: @Model.TheEvent.Photographer.FirstName @Model.TheEvent.Photographer.LastName
+</div>
 <br />
 
 <form method="post">
@@ -38,9 +42,9 @@ Photographer: TheEvent.Photographer.FirstName TheEvent.Photographer.LastName
         </select>
     </div>
     <div class="form-group">
-        <label asp-for="SchoolClassID"> Choose a School Class </label>
-        <select asp-for="SchoolClassID" class="form-select">
-            <option value=""> Select Teacher</option>
+        <label asp-for="SelectedSchoolClassID"> Choose a School Class </label>
+        <select asp-for="SelectedSchoolClassID" class="form-select">
+            <option value=""> Select School Class</option>
             @foreach (SchoolClass s in @Model.SchoolClassList)
             {
                 <option value="@s.SchoolClassID">
@@ -49,7 +53,10 @@ Photographer: TheEvent.Photographer.FirstName TheEvent.Photographer.LastName
             }
         </select>
     </div>
-
-
+    <br />
+    <input type="submit" value="Create Booking" class="btn btn-success" />
+    <a asp-page="Index" class="btn btn-warning">
+        Cancel
+    </a>
 
 </form>

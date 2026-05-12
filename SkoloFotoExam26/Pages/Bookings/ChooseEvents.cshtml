@@ -18,7 +18,7 @@
         <th> Start </th>
         <th> End </th>
         <th> Photographer </th>
-        <tboody>
+        <tbody>
             @foreach (PhotographingEvent e in @Model.EventList)
             {
                     <tr>
@@ -29,8 +29,7 @@
                         <td><a asp-page="CreateBooking" asp-route-id="@e.PhotographingEventID" class="btn btn-success">Choose event</a></td>
                     </tr>
             }
- 
 
-        </tboody>
+        </tbody>
     </table>
 </form>

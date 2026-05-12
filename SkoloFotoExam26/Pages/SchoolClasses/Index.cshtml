@@ -1,9 +1,29 @@
 ﻿@page
+@using SkoloFotoExam26.Models
 @model SkoloFotoExam26.Pages.SchoolClasses.IndexModel
 @{
-    
+    ViewData["Title"] = "Skole klasser";
 }
-
+<h2>
+    Skole Klasserne
+</h2>
 <p>
     <a asp-page="CreateSchoolClass"> Create a new School Class </a>
 </p>
+
+<form method="get">
+    <table class="table">
+        <th> Klasse navn </th>
+        <th> Skole navn </th>
+        <tbody>
+            @foreach (SchoolClass s in @Model.SchoolClasses)
+            {
+                <tr>
+                    <td> @s.ClassName </td>
+                    <td> @s.School.Name </td>
+                </tr>
+            }
+
+        </tbody>
+    </table>
+</form>

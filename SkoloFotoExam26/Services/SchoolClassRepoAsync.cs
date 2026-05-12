@@ -29,7 +29,7 @@ namespace SkoloFotoExam26.Services
                 await command.Connection.OpenAsync();
                 {
                     command.Parameters.AddWithValue("ClassName", input.ClassName);
-                    command.Parameters.AddWithValue("SchoolID", input.SchoolClassID);
+                    command.Parameters.AddWithValue("SchoolID", input.School.SchoolID);
                     await command.ExecuteNonQueryAsync();
                 }
 
@@ -68,9 +68,10 @@ namespace SkoloFotoExam26.Services
                 {
                     string className = reader.GetString("ClassName");
                     int schoolID = reader.GetInt32("SchoolID");
+                    int schoolClassID = reader.GetInt32("SchoolClassID");
                     School school = await _schoolRepo.GetAsync(schoolID);
 
-                    SchoolClass schoolClass = new SchoolClass(className, school);
+                    SchoolClass schoolClass = new SchoolClass(schoolClassID, className, school);
                     schoolClasses.Add(schoolClass);
                 }
 
@@ -96,13 +97,15 @@ namespace SkoloFotoExam26.Services
             {
                 SqlCommand command = new SqlCommand(_getSchoolClass, connection);
                 await command.Connection.OpenAsync();
+                command.Parameters.AddWithValue("@SchoolClassID", toGet);
                 SqlDataReader reader = await command.ExecuteReaderAsync();
-                while (await reader.ReadAsync())
+                if (await reader.ReadAsync())
                 {
                     string className = reader.GetString("ClassName");
                     int schoolID = reader.GetInt32("SchoolID");
+                    int schoolClassID = reader.GetInt32("SchoolClassID");
                     School school = await _schoolRepo.GetAsync(schoolID);
-                    schoolClass = new SchoolClass(className, school);
+                    schoolClass = new SchoolClass(schoolClassID, className, school);
                 }
             }
             catch (SqlException sqlEx)
