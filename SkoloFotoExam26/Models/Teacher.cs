@@ -2,7 +2,6 @@
 {
     public class Teacher : User
     {
-        public int TeacherID { get; private set; }
 
         public string Initials { get; private set; }
 

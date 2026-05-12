@@ -34,7 +34,7 @@ namespace SkoloFotoExam26.Pages.Schools
             }
             catch (SqlException sqlex)
             {
-                ViewData["ErrorMessage"] = "Fejl ved sletning - der er afhængigheder af denne skole i systemet";
+                ViewData["ErrorMessage"] = "Fejl ved sletning - der er andre data, som er knyttet til denne skole";
                 return Page();
             }
             catch (Exception ex)

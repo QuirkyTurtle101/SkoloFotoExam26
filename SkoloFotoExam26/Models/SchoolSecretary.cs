@@ -4,7 +4,6 @@
     {
 
         //private static int _counter = 1;
-        public int SchoolSecretaryID { get; private set; }
 
         public string Initials { get; private set; }
 
@@ -16,30 +15,28 @@
         }
 
         public SchoolSecretary(string firstName, string lastName, string initials, string phoneNumber, string email, 
-            School theSchool, int schoolSecretaryID) :
-            base(firstName, lastName, phoneNumber, email)
-        {
-
-            Initials = initials;
-            TheSchool = theSchool;
-            SchoolSecretaryID = schoolSecretaryID;
-        }
-
-        public SchoolSecretary(string firstName, string lastName, string initials, string phoneNumber, string email,
             School theSchool) :
             base(firstName, lastName, phoneNumber, email)
         {
 
             Initials = initials;
             TheSchool = theSchool;
-            
+            //SchoolSecretaryID = schoolSecretaryID;
+        }
+
+        public SchoolSecretary(int id, string firstName, string lastName, string initials, string phoneNumber, string email,
+            School theSchool) : 
+            base(id, firstName,lastName, phoneNumber, email)
+        {
+            Initials = initials;
+            TheSchool = theSchool;
         }
 
 
 
         public override string ToString()
         {
-            return $"ID: {SchoolSecretaryID}, Initials: {Initials}, {base.ToString()}";
+            return $"ID: {ID}, Initials: {Initials}, {base.ToString()}";
         }
     }
 }

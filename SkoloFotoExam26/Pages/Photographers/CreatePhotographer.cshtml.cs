@@ -58,8 +58,8 @@ namespace SkoloFotoExam26.Pages.Photographers
         {
             try
             {
-                _loginInfoRepo.AddAsync(new LoginInfo(Email, Password, UserType));
-                _photographerRepo.AddAsync(new Photographer(FirstName, LastName, PhoneNumber, Email, Website, CVRNumber, City, ZipCode, Street, ExperienceInYears, MaxTravelRadiusInKm, Instagram, Facebook));
+                await _loginInfoRepo.AddAsync(new LoginInfo(Email, Password, UserType));
+                await _photographerRepo.AddAsync(new Photographer(FirstName, LastName, PhoneNumber, Email, Website, CVRNumber, City, ZipCode, Street, ExperienceInYears, MaxTravelRadiusInKm, Instagram, Facebook));
             }
             catch(SqlException sqlex)
             {

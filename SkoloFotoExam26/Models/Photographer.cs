@@ -2,8 +2,6 @@
 {
     public class Photographer : User
     {
-        public int PhotographerID { get; private set; }
-
         public string Website { get; private set; }
 
         public string CVRNumber { get; private set; }
@@ -27,8 +25,8 @@
         }
         public Photographer(string firstName, string lastName, string phoneNumber, string email, string website, string cvrNumber,
             string city, int zipCode, string street, int experienceInYears, int maxTravelRadiusInKm, string instagram,
-            string facebook) 
-            : base(firstName, lastName, phoneNumber, email)
+            string facebook) : 
+            base(firstName, lastName, phoneNumber, email)
         {
             Website = website;
             CVRNumber = cvrNumber;
@@ -39,15 +37,13 @@
             MaxTravelRadiusInKm = maxTravelRadiusInKm;
             Instagram = instagram;
             Facebook = facebook;
-                
         }
 
-        public Photographer(int photographerID, string firstName, string lastName, string phoneNumber, string email, string website, string cvrNumber,
+        public Photographer(int id, string firstName, string lastName, string phoneNumber, string email, string website, string cvrNumber,
             string city, int zipCode, string street, int experienceInYears, int maxTravelRadiusInKm, string instagram,
-            string facebook)
-            : base(firstName, lastName, phoneNumber, email)
+            string facebook) : 
+            base(id, firstName, lastName, phoneNumber, email)
         {
-            PhotographerID = photographerID;
             Website = website;
             CVRNumber = cvrNumber;
             City = city;
@@ -57,12 +53,11 @@
             MaxTravelRadiusInKm = maxTravelRadiusInKm;
             Instagram = instagram;
             Facebook = facebook;
-
         }
 
         public override string ToString()
         {
-            return $"PhotographerID: {PhotographerID}, {base.ToString()}, WebPage: {Website}, CVRNumber: {CVRNumber}, " +
+            return $"PhotographerID: {ID}, {base.ToString()}, WebPage: {Website}, CVRNumber: {CVRNumber}, " +
                 $"City: {City}, PostCode: {ZipCode}, TheAddress: {Street}, ExperienceInYears: {ExperienceInYears}, " +
                 $"MaxTravelRadiusInKm: {MaxTravelRadiusInKm}, Instagram: {Instagram}, Facebook: {Facebook}";
         }

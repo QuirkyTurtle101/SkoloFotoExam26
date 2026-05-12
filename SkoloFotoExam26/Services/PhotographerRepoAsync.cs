@@ -12,6 +12,7 @@ namespace SkoloFotoExam26.Services
         private string _addPhotographer = "INSERT INTO Photographer VALUES(@FirstName, @LastName, @Email, @PhoneNumber, @WebSite, @CVRNumber, @StreetName, @ExperienceInYears, @MaxTravelRadiusInKm, @Instagram, @Facebook, @ZipCode)";
         private string _getPhotographer = "SELECT * FROM Photographer JOIN ZipCodeLookup ON Photographer.ZipCode=ZipCodeLookup.ZipCode WHERE PhotographerID = @PhotographerID";
         private string _getAll = "SELECT * FROM Photographer JOIN ZipCodeLookup ON Photographer.ZipCode=ZipCodeLookup.ZipCode";
+        private string _deletePhotographer = "DELETE FROM Photographer WHERE PhotographerID = @PhotographerID";
 
         #endregion
         public async Task AddAsync(Photographer input)
@@ -61,9 +62,33 @@ namespace SkoloFotoExam26.Services
             throw new NotImplementedException();
         }
 
-        public Task DeleteAsync(int toDelete)
+        public async Task DeleteAsync(int toDelete)
         {
-            throw new NotImplementedException();
+            using (SqlConnection connection = new SqlConnection(Secret.connectionString))
+            {
+                try
+                {
+                    SqlCommand command = new SqlCommand(_deletePhotographer, connection);
+                    await connection.OpenAsync();
+
+                    command.Parameters.AddWithValue("@PhotographerID", toDelete);
+
+                    int noOfRowsEffected = await command.ExecuteNonQueryAsync();
+
+                }
+                catch (SqlException sqlex)
+                {
+                    throw;
+                }
+                catch (Exception ex)
+                {
+                    throw;
+                }
+                finally
+                {
+                    await connection.CloseAsync();
+                }
+            }
         }
 
         public async Task<List<Photographer>> GetAllAsync()

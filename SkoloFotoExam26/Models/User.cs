@@ -2,7 +2,7 @@
 {
     public abstract class User
     {
-
+        public int ID { get; private set; }
         public string FirstName { get; private set; }
 
         public string LastName { get; private set; }
@@ -22,6 +22,13 @@
             PhoneNumber = phoneNumber;
             Email = email;
 
+        }
+        protected User(int id, string firstName, string lastName,string phoneNumber, string email)
+        {
+            ID = id;
+            FirstName = firstName;
+            LastName = lastName;
+            Email = email;
         }
 
         public override string ToString()

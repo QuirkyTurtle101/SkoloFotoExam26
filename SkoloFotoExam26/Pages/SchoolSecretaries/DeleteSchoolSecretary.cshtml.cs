@@ -30,13 +30,15 @@ namespace SkoloFotoExam26.Pages.SchoolSecretaries
         {
             try
             {
-                //await _loginRepo.DeleteAsync();
+                SchoolSecretary schoolSecretaryToBeDeleted = await _schoolSecRepo.GetAsync(schoolSecretaryID);
+
+                //await _loginRepo.DeleteAsync(schoolSecretaryToBeDeleted.Email);
                 await _schoolSecRepo.DeleteAsync(schoolSecretaryID);
                 return RedirectToPage("Index");
             }
             catch(SqlException sqlex)
             {
-                ViewData["ErrorMessage"] = sqlex.Message;
+                ViewData["ErrorMessage"] = "Denne kan ikke slettes, da der er andre data, som er knyttet til denne";
                 return Page();
             }
             catch(Exception ex)
@@ -44,6 +46,11 @@ namespace SkoloFotoExam26.Pages.SchoolSecretaries
                 ViewData["ErrorMessage"] = ex.Message;
                 return Page();
             }
+        }
+
+        public IActionResult OnPost()
+        {
+            return RedirectToPage("Index");
         }
     }
 }
