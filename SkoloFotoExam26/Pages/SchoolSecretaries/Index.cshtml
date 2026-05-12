@@ -32,15 +32,15 @@
             @foreach (SchoolSecretary item in Model.Secretaries)
             {
                 <tr>
-                    <td>@item.SchoolSecretaryID</td>
+                    <td>@item.ID</td>
                     <td>@item.FirstName</td>
                     <td>@item.LastName</td>
                     <td>@item.Initials</td>
                     <td>@item.Email</td>
                     <td>@item.PhoneNumber</td>
                     <td>@item.TheSchool.Name</td>
-                    <td><a asp-page="EditSchoolSecretary" asp-route-schoolSecretaryID="@item.SchoolSecretaryID">Edit</a> |
-                        <a asp-page="DeleteSchoolSecretary" asp-route-schoolSecretaryID="@item.SchoolSecretaryID">Delete</a>
+                    <td><a asp-page="EditSchoolSecretary" asp-route-schoolSecretaryID="@item.ID">Edit</a> |
+                        <a asp-page="DeleteSchoolSecretary" asp-route-schoolSecretaryID="@item.ID">Delete</a>
                     </td>
 
                 </tr>

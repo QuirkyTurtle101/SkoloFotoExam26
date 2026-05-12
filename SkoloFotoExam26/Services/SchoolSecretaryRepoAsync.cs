@@ -12,6 +12,8 @@ namespace SkoloFotoExam26.Services
         private string _getAllSchoolSecretaries = "SELECT SchoolSecretary.FirstName, SchoolSecretary.LastName, SchoolSecretary.SchoolSecretaryID, SchoolSecretary.Email, SchoolSecretary.PhoneNumber, SchoolSecretary.Initials, School.SchoolID, School.Name, School.StreetName, School.ZipCode, School.SchoolType, ZipCodeLookup.City FROM SchoolSecretary JOIN School on School.SchoolID = SchoolSecretary.SchoolID JOIN ZipCodeLookup ON School.ZipCode = ZipCodeLookup.ZipCode";
         private string _getSchoolSecretary = "SELECT SchoolSecretary.FirstName, SchoolSecretary.SchoolSecretaryID, SchoolSecretary.LastName, SchoolSecretary.Email, SchoolSecretary.PhoneNumber, SchoolSecretary.Initials, School.SchoolID, School.Name, School.StreetName, School.ZipCode FROM SchoolSecretary JOIN School on School.SchoolID = SchoolSecretary.SchoolID WHERE SchoolSecretaryID = @SchoolSecretaryID";
         private string _deleteSchoolSecretary = "Delete FROM School WHERE SchoolSecretaryID = @SchoolSecretaryID ";
+        private string _updateSchoolSecretary = "UPDATE SchoolSecretary SET FirstName = @FirstName, LastName = @LastName, PhoneNumber = @PhoneNumber, Initials = @Initials, SchoolID = @SchoolID";
+        
         #endregion
 
 
@@ -179,9 +181,39 @@ namespace SkoloFotoExam26.Services
             throw new NotImplementedException();
         }
 
-        public Task UpdateAsync(SchoolSecretary toUpdate)
+        public async Task UpdateAsync(SchoolSecretary toUpdate)
         {
-            throw new NotImplementedException();
+            using (SqlConnection connection = new SqlConnection(Secret.connectionString))
+            using (SqlCommand command = new SqlCommand(_updateSchoolSecretary, connection))
+            {
+                try
+                {
+                    await command.Connection.OpenAsync();
+
+                    command.Parameters.AddWithValue("@FirstName", toUpdate.FirstName);
+                    command.Parameters.AddWithValue("@LastName", toUpdate.LastName);
+                    command.Parameters.AddWithValue("@PhoneNumber", toUpdate.PhoneNumber);
+                    command.Parameters.AddWithValue("@Initials", toUpdate.Initials);
+                    command.Parameters.AddWithValue("@SchoolID", toUpdate.TheSchool.SchoolID);
+
+                    await command.ExecuteNonQueryAsync();
+
+                }
+                catch (SqlException sqlex)
+                {
+                    Console.WriteLine("sql fejl: " + sqlex.Message);
+                }
+                catch (Exception ex)
+                {
+                    Console.WriteLine("Generel fejl: " + ex.Message);
+                }
+                finally
+                {
+                    await command.Connection.CloseAsync();
+                }
+            }
+
+
         }
     }
 }

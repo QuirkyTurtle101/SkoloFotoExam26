@@ -39,7 +39,7 @@ namespace SkoloFotoExam26.Models
         public override string ToString()
         {
             return $"SchoolSecretaryID: {PhotographingEventID}, Start: {Start}, End: {End}, SchoolSecretaryID: " +
-                $"{SchoolSecretary.SchoolSecretaryID}, PhotographerID: {Photographer.PhotographerID}";
+                $"{SchoolSecretary.ID}, PhotographerID: {Photographer.ID}";
         }
     }
 }
