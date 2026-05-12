@@ -14,6 +14,7 @@ namespace SkoloFotoExam26.Services
         private string _deleteSchool = "Delete FROM School WHERE SchoolID = @SchoolID";
         private string _getAllSchools = "SELECT schoolID, School.Name, School.StreetName, School.ZipCode, School.SchoolType, ZipCodeLookup.City FROM School JOIN ZipCodeLookup ON School.ZipCode = ZipCodeLookup.ZipCode";
         private string _getSchool = "SELECT School.SchoolID, School.Name, School.streetName, School.SchoolType, School.ZipCode, ZipCodeLookup.City FROM School JOIN ZipCodeLookup on School.ZipCode = ZipCodeLookup.ZipCode WHERE SchoolID = @SchoolID";
+        private string _updateSchool = "UPDATE School SET Name = @Name, StreetName = @StreetName, ZipCode = @ZipCode, SchoolType = @SchoolType";
 
         #endregion
 
