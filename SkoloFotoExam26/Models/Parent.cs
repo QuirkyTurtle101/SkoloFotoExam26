@@ -2,7 +2,6 @@
 {
     public class Parent : User
     {
-        public int ParentID { get; private set; }
         public string Street { get; set; }
         public int ZipCode { get; set; }
         public string City { get; set; }
