@@ -4,7 +4,7 @@ namespace SkoloFotoExam26.Models
 {
     public class School
     {
-        public int SchoolID { get; }
+        public int SchoolID { get; set; }
         public string Name { get; set; }
         public string Street { get; set; }
         public string City { get; set; }

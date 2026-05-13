@@ -35,7 +35,7 @@
             <option value=""> Select Teacher</option>
             @foreach (Teacher t in @Model.TeacherList)
             {
-                <option value="@t.TeacherID">
+                <option value="@t.ID">
                     @t.FirstName @t.LastName
                 </option>
             }
