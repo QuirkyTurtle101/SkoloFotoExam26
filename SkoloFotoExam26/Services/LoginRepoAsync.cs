@@ -57,7 +57,7 @@ namespace SkoloFotoExam26.Services
             LoginInfo output = null;
 
             using (SqlConnection connection = new SqlConnection(Secret.connectionString))
-            using (SqlCommand command = new SqlCommand(_addLogin, connection))
+            using (SqlCommand command = new SqlCommand(_getLogin, connection))
             {
                 try
                 {
@@ -75,12 +75,16 @@ namespace SkoloFotoExam26.Services
                         UserType loginInfoUserType = (UserType)reader.GetInt32(2);
                         output = new LoginInfo(loginInfoEmail, loginInfoPwHash, loginInfoUserType);
                     }
+                    else
+                    {
+                        throw new Exception("WrongEmail");
+                    }
                     await reader.CloseAsync();
 
                 }
                 catch(Exception e)
                 {
-
+                    throw;
                 }
                 finally
                 {

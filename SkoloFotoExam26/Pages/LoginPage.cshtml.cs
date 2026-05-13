@@ -23,14 +23,16 @@ namespace SkoloFotoExam26.Pages
             repositories.Add(UserType.Teacher, teacherRepo);
             _loginRepo = loginRepo;
         }
-
+        
         public void OnGet()
         {
         }
 
-        public void OnGetLogout()
+        public IActionResult OnGetLogout()
         {
             HttpContext.Session.Clear();
+            return RedirectToPage("Index");
+
         }
 
         public async Task<IActionResult> OnPostAsync()
