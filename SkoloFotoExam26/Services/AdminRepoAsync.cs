@@ -7,7 +7,7 @@ namespace SkoloFotoExam26.Services
     public class AdminRepoAsync : IRepoAsync<Administrator, int>, ILoginableRepo
     {
         #region Query strings
-        private string _addAdmin = "INSERT INTO Administrator VALUES (FirstName = @FirstName, LastName = @LastName, Email = @Email, PhoneNumber = @PhoneNumber)";
+        private string _addAdmin = "INSERT INTO Administrator VALUES (@FirstName, @LastName, @Email, @PhoneNumber)";
 
         #endregion
 
@@ -23,7 +23,7 @@ namespace SkoloFotoExam26.Services
 
                     command.Parameters.AddWithValue("@FirstName", input.FirstName);
                     command.Parameters.AddWithValue("@LastName", input.LastName);
-                    command.Parameters.AddWithValue("@ZipCode", input.Email);
+                    command.Parameters.AddWithValue("@Email", input.Email);
                     command.Parameters.AddWithValue("@PhoneNumber", input.PhoneNumber);
                     int noOfRowsEffected = await command.ExecuteNonQueryAsync();
 
