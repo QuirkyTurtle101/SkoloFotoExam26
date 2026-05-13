@@ -5,9 +5,9 @@
 
         //private static int _counter = 1;
 
-        public string Initials { get; private set; }
+        public string Initials { get;  set; }
 
-        public School TheSchool { get; private set; }
+        public School TheSchool { get;  set; }
 
         public SchoolSecretary()
         {

@@ -43,6 +43,25 @@ namespace SkoloFotoExam26.Pages.Photographers
             return RedirectToPage("Index");
         }
 
+        public IActionResult OnPostDelete()
+        {
+            try
+            {
+                _photographerRepo.DeleteAsync(PhotographerToUpdate.ID);
+            }
+            catch(SqlException sqlex)
+            {
+                ViewData["ErrorMessage"] = "Fejl ved sletning - fotografen kan ikke slettes, da der er andre data, som er knyttet til denne";
+                return Page();
+            }
+            catch(Exception ex)
+            {
+                ViewData["ErrorMessage"] = ex.Message;
+                return Page();
+            }
+
+            return RedirectToPage("Index");
+        }
 
         public IActionResult OnPostCancel()
         {

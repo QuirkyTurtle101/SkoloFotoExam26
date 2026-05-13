@@ -39,7 +39,7 @@
                     <td>@item.Email</td>
                     <td>@item.PhoneNumber</td>
                     <td>@item.TheSchool.Name</td>
-                    <td><a asp-page="EditSchoolSecretary" asp-route-schoolSecretaryID="@item.ID">Edit</a> |
+                    <td><a asp-page="EditSchoolSecretary" asp-route-schoolSecretaryID="@item.ID" asp-route-schoolID="@item.TheSchool.SchoolID">Edit</a> |
                         <a asp-page="DeleteSchoolSecretary" asp-route-schoolSecretaryID="@item.ID">Delete</a>
                     </td>
 

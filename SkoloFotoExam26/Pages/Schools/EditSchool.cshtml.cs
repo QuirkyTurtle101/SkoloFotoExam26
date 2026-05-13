@@ -25,8 +25,6 @@ namespace SkoloFotoExam26.Pages.Schools
         {
             try
             {
-                //School school = await _schoolRepo.GetAsync(schoolID);
-
                 await _schoolRepo.UpdateAsync(SchoolToBeUpdated);
             }
             catch (SqlException sqlex)
@@ -43,7 +41,26 @@ namespace SkoloFotoExam26.Pages.Schools
 
         }
 
-        public async Task<IActionResult> OnPostAsyncCancel(int schoolID)
+        public async Task<IActionResult> OnPostAsyncDelete()
+        {
+            try
+            {
+                await _schoolRepo.DeleteAsync(SchoolToBeUpdated.SchoolID);
+            }
+            catch(SqlException sqlex)
+            {
+                ViewData["ErrorMessage"] = "Fejl ved sletning - der er andre data, som er knyttet til denne skole";
+                return Page();
+            }
+            catch(Exception ex)
+            {
+                ViewData["ErrorMessage"] = ex.Message;
+                return Page();
+            }
+            return RedirectToPage("Index");
+        }
+
+        public async Task<IActionResult> OnPostAsyncCancel()
         {
             return RedirectToPage("Index");
         }

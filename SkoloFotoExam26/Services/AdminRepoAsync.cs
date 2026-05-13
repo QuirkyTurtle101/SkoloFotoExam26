@@ -5,6 +5,12 @@ namespace SkoloFotoExam26.Services
 {
     public class AdminRepoAsync : IRepoAsync<Administrator, int>, ILoginableRepo
     {
+        #region Query strings
+        private string _addAdmin = "INSERT INTO ";
+
+        #endregion
+
+
         public Task AddAsync(Administrator input)
         {
             throw new NotImplementedException();
