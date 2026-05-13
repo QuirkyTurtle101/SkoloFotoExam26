@@ -9,6 +9,7 @@ namespace SkoloFotoExam26.Pages.Photographers
     public class EditPhotographerModel : PageModel
     {
         IRepoAsync<Photographer, int> _photographerRepo;
+        [BindProperty]
         public Photographer PhotographerToUpdate { get; set; }
 
         public EditPhotographerModel(IRepoAsync<Photographer, int> photographerRepo)
@@ -21,13 +22,13 @@ namespace SkoloFotoExam26.Pages.Photographers
             PhotographerToUpdate = await _photographerRepo.GetAsync(photographerID);
         }
 
-        public async Task<IActionResult> OnPostAsyncUpdate(int photographerID)
+        public async Task<IActionResult> OnPostAsync()
         {
             try
             {
-                Photographer photographerToUpdate = await _photographerRepo.GetAsync(photographerID);
+                //Photographer photographerToUpdate = await _photographerRepo.GetAsync(photographerID);
 
-                await _photographerRepo.UpdateAsync(photographerToUpdate);
+                await _photographerRepo.UpdateAsync(PhotographerToUpdate);
             }
             catch(SqlException sqlex)
             {
