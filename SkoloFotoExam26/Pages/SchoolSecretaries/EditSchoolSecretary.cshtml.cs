@@ -10,7 +10,9 @@ namespace SkoloFotoExam26.Pages.SchoolSecretaries
     {
         IRepoAsync<SchoolSecretary, int> _schoolSecRepo;
         IRepoAsync<School, int> _schoolRepo;
+        [BindProperty]
         public SchoolSecretary SecretaryToBeUpdated { get; set; }
+        [BindProperty]
         public School ChosenSchoolID { get; set; }
         public List<School> Schools { get; set; }
         public EditSchoolSecretaryModel(IRepoAsync<SchoolSecretary, int> schoolSecRepo, IRepoAsync<School, int> schoolRepo)
@@ -21,16 +23,18 @@ namespace SkoloFotoExam26.Pages.SchoolSecretaries
 
         public async Task OnGetAsync(int schoolSecretaryID)
         {
-            SecretaryToBeUpdated = await _schoolSecRepo.GetAsync(schoolSecretaryID);
+
             Schools = await _schoolRepo.GetAllAsync();
+            SecretaryToBeUpdated = await _schoolSecRepo.GetAsync(schoolSecretaryID);
         }
 
-        public async Task<IActionResult> OnPostAsyncUpdate(int schoolSecretaryID)
+        public async Task<IActionResult> OnPostAsyncUpdate()
         {
             try
             {
-                SchoolSecretary secretaryToBeUpdated = await _schoolSecRepo.GetAsync(schoolSecretaryID);
-                _schoolSecRepo.UpdateAsync(secretaryToBeUpdated);
+                //SchoolSecretary secretaryToBeUpdated = await _schoolSecRepo.GetAsync(schoolSecretaryID);
+
+                _schoolSecRepo.UpdateAsync(SecretaryToBeUpdated);
             }
             catch(SqlException sqlex)
             {

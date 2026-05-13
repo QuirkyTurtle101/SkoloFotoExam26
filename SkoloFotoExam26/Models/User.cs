@@ -2,13 +2,13 @@
 {
     public abstract class User
     {
-        public int ID { get; private set; }
-        public string FirstName { get; private set; }
+        public int ID { get;  set; }
+        public string FirstName { get;  set; }
 
-        public string LastName { get; private set; }
+        public string LastName { get;  set; }
 
-        public string Email { get; private set; }
-        public string PhoneNumber { get; private set; }
+        public string Email { get;  set; }
+        public string PhoneNumber { get;  set; }
 
         protected User()
         {

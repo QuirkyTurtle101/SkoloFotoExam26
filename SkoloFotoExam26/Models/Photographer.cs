@@ -2,22 +2,22 @@
 {
     public class Photographer : User
     {
-        public string Website { get; private set; }
+        public string Website { get;  set; }
 
-        public string CVRNumber { get; private set; }
+        public string CVRNumber { get;  set; }
 
-        public string Street { get; private set; }
+        public string Street { get;  set; }
 
-        public string City { get; private set; }
+        public string City { get;  set; }
 
-        public int ZipCode { get; private set; }
-        public int ExperienceInYears { get; private set; }
+        public int ZipCode { get;  set; }
+        public int ExperienceInYears { get;  set; }
 
-        public int MaxTravelRadiusInKm { get; private set; }
+        public int MaxTravelRadiusInKm { get;  set; }
 
-        public string Instagram { get; private set; }
+        public string Instagram { get;  set; }
 
-        public string Facebook { get; private set; }
+        public string Facebook { get;  set; }
 
         public Photographer()
         {
