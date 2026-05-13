@@ -28,6 +28,7 @@
                     <td> @p.End </td>
                     <td> @p.Photographer.FirstName @p.Photographer.LastName</td>
                     <td><a asp-page="DeletePhotographingEvent" asp-route-photographingEventID="@p.PhotographingEventID" class="btn btn-danger">Slet</a></td>
+                    <td><a asp-page="EditPhotographingEvent" asp-route-photographingEventID="@p.PhotographingEventID" class="btn btn-success">Rediger</a></td>
 
                 </tr>
             }

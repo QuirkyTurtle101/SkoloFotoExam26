@@ -33,6 +33,8 @@
                         <td>@b.ThePhotographingEvent</td>
                         <td>@b.TheSchoolClass</td>
                         <td>@b.TheTeacher.FirstName @b.TheTeacher.LastName</td>
+                    <td><a asp-page="DeleteBooking" asp-route-BookingID="@b.BookingID" class="btn btn-danger">Slet</a></td>
+
                     </tr>
                 }
         </tbody>

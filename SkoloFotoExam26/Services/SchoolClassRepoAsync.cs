@@ -11,7 +11,7 @@ namespace SkoloFotoExam26.Services
         private string _addSchoolClass = "INSERT INTO SchoolClass VALUES(@ClassName, @SchoolID)";
         private string _getAll = "SELECT * FROM SchoolClass";
         private string _getSchoolClass = "SELECT * FROM SchoolClass WHERE SchoolClassID = @SchoolClassID";
-        private string _delete = "SELECT FROM SchoolClass WHERE SchoolClassID = @SchoolClassID";
+        private string _delete = "DELETE FROM SchoolClass WHERE SchoolClassID = @SchoolClassID";
         private string _update = "UPDATE SchoolClass SET ClassName = @ClassName, SchoolID = @SchoolID WHERE SchoolClassID = @SchoolClassID";
         #endregion
 
