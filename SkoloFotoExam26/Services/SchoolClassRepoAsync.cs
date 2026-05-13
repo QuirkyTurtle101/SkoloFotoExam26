@@ -11,6 +11,8 @@ namespace SkoloFotoExam26.Services
         private string _addSchoolClass = "INSERT INTO SchoolClass VALUES(@ClassName, @SchoolID)";
         private string _getAll = "SELECT * FROM SchoolClass";
         private string _getSchoolClass = "SELECT * FROM SchoolClass WHERE SchoolClassID = @SchoolClassID";
+        private string _delete = "SELECT FROM SchoolClass WHERE SchoolClassID = @SchoolClassID";
+        private string _update = "UPDATE SchoolClass SET ClassName = @ClassName, SchoolID = @SchoolID WHERE SchoolClassID = @SchoolClassID";
         #endregion
 
         private IRepoAsync<School, int> _schoolRepo;
@@ -49,9 +51,24 @@ namespace SkoloFotoExam26.Services
             throw new NotImplementedException();
         }
 
-        public Task DeleteAsync(int toDelete)
+        public async Task DeleteAsync(int toDelete)
         {
-            throw new NotImplementedException();
+            using SqlConnection connection = new SqlConnection(Secret.connectionString);
+            try
+            {
+                SqlCommand command = new SqlCommand(_delete, connection);
+                await command.Connection.OpenAsync();
+                command.Parameters.AddWithValue("@SchoolClassID", toDelete);
+                await command.ExecuteNonQueryAsync();
+            }
+            catch (SqlException sqlEx)
+            {
+                Console.WriteLine($"SQL exception message: {sqlEx.Message}");
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"Exception message: {ex.Message}");
+            }
         }
 
         public async Task<List<SchoolClass>> GetAllAsync()
@@ -119,9 +136,26 @@ namespace SkoloFotoExam26.Services
             return schoolClass;
         }
 
-        public Task UpdateAsync(SchoolClass toUpdate)
+        public async Task UpdateAsync(SchoolClass toUpdate)
         {
-            throw new NotImplementedException();
+            using SqlConnection connection = new SqlConnection(Secret.connectionString);
+            try
+            {
+                SqlCommand command = new SqlCommand(_update, connection);
+                await command.Connection.OpenAsync();
+                command.Parameters.AddWithValue("@ClassName", toUpdate.ClassName);
+                command.Parameters.AddWithValue("@SchoolID", toUpdate.School.SchoolID);
+                command.Parameters.AddWithValue("@SchoolClassID", toUpdate.SchoolClassID);
+                await command.ExecuteNonQueryAsync();
+            }
+            catch (SqlException sqlEx)
+            {
+                Console.WriteLine($"SQL exception message: {sqlEx.Message}");
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"Exception message: {ex.Message}");
+            }
         }
     }
 }

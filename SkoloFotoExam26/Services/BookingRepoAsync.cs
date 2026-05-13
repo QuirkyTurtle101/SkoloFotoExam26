@@ -16,6 +16,9 @@ namespace SkoloFotoExam26.Services
 
         private string _getBooking = "SELECT * FROM Booking WHERE BookingID = @BookingID";
 
+        private string _delete = "DELETE FROM Booking WHERE BookingID = @BookingID";
+
+        private string _update = "UPDATE Booking SET Start = @Start, End = @End, SchoolClassID = @SchoolClassID, PhotographingEventID = @PhotographingEventID, TeacherID = @TeacherID WHERE BookingID = @BookingID";
 
         private IRepoAsync<PhotographingEvent, int> _photographingEventRepo;
 
@@ -61,9 +64,24 @@ namespace SkoloFotoExam26.Services
             throw new NotImplementedException();
         }
 
-        public Task DeleteAsync(int toDelete)
+        public async Task DeleteAsync(int toDelete)
         {
-            throw new NotImplementedException();
+            using SqlConnection connection = new SqlConnection(Secret.connectionString);
+            try
+            {
+                SqlCommand command = new SqlCommand(_delete, connection);
+                await command.Connection.OpenAsync();
+                command.Parameters.AddWithValue("@BookingID", toDelete);
+                await command.ExecuteNonQueryAsync();
+            }
+            catch (SqlException sqlExp)
+            {
+                Console.WriteLine($"sql exception message: {sqlExp.Message}");
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"exception message: {ex.Message}");
+            }
         }
 
         public async Task<List<Booking>> GetAllAsync()
@@ -76,7 +94,7 @@ namespace SkoloFotoExam26.Services
                     SqlCommand command = new SqlCommand(_getAll, connection);
                     await connection.OpenAsync();
                     SqlDataReader reader = await command.ExecuteReaderAsync();
-                    while (reader.Read())
+                    while (await reader.ReadAsync())
                     {
                         //int bookingID = reader.GetInt32("BookingID");
                         DateTime start = reader.GetDateTime("Start");
@@ -115,7 +133,7 @@ namespace SkoloFotoExam26.Services
                 command.Parameters.AddWithValue("@BookingID", toGet);
                 SqlDataReader reader = await command.ExecuteReaderAsync();
 
-                if (reader.Read())
+                if (await reader.ReadAsync())
                 {
                     //int bookingID = reader.GetInt32("BookingID");
                     DateTime start = reader.GetDateTime("Start");
@@ -141,9 +159,29 @@ namespace SkoloFotoExam26.Services
             return booking;
         }
 
-        public Task UpdateAsync(Booking toUpdate)
+        public async Task UpdateAsync(Booking toUpdate)
         {
-            throw new NotImplementedException();
+            using SqlConnection connection = new SqlConnection(Secret.connectionString);
+            try
+            {
+                SqlCommand command = new SqlCommand(_update, connection);
+                await command.Connection.OpenAsync();
+                command.Parameters.AddWithValue("@Start", toUpdate.Start);
+                command.Parameters.AddWithValue("@End", toUpdate.End);
+                command.Parameters.AddWithValue("@SchoolClassID", toUpdate.TheSchoolClass.SchoolClassID);
+                command.Parameters.AddWithValue("@PhotographingEventID", toUpdate.ThePhotographingEvent.PhotographingEventID);
+                command.Parameters.AddWithValue("@TeacherID", toUpdate.TheTeacher.ID);
+                command.Parameters.AddWithValue("@BookingID", toUpdate.BookingID);
+                await command.ExecuteNonQueryAsync();
+            }
+            catch (SqlException sqlEx)
+            {
+                Console.WriteLine($"SQL exception message: {sqlEx.Message}");
+            }
+            catch(Exception ex)
+            {
+                Console.WriteLine($"Exception message: {ex.Message}");
+            }
         }
     }
 }
