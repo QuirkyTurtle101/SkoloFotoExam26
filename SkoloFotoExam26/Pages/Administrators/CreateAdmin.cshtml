@@ -1,0 +1,49 @@
+﻿@page
+@model SkoloFotoExam26.Pages.Administrators.CreateAdminModel
+@{
+    ViewData["Title"] = "Opret Administrator";
+}
+
+<h1>Opret administrator</h1>
+
+
+<form method="post">
+    <div asp-validation-summary="All" class="text-danger"></div>
+
+    <div class="form-group">
+        <label asp-for="@Model.FirstName" class="control-label"></label>
+        <input asp-for="@Model.FirstName" class="form-control" />
+    </div>
+
+    <div class="form-group">
+        <label asp-for="@Model.LastName" class="control-label"></label>
+        <input asp-for="@Model.LastName" class="form-control" />
+    </div>
+
+    <div class="form-group">
+        <label asp-for="@Model.Email" class="control-label"></label>
+        <input asp-for="@Model.Email" class="form-control" />
+    </div>
+
+    <div class="form-group">
+        <label asp-for="@Model.PhoneNumber" class="control-label"></label>
+        <input asp-for="@Model.PhoneNumber" class="form-control" />
+    </div>
+
+    <div>
+        <input type="hidden" name="UserType" value="Administrator">
+    </div>
+    <div class="form-group">
+        <label asp-for="@Model.Password" class="control-label"></label>
+        <input asp-for="@Model.Password" class="form-control" />
+    </div>
+
+    <br />
+    <div class="form-group">
+        <input type="submit" value="Opret administratoren" class="btn-primary" />
+    </div>
+
+    <div>
+        <a asp-page="index">Annuler</a>
+    </div>
+</form>

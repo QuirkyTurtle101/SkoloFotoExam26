@@ -10,7 +10,7 @@
         public string Email { get;  set; }
         public string PhoneNumber { get;  set; }
 
-        protected User()
+        public User()
         {
             
         }
@@ -22,7 +22,7 @@
             Email = email;
 
         }
-        protected User(int id, string firstName, string lastName, string phoneNumber, string email)
+        public User(int id, string firstName, string lastName, string phoneNumber, string email)
         {
             ID = id;
             FirstName = firstName;

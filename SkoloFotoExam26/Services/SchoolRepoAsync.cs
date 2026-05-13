@@ -35,7 +35,7 @@ namespace SkoloFotoExam26.Services
                     command.Parameters.AddWithValue("@City", input.City);
                     int noOfRowsEffected = await command.ExecuteNonQueryAsync();
 
-                    await connection.CloseAsync();
+                   
                 }
                 catch (SqlException sqlex)
                 {
@@ -45,6 +45,10 @@ namespace SkoloFotoExam26.Services
                 {
 
                     throw;
+                }
+                finally
+                {
+                    await connection.CloseAsync();
                 }
             }
         }
