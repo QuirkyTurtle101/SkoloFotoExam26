@@ -7,12 +7,12 @@
 
 <h1>Informationer</h1>
 
-<div class="form-group">
-    <a asp-page="CreateParent" class="btn btn-primary">Opret forældreprofil</a>
+<div class="form-group mb-3">
+    <a class="btn btn-primary" asp-page="CreateParent">Opret forældreprofil</a>
 
     @* <a asp-page="CreateStudent" class="btn btn-primary">Opret dit barn</a> *@
 
-        <a class="btn btn-primary" asp-page="/Students/Index">Børn</a>
+    <a class="btn btn-primary" asp-page="/Students/Index">Børn</a>
 
 </div>
 
@@ -23,7 +23,7 @@
         <tr>
             <form method"get">
             <th>
-                    <button type="submit" class="btn btn-link" name="SortBy" value="ForældreID" >ID</button>
+                <button type="submit" class="btn btn-link" name="SortBy" value="ForældreID">ID</button>
             </th>
             </form>
             <th>Fornavn</th>
@@ -47,6 +47,10 @@
                 <td>@item.City</td>
                 <td>@item.ZipCode</td>
                 <td>@item.Street</td>
+                <td>
+                    <a asp-page="IndexStudent" asp-route-ParentID="@item.ID">Børne oversigt</a>
+                </td>
+
             </tr>
         }
     </tbody>

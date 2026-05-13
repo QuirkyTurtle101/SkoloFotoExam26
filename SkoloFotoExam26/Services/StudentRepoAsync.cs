@@ -9,8 +9,19 @@ namespace SkoloFotoExam26.Services
     {
         #region Querys
 
-        private string _addStudent = "INSERT INTO Student VALUES (@StudentID, @FirstName, @MiddleName, @LastName, @ParentID, @SchoolID, @SchoolClassID)";
-        private string _getAllStudent = "SELECT s.StudentID, s.FirstName, s.MiddleName, s.LastName, s.ParentID, s.SchoolClassID, c.ClassName, sch.SchoolName FROM Student s JOIN SchoolClass c ON s.SchoolClassID = c.SchoolClassID JOIN School sch ON c.SchoolID = sch.SchoolID";
+        private string _addStudent = "INSERT INTO Student VALUES (@StudentID, @FirstName, @MiddleName, @LastName, @ParentID, @SchoolClassID)";
+        private string _getAllStudent = @"SELECT " +
+            "s.StudentID," +
+            "s.FirstName, " +
+            "s.MiddleName, " +
+            "s.LastName, " +
+            "s.ParentID, " +
+            "s.SchoolClassID, " +
+            "c.ClassName, " +
+            "sch.Name AS SchoolName " +
+            "FROM Student s " +
+            "JOIN SchoolClass c ON s.SchoolClassID = c.SchoolClassID " +
+            "JOIN School sch ON c.SchoolID = sch.SchoolID";
 
         #endregion
 
@@ -71,7 +82,7 @@ namespace SkoloFotoExam26.Services
                     {
                         int studentID = reader.GetInt32("StudentID");
                         string firstName = reader.GetString("FirstName");
-                        string middleName = reader.GetString("MiddleName");
+                        string middleName = reader.IsDBNull(reader.GetOrdinal("MiddleName")) ? "" : reader.GetString("MiddleName");
                         string lastName = reader.GetString("LastName");
 
                         string sName = reader.GetString("SchoolName");
@@ -82,7 +93,7 @@ namespace SkoloFotoExam26.Services
                         SchoolClass dummyClass = new SchoolClass { ClassName = cName };
                         Parent dummyParent = new Parent { FirstName = pName };
 
-                        students.Add(new Student(firstName, middleName, lastName, dummyParent, dummySchool, dummyClass));
+                        students.Add(new Student(studentID, firstName, middleName, lastName, dummyParent, dummySchool, dummyClass));
                     }
                 }
                 catch (SqlException sqlExp)
