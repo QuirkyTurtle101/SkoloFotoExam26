@@ -13,7 +13,7 @@
         }
         public Teacher(int teacherID, string initials, string firstName, string lastName, string phoneNumber, string email, 
             School theSchool) 
-            : base(firstName, lastName, phoneNumber, email)
+            : base(teacherID, firstName, lastName, phoneNumber, email)
         {
             
             Initials = initials;

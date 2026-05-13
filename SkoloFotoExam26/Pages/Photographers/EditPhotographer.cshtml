@@ -1,0 +1,77 @@
+﻿@page
+@model SkoloFotoExam26.Pages.Photographers.EditPhotographerModel
+@{
+    ViewData["Title"] = "Opdater fotograf";
+}
+
+
+<h1>Rediger fotograf</h1>
+<form method="post">
+
+    <div class="form-group">
+        <label asp-for="@Model.PhotographerToUpdate.FirstName" class="control-label"></label>
+        <input asp-for="@Model.PhotographerToUpdate.FirstName" class="form-control" />
+    </div>
+
+    <div class="form-group">
+        <label asp-for="@Model.PhotographerToUpdate.LastName" class="control-label"></label>
+        <input asp-for="@Model.PhotographerToUpdate.LastName" class="form-control" />
+    </div>
+
+    <div class="form-group">
+        <label asp-for="@Model.PhotographerToUpdate.PhoneNumber" class="control-label"></label>
+        <input asp-for="@Model.PhotographerToUpdate.PhoneNumber" class="form-control" />
+    </div>
+
+    <div class="form-group">
+        <label asp-for="@Model.PhotographerToUpdate.PhoneNumber" class="control-label"></label>
+        <input asp-for="@Model.PhotographerToUpdate.PhoneNumber" readonly class="form-control" />
+    </div>
+
+    <div class="form-group">
+        <label asp-for="@Model.PhotographerToUpdate.Street" class="control-label"></label>
+        <select asp-for="@Model.PhotographerToUpdate.Street" class="form-control"></select>
+    </div>
+
+    <div class="form-group">
+        <label asp-for="@Model.PhotographerToUpdate.ZipCode" class="control-label"></label>
+        <input asp-for="@Model.PhotographerToUpdate.ZipCode" class="form-control" />
+    </div>
+
+    <div class="form-group">
+        <label asp-for="@Model.PhotographerToUpdate.Website" class="control-label"></label>
+        <input asp-for="@Model.PhotographerToUpdate.Website" class="form-control" />
+    </div>
+
+    <div class="form-group">
+        <label asp-for="@Model.PhotographerToUpdate.CVRNumber" class="control-label"></label>
+        <input asp-for="@Model.PhotographerToUpdate.CVRNumber" class="form-control" />
+    </div>
+
+    <div class="form-group">
+        <label asp-for="@Model.PhotographerToUpdate.ExperienceInYears" class="control-label"></label>
+        <input asp-for="@Model.PhotographerToUpdate.ExperienceInYears" class="form-control" />
+    </div>
+
+    <div class="form-group">
+        <label asp-for="@Model.PhotographerToUpdate.MaxTravelRadiusInKm" class="control-label"></label>
+        <input asp-for="@Model.PhotographerToUpdate.MaxTravelRadiusInKm" class="form-control" />
+    </div>
+
+    <div class="form-group">
+        <label asp-for="@Model.PhotographerToUpdate.Instagram" class="control-label"></label>
+        <input asp-for="@Model.PhotographerToUpdate.Instagram" class="form-control" />
+    </div>
+
+    <div class="form-group">
+        <label asp-for="@Model.PhotographerToUpdate.Facebook" class="control-label"></label>
+        <input asp-for="@Model.PhotographerToUpdate.Facebook" class="form-control" />
+    </div>
+
+    <div class="form-group">
+        <input type="submit" value="Update boat" class="btn-primary" />
+        <input type="submit" value="Delete boat" asp-page-handler="Delete" class="btn-danger" />
+        <input type="submit" value="Cancel" asp-page-handler="Cancel" class="btn-warning" />
+    </div>
+
+</form>

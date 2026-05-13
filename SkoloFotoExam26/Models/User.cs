@@ -14,7 +14,6 @@
         {
             
         }
-
         public User(string firstName, string lastName, string phoneNumber, string email)
         {
             FirstName = firstName;
@@ -23,11 +22,12 @@
             Email = email;
 
         }
-        protected User(int id, string firstName, string lastName,string phoneNumber, string email)
+        protected User(int id, string firstName, string lastName, string phoneNumber, string email)
         {
             ID = id;
             FirstName = firstName;
             LastName = lastName;
+            PhoneNumber = phoneNumber;
             Email = email;
         }
 
