@@ -26,7 +26,7 @@ namespace SkoloFotoExam26.Pages.SchoolSecretaries
             SchoolSecretaryToBeDeleted = await _schoolSecRepo.GetAsync(schoolSecretaryID);
         }
 
-        public async Task<IActionResult> OnPostaAyncDelete(int schoolSecretaryID)
+        public async Task<IActionResult> OnPostaAyncDelete(int schoolSecretaryID)//Kan ikke teste før loginRepo
         {
             try
             {
