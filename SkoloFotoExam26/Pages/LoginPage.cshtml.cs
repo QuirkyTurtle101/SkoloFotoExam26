@@ -23,7 +23,7 @@ namespace SkoloFotoExam26.Pages
             repositories.Add(UserType.Teacher, teacherRepo);
             _loginRepo = loginRepo;
         }
-
+        
         public void OnGet()
         {
         }

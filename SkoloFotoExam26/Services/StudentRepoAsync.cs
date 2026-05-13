@@ -32,6 +32,8 @@
 //                    command.Parameters.AddWithValue("@MiddleName", input.MiddleName);
 //                    command.Parameters.AddWithValue("@LastName", input.LastName);
 //                    command.Parameters.AddWithValue("@ParentID", input.Parent.ParentID);
+//                    command.Parameters.AddWithValue("@SchoolID", input.School.SchoolID);
+
 //                    command.Parameters.AddWithValue("@SchoolClassID", input.SchoolClass.SchoolClassID);
 
 //                    int noOfRowsEffected = await command.ExecuteNonQueryAsync();
@@ -74,7 +76,7 @@
 //                        string schoolName = reader.GetString("SchoolName");
 //                        string className = reader.GetString("ClassName");
 
-//                        students.Add(new Student(firstName, middleName, lastName, schoolName, className));
+//                        students.Add(new Student(firstName, middleName, lastName, parent, schoolName, className));
 //                    }
 //                }
 //                catch (SqlException sqlExp)
