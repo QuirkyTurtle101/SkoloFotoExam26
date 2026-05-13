@@ -1,0 +1,56 @@
+﻿@page
+@using SkoloFotoExam26.Models
+@model SkoloFotoExam26.Pages.PhotographingEvents.EditPhotographingEventModel
+@{
+    ViewData["Title"] = "Edit Fotograferings Event";
+}
+<h1>
+    Edit Fotograferings Event
+</h1>
+
+<form method="post">
+    <div class="form-group">
+        <label asp-for="@Model.PhotographingEventToEdit.End" class="control-label"> </label>
+        <input asp-for="@Model.PhotographingEventToEdit.End" class="form-control"/>
+    </div>
+    <div class="form-group">
+        <label asp-for="@Model.PhotographingEventToEdit.Start" class="control-label"></label>
+        <input asp-for="@Model.PhotographingEventToEdit.Start" class="form-control" />
+    </div>
+    <div class="form-group">
+        <label asp-for="PhotographerID"> Choose a Photographer</label>
+        <select asp-for="PhotographerID" class="form-select">
+            <option value=""> Select Photographer</option>
+            @foreach (Photographer p in Model.PhotographerList)
+            {
+                <option value="@p.ID">
+                    @p.FirstName @p.LastName
+                </option>
+            }
+        </select>
+    </div>
+    <div class="form-group">
+        <label asp-for="SchoolSecretaryID"> Choose a Secretary </label>
+        <select asp-for="SchoolSecretaryID" class="form-select">
+            <option value=""> Select Secretary</option>
+            @foreach (SchoolSecretary s in @Model.SecretaryList)
+            {
+                <option value="@s.ID">
+                    @s.FirstName @s.LastName
+                </option>
+            }
+        </select>
+    </div>
+    @* <div>
+        <input type="submit" asp-page-handler="Update" value="rediger event" class="btn btn-success" />
+    </div> *@
+
+    <button type="submit"
+            class="btn btn-success"
+            asp-page-handler="Update" asp-route-PhotographingEventID="@Model.PhotographingEventToEdit.PhotographingEventID" >
+        Rediger event
+    </button>
+    <a asp-page="Index" class="btn btn-warning">
+        Cancel
+    </a>
+</form>

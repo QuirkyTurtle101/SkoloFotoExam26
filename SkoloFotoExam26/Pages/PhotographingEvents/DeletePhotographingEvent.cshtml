@@ -4,7 +4,7 @@
     ViewData["Title"] = "Slet et Fotografering Event";
 }
 <h2>
-    Slet Fotografering Eventet
+    Slet Fotograferings Eventet
 </h2>
 
 <form method="post">
@@ -14,10 +14,20 @@
         <label>Fotografen</label> : @Model.PhotographingEventDelete.Photographer.FirstName @Model.PhotographingEventDelete.Photographer.LastName<br>
         <label>Sekretæren</label> : @Model.PhotographingEventDelete.SchoolSecretary.FirstName @Model.PhotographingEventDelete.SchoolSecretary.LastName<br>
     </div>
-    <input type="submit" value="Slet Event" asp-route-photographingEventID="@Model.PhotographingEventDelete.PhotographingEventID" class="btn-danger" onclick="return confirm('Er du sikker på at slette fotografering eventet?')" />
+
+    <button type="submit"
+            class="btn-danger"
+            asp-page-handler="Delete" asp-route-PhotographingEventID="@Model.PhotographingEventDelete.PhotographingEventID"
+            onclick="return confirm('Er du sikker på at slette fotografering eventet?')">
+        Slet Event
+
+        
+        
+    </button>
+    <a asp-page="Index" class="btn btn-warning">
+        Cancel
+    </a>
 </form>
 
 
-<a asp-page="Index" class="btn btn-warning">
-    Cancel
-</a>
+

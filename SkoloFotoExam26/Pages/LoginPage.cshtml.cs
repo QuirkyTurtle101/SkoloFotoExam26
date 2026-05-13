@@ -28,9 +28,11 @@ namespace SkoloFotoExam26.Pages
         {
         }
 
-        public void OnGetLogout()
+        public IActionResult OnGetLogout()
         {
             HttpContext.Session.Clear();
+            return RedirectToPage("Index");
+
         }
 
         public async Task<IActionResult> OnPostAsync()

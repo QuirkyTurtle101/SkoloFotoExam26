@@ -5,7 +5,7 @@ using System.Data;
 
 namespace SkoloFotoExam26.Services
 {
-    public class ParentRepoAsync : IRepoAsync<Parent, int>
+    public class ParentRepoAsync : IRepoAsync<Parent, int>, ILoginableRepo
     {
         private string _addParent = "INSERT INTO Parent Values (@FirstName, @LastName, @Email, @PhoneNumber, @StreetName, @ZipCode)";
         private string _getAllParent = "SELECT p.ParentID, p.FirstName, p.LastName, p.Email, p.PhoneNumber, p.StreetName, p.ZipCode, z.City FROM Parent p JOIN ZipCodeLookup z ON p.ZipCode = z.ZipCode";
