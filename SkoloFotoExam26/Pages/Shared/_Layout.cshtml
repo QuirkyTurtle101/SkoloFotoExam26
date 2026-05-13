@@ -91,10 +91,14 @@
             @{
                 var session = Context?.Session;
                 var hasUserId = session != null && session.GetInt32("UserID") != null;
+                var pageName = ViewContext.RouteData.Values["page"].ToString();
             }
             @if (hasUserId)
             {
-                <a class="btn btn-sm btn-login-tab" asp-page="/Account/Profile">Min Profil</a>
+                if (!pageName.Contains("/Profile/"))
+                {
+                    <a class="btn btn-sm btn-login-tab" asp-page="/Profile/ProfileRedirect" asp-page-handler="Redirect">Min Profil</a>
+                }
                 <a class="btn btn-sm btn-danger ms-2" asp-page="/LoginPage" asp-page-handler="Logout" style="border-radius: 0 0 4px 4px;">Log ud</a>
             }
             else

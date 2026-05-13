@@ -1,10 +1,14 @@
-﻿using SkoloFotoExam26.Interfaces;
+﻿using Microsoft.Data.SqlClient;
+using SkoloFotoExam26.Interfaces;
 using SkoloFotoExam26.Models;
+using System.Data;
 
 namespace SkoloFotoExam26.Services
 {
     public class AdminRepoAsync : IRepoAsync<Administrator, int>, ILoginableRepo
     {
+        private string _getAdminForLogin = "SELECT * FROM Administrator WHERE Email = @Email";
+
         public Task AddAsync(Administrator input)
         {
             throw new NotImplementedException();
@@ -30,9 +34,37 @@ namespace SkoloFotoExam26.Services
             throw new NotImplementedException();
         }
 
-        public Task<User> GetForLogin(string email)
+        public async Task<User> GetForLogin(string email)
         {
-            throw new NotImplementedException();
+            Administrator admin = null;
+            using SqlConnection connection = new SqlConnection(Secret.connectionString);
+            try
+            {
+                using SqlCommand command = new SqlCommand(_getAdminForLogin, connection);
+                await command.Connection.OpenAsync();
+                command.Parameters.AddWithValue("@Email", email);
+                SqlDataReader reader = await command.ExecuteReaderAsync();
+
+                if (reader.Read())
+                {
+                    int adminID = reader.GetInt32("PhotographerID");
+                    string firstName = reader.GetString("FirstName");
+                    string lastName = reader.GetString("LastName");
+                    string emailResult = reader.GetString("Email");
+                    string phoneNumber = reader.GetString("PhoneNumber");
+
+                    admin = new Administrator(adminID, firstName, lastName, phoneNumber, emailResult);
+                }
+            }
+            catch (SqlException sqlEx)
+            {
+                Console.WriteLine($"SQL Exception message: {sqlEx.Message}");
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"Exception message: {ex.Message}");
+            }
+            return admin;
         }
 
         public Task UpdateAsync(Administrator toUpdate)

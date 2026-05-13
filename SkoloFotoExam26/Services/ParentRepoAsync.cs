@@ -9,9 +9,9 @@ namespace SkoloFotoExam26.Services
     {
         private string _addParent = "INSERT INTO Parent Values (@FirstName, @LastName, @Email, @PhoneNumber, @StreetName, @ZipCode)";
         private string _getAllParent = "SELECT p.ParentID, p.FirstName, p.LastName, p.Email, p.PhoneNumber, p.StreetName, p.ZipCode, z.City FROM Parent p JOIN ZipCodeLookup z ON p.ZipCode = z.ZipCode";
-        private string _readParent = "SELECT * FROM Parent WHERE ParentID = @ParentID";
+        private string _readParent = "SELECT * FROM Parent JOIN ZipCodeLookup ON Parent.ZipCode = ZipCodeLookup.ZipCode WHERE ParentID = @ParentID";
         //private string _updateParent = "UPDATE Parent SET FirstName=@FirstName, LastBane=@LastName, Email=@Email, PhoneNumber=@PhoneNumber, StreetName=@StreetName, ZipCode=@ZipCode, City=@City, WHERE ParentID = @ParentID";
-
+        private string _getParentForLogin = "SELECT * FROM Parent JOIN ZipCodeLookup ON Parent.ZipCode = ZipCodeLookup.ZipCode WHERE Email = @Email";
         public Task<int> CountAsync()
         {
             throw new NotImplementedException();
@@ -107,9 +107,40 @@ namespace SkoloFotoExam26.Services
             throw new NotImplementedException();
         }
 
-        public Task<User> GetForLogin(string email)
+        public async Task<User> GetForLogin(string email)
         {
-            throw new NotImplementedException();
+            Parent parent = null;
+            using SqlConnection connection = new SqlConnection(Secret.connectionString);
+            try
+            {
+                using SqlCommand command = new SqlCommand(_getParentForLogin, connection);
+                await command.Connection.OpenAsync();
+                command.Parameters.AddWithValue("@Email", email);
+                SqlDataReader reader = await command.ExecuteReaderAsync();
+
+                if (reader.Read())
+                {
+                    int parentID = reader.GetInt32("PhotographerID");
+                    string firstName = reader.GetString("FirstName");
+                    string lastName = reader.GetString("LastName");
+                    string emailResult = reader.GetString("Email");
+                    string phoneNumber = reader.GetString("PhoneNumber");
+                    string street = reader.GetString("Street");
+                    int zipCode = reader.GetInt32("ZipCode");
+                    string city = reader.GetString("City");
+
+                    parent = new Parent(firstName, lastName, emailResult, phoneNumber, street, zipCode, city, parentID);
+                }
+            }
+            catch (SqlException sqlEx)
+            {
+                Console.WriteLine($"SQL Exception message: {sqlEx.Message}");
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"Exception message: {ex.Message}");
+            }
+            return parent;
         }
     }
 }

@@ -13,6 +13,7 @@ namespace SkoloFotoExam26.Services
         private string _getTeacher = "SELECT * FROM Teacher WHERE TeacherID = @TeacherID";
         private string _delete = "DELETE FROM Teacher WHERE TeacherID = @TeacherID";
         private string _update = "UPDATE Teacher SET FirstName = @FirstName, LastName = @LastName, Email = @Email, PhoneNumber = @PhoneNumber, Initials = @Initials, SchoolID = @SchoolID WHERE TeacherID = @TeacherID";
+        private string _getTeacherForLogin = "SELECT * FROM Teacher WHERE Email = @Email";
 
         private IRepoAsync<School, int> _schoolRepo;
         public TeacherRepoAsync(IRepoAsync<School, int> schoolRepo)
@@ -143,9 +144,39 @@ namespace SkoloFotoExam26.Services
             return teacher;
         }
 
-        public Task<User> GetForLogin(string email)
+        public async Task<User> GetForLogin(string email)
         {
-            throw new NotImplementedException();
+            Teacher teacher = null;
+            using SqlConnection connection = new SqlConnection(Secret.connectionString);
+            try
+            {
+                using SqlCommand command = new SqlCommand(_getTeacherForLogin, connection);
+                await command.Connection.OpenAsync();
+                command.Parameters.AddWithValue("@Email", email);
+                SqlDataReader reader = await command.ExecuteReaderAsync();
+
+                if (await reader.ReadAsync())
+                {
+                    int teacherID = reader.GetInt32("TeacherID");
+                    string initials = reader.GetString("Initials");
+                    string firstName = reader.GetString("FirstName");
+                    string lastName = reader.GetString("LastName");
+                    string phoneNumber = reader.GetString("PhoneNumber");
+                    string emailResult = reader.GetString("Email");
+                    int schoolID = reader.GetInt32("SchoolID");
+                    School school = await _schoolRepo.GetAsync(schoolID);
+                    teacher = new Teacher(teacherID, initials, firstName, lastName, phoneNumber, emailResult, school);
+                }
+            }
+            catch (SqlException sqlEx)
+            {
+                Console.WriteLine($"SQL Exception message: {sqlEx.Message}");
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"Exception message: {ex.Message}");
+            }
+            return teacher;
         }
 
         public async Task UpdateAsync(Teacher toUpdate)
