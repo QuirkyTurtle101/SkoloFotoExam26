@@ -14,6 +14,7 @@ namespace SkoloFotoExam26.Services
         private string _deleteSchool = "Delete FROM School WHERE SchoolID = @SchoolID";
         private string _getAllSchools = "SELECT schoolID, School.Name, School.StreetName, School.ZipCode, School.SchoolType, ZipCodeLookup.City FROM School JOIN ZipCodeLookup ON School.ZipCode = ZipCodeLookup.ZipCode";
         private string _getSchool = "SELECT School.SchoolID, School.Name, School.streetName, School.SchoolType, School.ZipCode, ZipCodeLookup.City FROM School JOIN ZipCodeLookup on School.ZipCode = ZipCodeLookup.ZipCode WHERE SchoolID = @SchoolID";
+        private string _updateSchool = "UPDATE School SET Name = @Name, StreetName = @StreetName, ZipCode = @ZipCode, SchoolType = @SchoolType WHERE SchoolID = @SchoolID";
 
         #endregion
 
@@ -32,7 +33,6 @@ namespace SkoloFotoExam26.Services
                     command.Parameters.AddWithValue("@ZipCode", input.ZipCode);
                     command.Parameters.AddWithValue("@SchoolType", (int)input.SchoolType); //Skal lige forhøre mig hos Rosa. //det er præcis sådan det gøres //Det var godt :-)
                     command.Parameters.AddWithValue("@City", input.City);
-
                     int noOfRowsEffected = await command.ExecuteNonQueryAsync();
 
                     await connection.CloseAsync();
@@ -188,9 +188,36 @@ namespace SkoloFotoExam26.Services
             return school;
         }
 
-        public Task UpdateAsync(School toUpdate)
+        public async Task UpdateAsync(School toUpdate)
         {
-            throw new NotImplementedException();
+            using (SqlConnection connection = new SqlConnection(Secret.connectionString))
+            using (SqlCommand command = new SqlCommand(_updateSchool, connection))
+            {
+                try
+                {
+                    await command.Connection.OpenAsync();
+
+                    command.Parameters.AddWithValue("@Name", toUpdate.Name);
+                    command.Parameters.AddWithValue("@StreetName", toUpdate.Street);
+                    command.Parameters.AddWithValue("@ZipCode", toUpdate.ZipCode);
+                    command.Parameters.AddWithValue("@SchoolType", (int)toUpdate.SchoolType);
+                    command.Parameters.AddWithValue("@SchoolID", toUpdate.SchoolID);
+                    await command.ExecuteNonQueryAsync();
+
+                }
+                catch (SqlException sqlex)
+                {
+                    Console.WriteLine("sql fejl: " + sqlex.Message);
+                }
+                catch (Exception ex)
+                {
+                    Console.WriteLine("Generel fejl: " + ex.Message);
+                }
+                finally
+                {
+                    await command.Connection.CloseAsync();
+                }
+            }
         }
     }
 }

@@ -10,7 +10,7 @@
 
         public override string ToString()
         {
-            return $"AdministratorID: {ID}" + base.ToString();
+            return $"{base.ToString()}";
         }
     }
 }

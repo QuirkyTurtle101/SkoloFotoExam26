@@ -11,7 +11,8 @@ namespace SkoloFotoExam26.Services
         private string _addTeacher = "INSERT INTO Teacher VALUES(@FirstName, @LastName, @Email, @PhoneNumber, @Initials, @SchoolID)";
         private string _getAll = "SELECT * FROM Teacher";
         private string _getTeacher = "SELECT * FROM Teacher WHERE TeacherID = @TeacherID";
-
+        private string _delete = "DELETE FROM Teacher WHERE TeacherID = @TeacherID";
+        private string _update = "UPDATE Teacher SET FirstName = @FirstName, LastName = @LastName, Email = @Email, PhoneNumber = @PhoneNumber, Initials = @Initials, SchoolID = @SchoolID WHERE TeacherID = @TeacherID";
 
         private IRepoAsync<School, int> _schoolRepo;
         public TeacherRepoAsync(IRepoAsync<School, int> schoolRepo)
@@ -49,9 +50,24 @@ namespace SkoloFotoExam26.Services
             throw new NotImplementedException();
         }
 
-        public Task DeleteAsync(int toDelete)
+        public async Task DeleteAsync(int toDelete)
         {
-            throw new NotImplementedException();
+            using SqlConnection connection = new SqlConnection(Secret.connectionString);
+            try
+            {
+                SqlCommand command = new SqlCommand(_delete, connection);
+                await command.Connection.OpenAsync();
+                command.Parameters.AddWithValue("@TeacherID", toDelete);
+                await command.ExecuteNonQueryAsync();
+            }
+            catch (SqlException sqlEx)
+            {
+                Console.WriteLine($"SQL exception message: {sqlEx.Message}");
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"Exception message: {ex.Message}");
+            }
         }
 
         public async Task<List<Teacher>> GetAllAsync()
@@ -64,7 +80,7 @@ namespace SkoloFotoExam26.Services
                     SqlCommand command = new SqlCommand(_getAll, connection);
                     await command.Connection.OpenAsync();
                     SqlDataReader reader = await command.ExecuteReaderAsync();
-                    while (reader.Read())
+                    while (await reader.ReadAsync())
                     {
                         int teacherID = reader.GetInt32("TeacherID");
                         string initials = reader.GetString("Initials");
@@ -103,7 +119,7 @@ namespace SkoloFotoExam26.Services
                 command.Parameters.AddWithValue("@TeacherID", toGet);
                 SqlDataReader reader = await command.ExecuteReaderAsync();
 
-                if (reader.Read())
+                if (await reader.ReadAsync())
                 {
                     int teacherID = reader.GetInt32("TeacherID");
                     string initials = reader.GetString("Initials");
@@ -132,9 +148,30 @@ namespace SkoloFotoExam26.Services
             throw new NotImplementedException();
         }
 
-        public Task UpdateAsync(Teacher toUpdate)
+        public async Task UpdateAsync(Teacher toUpdate)
         {
-            throw new NotImplementedException();
+            using SqlConnection connection = new SqlConnection(Secret.connectionString);
+            try
+            {
+                SqlCommand command = new SqlCommand(_update, connection);
+                await command.Connection.OpenAsync();
+                command.Parameters.AddWithValue("@FirstName", toUpdate.FirstName);
+                command.Parameters.AddWithValue("@LastName", toUpdate.LastName);
+                command.Parameters.AddWithValue("@Email", toUpdate.Email);
+                command.Parameters.AddWithValue("@PhoneNumber", toUpdate.PhoneNumber);
+                command.Parameters.AddWithValue("@Initials", toUpdate.Initials);
+                command.Parameters.AddWithValue("@SchoolID", toUpdate.TheSchool.SchoolID);
+                command.Parameters.AddWithValue("@TeacherID", toUpdate.ID);
+                await command.ExecuteNonQueryAsync();
+            }
+            catch (SqlException sqlEx)
+            {
+                Console.WriteLine($"SQL exception message: {sqlEx.Message}");
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"Exception message: {ex.Message}");
+            }
         }
     }
 }

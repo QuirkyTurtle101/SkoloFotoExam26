@@ -13,6 +13,7 @@ namespace SkoloFotoExam26.Services
         private string _getPhotographer = "SELECT * FROM Photographer JOIN ZipCodeLookup ON Photographer.ZipCode=ZipCodeLookup.ZipCode WHERE PhotographerID = @PhotographerID";
         private string _getAll = "SELECT * FROM Photographer JOIN ZipCodeLookup ON Photographer.ZipCode=ZipCodeLookup.ZipCode";
         private string _deletePhotographer = "DELETE FROM Photographer WHERE PhotographerID = @PhotographerID";
+        private string _updatePhotographer = "UPDATE Photographer SET FirstName = @FirstName, LastName = @LastName, PhoneNumber = @PhoneNumber, StreetName = @StreetName, ZipCode  = @ZipCode, WebSite = @WebSite, CVRNumber = @CVRNumber, ExperienceInYears = @ExperienceInYears, MaxTravelRadiusInKm = @MaxTravelRadiusInKm, Instagram = @Instagram, Facebook = @Facebook WHERE PhotographerID = @ID";
 
         #endregion
         public async Task AddAsync(Photographer input)
@@ -161,9 +162,9 @@ namespace SkoloFotoExam26.Services
                     string website = reader.GetString("Website");
                     string cvrNumber = reader.GetString("CVRNumber");
                     string city = reader.GetString("City");
-//<<<<<<< HEAD
+                    //<<<<<<< HEAD
                     int zipCode = reader.GetInt32("ZipCode");
-//=======
+                    //=======
                     string street = reader.GetString("StreetName");
                     int experienceInYears = reader.GetInt32("ExperienceInYears");
                     int maxTravelRadiusInKm = reader.GetInt32("MaxTravelRadiusInKm");
@@ -177,7 +178,7 @@ namespace SkoloFotoExam26.Services
             {
                 Console.WriteLine($"SQL Exception message: {sqlEx.Message}");
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 Console.WriteLine($"Exception message: {ex.Message}");
             }
@@ -189,9 +190,47 @@ namespace SkoloFotoExam26.Services
             throw new NotImplementedException();
         }
 
-        public Task UpdateAsync(Photographer toUpdate)
+        public async Task UpdateAsync(Photographer toUpdate)
         {
-            throw new NotImplementedException();
+
+            using (SqlConnection connection = new SqlConnection(Secret.connectionString))
+            using (SqlCommand command = new SqlCommand(_updatePhotographer, connection))
+            {
+                try
+                {
+                    await command.Connection.OpenAsync();
+
+                    command.Parameters.AddWithValue("@FirstName", toUpdate.FirstName);
+                    command.Parameters.AddWithValue("@LastName", toUpdate.LastName);
+                    command.Parameters.AddWithValue("@PhoneNumber", toUpdate.PhoneNumber);
+                    command.Parameters.AddWithValue("@StreetName", toUpdate.Street);
+                    command.Parameters.AddWithValue("@ZipCode", toUpdate.ZipCode);
+                    command.Parameters.AddWithValue("@WebSite", toUpdate.Website);
+                    command.Parameters.AddWithValue("@CVRNumber", toUpdate.CVRNumber);
+                    command.Parameters.AddWithValue("@ExperienceInYears", toUpdate.ExperienceInYears);
+                    command.Parameters.AddWithValue("@MaxTravelRadiusInKm", toUpdate.MaxTravelRadiusInKm);
+                    command.Parameters.AddWithValue("@Instagram", toUpdate.Instagram);
+                    command.Parameters.AddWithValue("@Facebook", toUpdate.Facebook);
+                    command.Parameters.AddWithValue("@ID", toUpdate.ID);
+
+                    await command.ExecuteNonQueryAsync();
+
+                }
+                catch (SqlException sqlex)
+                {
+                    Console.WriteLine("sql fejl: " + sqlex.Message);
+                }
+                catch (Exception ex)
+                {
+                    Console.WriteLine("Generel fejl: " + ex.Message);
+                }
+                finally
+                {
+                    await command.Connection.CloseAsync();
+                }
+            }
         }
+
+
     }
 }
