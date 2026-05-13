@@ -6,14 +6,39 @@
 
 <h1>Login</h1>
 
-<form method="post">
-    <div class="form-group">
-        <input asp-for="@Model.Attempt.Email" />
-    </div>
 
-    <div class="form-group">
-        <input asp-for="@Model.Attempt.Password" />
-    </div>
 
-    <input type="submit" value="Login" class="btn btn-primary"/>
-</form>
+<div class="container mt-5">
+    <div class="row justify-content-center">
+        <div class="col-md-4">
+            <div class="card shadow p-4 text-center" style="border-radius: 15px;">
+                <h3 class="fw-bold" style="color: #4a4a4a;">Login</h3>
+                <hr style="border: 2px solid #d1a678; opacity: 1; width: 60%; margin: 10px auto 30px auto;">
+
+                <form method="post">
+                    <div class="mb-3">
+                        <input asp-for="Attempt.Email" class="form-control" placeholder="E-mail" required />
+                        <span asp-validation-for="Attempt.Email" class="text-danger small"></span>
+                    </div>
+
+                    <div class="mb-3">
+                        <input asp-for="Attempt.Password" type="password" class="form-control" placeholder="Adgangskode" required />
+                        <span asp-validation-for="Attempt.Password" class="text-danger small"></span>
+                    </div>
+
+                    <button type="submit" class="btn w-100" style="background-color: #d1a678; color: white;">Log ind</button>
+                </form>
+
+                <div class="mt-3 small">
+                    <a href="#" class="text-decoration-none" style="color: #d1a678;">Glemt login?</a>
+                    <br>
+                    <a href="#" class="text-muted text-decoration-none">Vilkår & betingelser</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}
