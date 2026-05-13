@@ -90,16 +90,18 @@
         <div class="container d-flex justify-content-end">
             @{
                 var session = Context?.Session;
-                var isAuthenticated = User?.Identity?.IsAuthenticated == true;
                 var hasUserId = session != null && session.GetInt32("UserID") != null;
             }
-            @if (isAuthenticated || hasUserId)
+            @if (hasUserId)
             {
                 <a class="btn btn-sm btn-login-tab" asp-page="/Account/Profile">Min Profil</a>
                 <a class="btn btn-sm btn-danger ms-2" asp-page="/LoginPage" asp-page-handler="Logout" style="border-radius: 0 0 4px 4px;">Log ud</a>
             }
             else
             {
+                <a class="btn btn-sm btn-login-tab" asp-page="/LoginPage">
+                    Log ind
+                </a>
             }
         </div>
 
@@ -122,3 +124,4 @@
 
     @await RenderSectionAsync("Scripts", required: false)
 </body>
+</html>
