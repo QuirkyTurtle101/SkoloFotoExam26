@@ -5,27 +5,28 @@
     ViewData["Titel"] = "Liste af forældre";
 }
 
-<h1>Informationer</h1>
+<h1>Forælder info</h1>
 
 <div class="form-group mb-3">
-    <a class="btn btn-primary" asp-page="CreateParent">Opret forældreprofil</a>
+    <a class="btn btn-primary" asp-page="CreateParent">Opret Forældreprofil</a>
 
-    @* <a asp-page="CreateStudent" class="btn btn-primary">Opret dit barn</a> *@
+    @* <a class="btn btn-primary" asp-page="/Students/Create">Tilmeld barn</a> *@
 
-    <a class="btn btn-primary" asp-page="/Students/Index">Børn</a>
-
+    @* <a class="btn btn-primary" asp-page="/Students/Index">Børn</a> *@
 </div>
 
 @*Maybe create a Filter here*@
 
-<table class="table">
+<table class="table table-striped">
     <thead>
         <tr>
-            <form method"get">
             <th>
                 <button type="submit" class="btn btn-link" name="SortBy" value="ForældreID">ID</button>
+                <form method="get" style="display:inline;">
+                    <button type="submit" class=btn btn-link p-0" name="SortBy" value="ParentID">ID</button>
+                </form>
             </th>
-            </form>
+
             <th>Fornavn</th>
             <th>Efternavn</th>
             <th>Email</th>
@@ -33,6 +34,7 @@
             <th>By</th>
             <th>PostNummer</th>
             <th>Vejnavn</th>
+            <th class="text-center">Handlinger</th>
         </tr>
     </thead>
     <tbody>
@@ -40,7 +42,7 @@
         {
             <tr>
                 <td>@item.ID</td>
-                <td>@item.FirstName</td>
+                <td> @item.FirstName</td>
                 <td>@item.LastName</td>
                 <td>@item.Email</td>
                 <td>@item.PhoneNumber</td>
@@ -48,9 +50,16 @@
                 <td>@item.ZipCode</td>
                 <td>@item.Street</td>
                 <td>
-                    <a asp-page="IndexStudent" asp-route-ParentID="@item.ID">Børne oversigt</a>
+                    <div class="btn-group" role="group">
+                        <a class="btn btn-primary" asp-page="/Students/Index">Børn</a>
+                        <a class="btn btn-outline-info btn-sm" asp-page="IndexStudent" asp-route-ParentID="@item.ID">Børn</a>
+                        <a asp-page="IndexStudent" asp-route-ParentID="@item.ID">Børne oversigt</a>
+                        <a class="btn btn-primary" asp-page="/Students/CreateStudent">Tilmeld barn</a>
+                        <a asp-page="CreateStudent" asp-route-ParentID="@item.ID">Tilføj barn</a>
+                        <a asp-page="UpdateParent" asp-route-ParentID="@item.ID">Rediger forælder</a>
+                        <a asp-page="DeleteParent" asp-route-ParentID="@item.ID">Slet forælder</a>
+                    </div>
                 </td>
-
             </tr>
         }
     </tbody>

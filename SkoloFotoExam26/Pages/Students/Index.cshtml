@@ -31,14 +31,13 @@
         @foreach (Student item in @Model.Students)
         {
             <tr>
-                <th>Fornavn</th>
-                <th>Mellemnavn</th>
-                <th>Efternavn</th>
-                <th>ForældreID</th>
-                <th>SkoleID</th>
-                <th>Skoleklasse</th>
+                <td>@item.FirstName</td>
+                <td>@item.MiddleName</td>
+                <td>@item.LastName</td>
+                <td>@item.School.Name</td>
+                <td>@item.SchoolClass.ClassName</td>
                 <td>
-                    @* <a asp-page="CreateStudent" asp-route-ParentID="@item.ID">Opret barn</a> *@
+                    <a asp-page="Details" asp-route-id="@item.StudentID" class="btn btn-info btn-sm">Vis</a>
                 </td>
             </tr>
         }

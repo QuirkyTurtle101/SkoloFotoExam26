@@ -45,27 +45,41 @@ namespace SkoloFotoExam26.Pages.Students
             _schoolClassRepo = schoolClassRepoAsync;
         }
 
-        public async Task OnGetAsync()
+
+        public async Task OnGetAsync(int ParentID)
         {
-            ParentList = await _parentRepo.GetAllAsync();
-            SchoolList = await _schoolRepo.GetAllAsync();
+            this.ParentID = ParentID;
+
+            // Hent alle klasser fra databasen, så vi kan vise dem i dropdown'en
             SchoolClassList = await _schoolClassRepo.GetAllAsync();
         }
+
+
         public async Task<IActionResult> OnPostAsync()
         {
             try
             {
-                Parent parent = await _parentRepo.GetAsync(ParentID);
-                School school = await _schoolRepo.GetAsync(SchoolID);
-                SchoolClass schoolClass = await _schoolClassRepo.GetAsync(SchoolClassID);
-                Student newStudent = new Student(0, NewStudent.FirstName, NewStudent.MiddleName, NewStudent.LastName, parent, school, schoolClass);
-                await _studentRepo.AddAsync(newStudent);
+                // 1. Opret et Student objekt manuelt ud fra de properties, formen har udfyldt
+                // Vi bruger ParentID fra formen og SchoolClassID (husk at tilføje den til formen!)
+                Student studentToSave = new Student
+                {
+                    FirstName = this.FirstName,
+                    MiddleName = this.MiddleName,
+                    LastName = this.LastName,
+                    Parent = new Parent { ID = this.ParentID },
+                    SchoolClass = new SchoolClass { SchoolClassID = this.SchoolClassID }
+                };
+
+                // 2. Gem via repo
+                await _studentRepo.AddAsync(studentToSave);
+
+                return RedirectToPage("Index");
             }
             catch (Exception ex)
             {
-                ViewData["ErrorMessage"] = ex.Message;
+                ViewData["ErrorMessage"] = "Fejl ved oprettelse: " + ex.Message;
+                return Page();
             }
-            return RedirectToPage("Index");
         }
     }
 }
