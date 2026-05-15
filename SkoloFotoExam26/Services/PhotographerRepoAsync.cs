@@ -40,7 +40,6 @@ namespace SkoloFotoExam26.Services
 
                     int noOfRowsEffected = await command.ExecuteNonQueryAsync();
 
-                    await connection.CloseAsync();
                 }
                 catch (SqlException sqlex)
                 {
@@ -137,6 +136,10 @@ namespace SkoloFotoExam26.Services
                 {
                     Console.WriteLine($"Exception message: {ex.Message}");
                 }
+                finally
+                {
+                    await connection.CloseAsync();
+                }
             }
             return photographers;
         }
@@ -181,6 +184,10 @@ namespace SkoloFotoExam26.Services
             catch (Exception ex)
             {
                 Console.WriteLine($"Exception message: {ex.Message}");
+            }
+            finally
+            {
+                await connection.CloseAsync();
             }
             return photographer;
         }

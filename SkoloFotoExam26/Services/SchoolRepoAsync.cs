@@ -65,7 +65,7 @@ namespace SkoloFotoExam26.Services
 
                     countOfSchools = Convert.ToInt32(await command.ExecuteScalarAsync());
 
-                    await connection.CloseAsync();
+
                 }
                 catch (SqlException sqlex)
                 {
@@ -74,6 +74,10 @@ namespace SkoloFotoExam26.Services
                 catch (Exception ex)
                 {
                     throw;
+                }
+                finally
+                {
+                    await connection.CloseAsync();
                 }
                 return countOfSchools;
             }

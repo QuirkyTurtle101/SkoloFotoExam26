@@ -12,7 +12,7 @@ namespace SkoloFotoExam26.Services
         private string _getAllSchoolSecretaries = "SELECT SchoolSecretary.FirstName, SchoolSecretary.LastName, SchoolSecretary.SchoolSecretaryID, SchoolSecretary.Email, SchoolSecretary.PhoneNumber, SchoolSecretary.Initials, School.SchoolID, School.Name, School.StreetName, School.ZipCode, School.SchoolType, ZipCodeLookup.City FROM SchoolSecretary JOIN School on School.SchoolID = SchoolSecretary.SchoolID JOIN ZipCodeLookup ON School.ZipCode = ZipCodeLookup.ZipCode";
         private string _getSchoolSecretary = "SELECT SchoolSecretary.FirstName, SchoolSecretary.SchoolSecretaryID, SchoolSecretary.LastName, SchoolSecretary.Email, SchoolSecretary.PhoneNumber, SchoolSecretary.Initials, School.SchoolID, School.Name, School.StreetName, School.ZipCode FROM SchoolSecretary JOIN School on School.SchoolID = SchoolSecretary.SchoolID WHERE SchoolSecretaryID = @SchoolSecretaryID";
         private string _deleteSchoolSecretary = "DELETE FROM SchoolSecretary WHERE SchoolSecretaryID = @SchoolSecretaryID ";
-        private string _updateSchoolSecretary = "UPDATE SchoolSecretary SET FirstName = @FirstName, LastName = @LastName, PhoneNumber = @PhoneNumber, Initials = @Initials, SchoolID = @SchoolSecretaryID WHERE SchoolID = @ID";
+        private string _updateSchoolSecretary = "UPDATE SchoolSecretary SET FirstName = @FirstName, LastName = @LastName, PhoneNumber = @PhoneNumber, Initials = @Initials, SchoolID = @SchoolID WHERE SchoolSecretaryID = @ID";
         private string _getSchoolSecretaryForLogin = "SELECT * FROM SchoolSecretary WHERE Email = @Email";
         #endregion
 
@@ -239,7 +239,7 @@ namespace SkoloFotoExam26.Services
                     command.Parameters.AddWithValue("@PhoneNumber", toUpdate.PhoneNumber);
                     command.Parameters.AddWithValue("@Initials", toUpdate.Initials);
                     command.Parameters.AddWithValue("@SchoolID", toUpdate.TheSchool.SchoolID);
-                    command.Parameters.AddWithValue("@SchoolSecretaryID", toUpdate.ID);
+                    command.Parameters.AddWithValue("@ID", toUpdate.ID);
                     await command.ExecuteNonQueryAsync();
 
                 }

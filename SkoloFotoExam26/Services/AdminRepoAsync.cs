@@ -11,6 +11,8 @@ namespace SkoloFotoExam26.Services
         private string _addAdmin = "INSERT INTO Administrator VALUES (@FirstName, @LastName, @Email, @PhoneNumber)";
         private string _getAllAdmins = "SELECT * FROM Administrator";
         private string _getAdmin = "SELECT * FROM Administrator WHERE AdministratorID = @AdministratorID";
+        private string _deleteAdmin = "DELETE FROM Administrator WHERE AdministratorID = @AdministratorID";
+        private string _updateAdmin = " UPDATE Administrator SET FirstName = @FirstName, LastName = @LastName, PhoneNumber = @PhoneNumber WHERE AdministratorID = @AdminID";
         #endregion
 
         public async Task AddAsync(Administrator input)
@@ -53,9 +55,34 @@ namespace SkoloFotoExam26.Services
             throw new NotImplementedException();
         }
 
-        public Task DeleteAsync(int toDelete)
+        public async Task DeleteAsync(int toDelete)
         {
-            throw new NotImplementedException();
+            using (SqlConnection connection = new SqlConnection(Secret.connectionString))
+            {
+                try
+                {
+                    SqlCommand command = new SqlCommand(_deleteAdmin, connection);
+                    await connection.OpenAsync();
+
+                    command.Parameters.AddWithValue("@AdministratorID", toDelete);
+
+                    int noOfRowsEffected = await command.ExecuteNonQueryAsync();
+
+                }
+                catch (SqlException sqlex)
+                {
+                    throw;
+                }
+                catch (Exception ex)
+                {
+                    throw;
+                }
+                finally
+                {
+                    await connection.CloseAsync();
+                }
+
+            }
         }
 
         public async Task<List<Administrator>> GetAllAsync()
@@ -145,9 +172,35 @@ namespace SkoloFotoExam26.Services
             throw new NotImplementedException();
         }
 
-        public Task UpdateAsync(Administrator toUpdate)
+        public async Task UpdateAsync(Administrator toUpdate)
         {
-            throw new NotImplementedException();
+            using (SqlConnection connection = new SqlConnection(Secret.connectionString))
+            using (SqlCommand command = new SqlCommand(_updateAdmin, connection))
+            {
+                try
+                {
+                    await command.Connection.OpenAsync();
+
+                    command.Parameters.AddWithValue("@FirstName", toUpdate.FirstName);
+                    command.Parameters.AddWithValue("@LastName", toUpdate.LastName);
+                    command.Parameters.AddWithValue("@PhoneNumber", toUpdate.PhoneNumber);
+                    command.Parameters.AddWithValue("@AdminID", toUpdate.ID);
+                    await command.ExecuteNonQueryAsync();
+
+                }
+                catch (SqlException sqlex)
+                {
+                    throw;
+                }
+                catch (Exception ex)
+                {
+                    throw;
+                }
+                finally
+                {
+                    await command.Connection.CloseAsync();
+                }
+            }
         }
     }
 }
