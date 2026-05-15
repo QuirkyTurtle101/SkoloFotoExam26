@@ -1,0 +1,39 @@
+﻿@page
+@using SkoloFotoExam26.Models
+@model SkoloFotoExam26.Pages.SchoolClasses.EditSchoolClassModel
+@{
+    ViewData["Title"] = "Rediger skole klasse";
+}
+
+<h1>
+    Rediger Klasse
+</h1>
+
+<form method="post">
+    <div class="form-group">
+        <label asp-for="@Model.ClassName" class="control-label"></label>
+        <input asp-for="@Model.ClassName" class="form-control" />
+    </div>
+
+    <div class="form-group">
+        <label asp-for="SchoolID">Choose a School</label>
+        <select asp-for="SchoolID" class="form-control">
+            <option value=""> Select School </option>
+            @foreach (School s in Model.SchoolList)
+            {
+                <option value="@s.SchoolID">
+                    @s.Name
+                </option>
+            }
+        </select>
+    </div>
+    <br />
+    <button type="submit"
+            class="btn btn-success"
+            asp-page-handler="Update" asp-route-SchoolClassID="@Model.EditSchoolClass.SchoolClassID">
+        Rediger Klasse
+    </button>
+    <a asp-page="Index" class="btn btn-warning">
+        Cancel
+    </a>
+</form>

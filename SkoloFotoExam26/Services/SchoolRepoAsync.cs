@@ -8,7 +8,7 @@ namespace SkoloFotoExam26.Services
 {
     public class SchoolRepoAsync : IRepoAsync<School, int>
     {
-        #region QueryStrings
+        #region Query strings
         private string _addSchool = "INSERT INTO School VALUES(@Name, @Street, @ZipCode, @SchoolType)";
         private string _countSchools = "SELECT COUNT(*) FROM School";
         private string _deleteSchool = "Delete FROM School WHERE SchoolID = @SchoolID";
@@ -18,7 +18,7 @@ namespace SkoloFotoExam26.Services
 
         #endregion
 
-
+        #region Methods
         public async Task AddAsync(School input)
         {
             using (SqlConnection connection = new SqlConnection(Secret.connectionString))
@@ -227,5 +227,6 @@ namespace SkoloFotoExam26.Services
                 }
             }
         }
+        #endregion
     }
 }

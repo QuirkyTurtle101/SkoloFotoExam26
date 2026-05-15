@@ -35,7 +35,7 @@ namespace SkoloFotoExam26.Pages.Bookings
                 catch (Exception ex)
                 {
 
-                    ViewData["Title"] = ex.Message;
+                    ViewData["ErrorMessage"] = ex.Message;
                     return Page();
                 }
             } 

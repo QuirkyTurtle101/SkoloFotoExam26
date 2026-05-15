@@ -5,7 +5,7 @@ using SkoloFotoExam26.Models;
 
 namespace SkoloFotoExam26.Pages.Bookings
 {
-    public class CreateBookingModel : PageModel
+    public class EditBookingModel : PageModel
     {
         private IRepoAsync<Booking, int> _bookingRepo;
 
@@ -16,13 +16,16 @@ namespace SkoloFotoExam26.Pages.Bookings
         public IRepoAsync<SchoolClass, int> _schoolClassRepo;
 
         [BindProperty]
-        public PhotographingEvent TheEvent { get; set; }
+        public Booking EditBooking { get; set; }
 
         [BindProperty]
         public DateTime Start { get; set; } = DateTime.Today;
         [BindProperty]
         public DateTime End { get; set; } = DateTime.Today;
-        
+
+        [BindProperty]
+        public int TheEventID { get; set; }
+
         [BindProperty]
         public int TeacherID { get; set; }
         [BindProperty]
@@ -34,7 +37,7 @@ namespace SkoloFotoExam26.Pages.Bookings
 
         public List<Booking> Bookings { get; set; }
 
-        public CreateBookingModel(IRepoAsync<PhotographingEvent, int> photographingEventRepo, IRepoAsync<Booking, int> bookingRepo,
+        public EditBookingModel(IRepoAsync<PhotographingEvent, int> photographingEventRepo, IRepoAsync<Booking, int> bookingRepo,
             IRepoAsync<Teacher, int> teacherRepo, IRepoAsync<SchoolClass, int> schoolClassRepo)
         {
             _bookingRepo = bookingRepo;
@@ -43,47 +46,40 @@ namespace SkoloFotoExam26.Pages.Bookings
             _schoolClassRepo = schoolClassRepo;
         }
 
-        public async Task OnGet(int id)
+        public async Task OnGet(int BookingID)
         {
             TeacherList = await _teacherRepo.GetAllAsync();
-            TheEvent = await _photographingEventRepo.GetAsync(id);
+            EditBooking = await _bookingRepo.GetAsync(BookingID);
             SchoolClassList = await _schoolClassRepo.GetAllAsync();
-            Bookings = await _bookingRepo.GetAllAsync();
+            Start = EditBooking.Start;
+            End = EditBooking.End;
+            TeacherID = EditBooking.TheTeacher.ID;
+            SelectedSchoolClassID = EditBooking.TheSchoolClass.SchoolClassID;
+            TheEventID = EditBooking.ThePhotographingEvent.PhotographingEventID;
         }
 
-        public async Task<IActionResult> OnPostAsync(int id)
+        public async Task<IActionResult> OnPostUpdate(int BookingID)
         {
             try
             {
+                TeacherList = await _teacherRepo.GetAllAsync();
+                EditBooking = await _bookingRepo.GetAsync(BookingID);
+                SchoolClassList = await _schoolClassRepo.GetAllAsync();
 
-                Teacher teacher = await _teacherRepo.GetAsync(TeacherID);
-                TheEvent = await _photographingEventRepo.GetAsync(id);
-                SchoolClass schoolClass = await _schoolClassRepo.GetAsync(SelectedSchoolClassID);
-                Bookings = await _bookingRepo.GetAllAsync();
-                Booking booking = new Booking(Start, End, TheEvent, teacher, schoolClass);
-                foreach (Booking b in Bookings)
-                {         
-                    if (booking.Start < b.End && booking.End > b.Start)
-                    {
-                        ViewData["ErrorMessage"] = "Tiden er booket";
-                        return Page();
-                    }
-                    //if ()
-                    //{
-                    //    ViewData["ErrorMessage"] = "Bookningen skal laves indefor eventet tidsramme";
-                    //    return Page();
-                    //}
-                }
-                await _bookingRepo.AddAsync(booking);
-
+                Booking edited = new Booking(Start, End, await _photographingEventRepo.GetAsync(TheEventID),
+                    await _schoolClassRepo.GetAsync(SelectedSchoolClassID), 
+                    await _teacherRepo.GetAsync(TeacherID), BookingID);
+                await _bookingRepo.UpdateAsync(edited);
+                return RedirectToPage("Index");
             }
             catch (Exception ex)
             {
-
-                ViewData["ErrorMessage"] = ex.Message;
+                ViewData["Title"] = ex.Message;
                 return Page();
             }
-            return RedirectToPage("ChooseEvents");
         }
+
+
+
     }
 }

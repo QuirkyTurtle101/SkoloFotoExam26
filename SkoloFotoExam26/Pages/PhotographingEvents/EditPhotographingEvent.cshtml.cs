@@ -23,6 +23,12 @@ namespace SkoloFotoExam26.Pages.PhotographingEvents
 
         [BindProperty]
         public int SchoolSecretaryID { get; set; }
+
+        [BindProperty]
+        public DateTime Start { get; set; } = DateTime.Today;
+
+        [BindProperty]
+        public DateTime End { get; set; } = DateTime.Today;
         public List<Photographer> PhotographerList { get; set; }
 
         public List<SchoolSecretary> SecretaryList { get; set; }
@@ -38,14 +44,23 @@ namespace SkoloFotoExam26.Pages.PhotographingEvents
             PhotographingEventToEdit = await _photographingEvents.GetAsync(photographingEventID);
             PhotographerList = await _photographers.GetAllAsync();
             SecretaryList = await _secretaryRepo.GetAllAsync();
+            PhotographerID = PhotographingEventToEdit.Photographer.ID;
+            SchoolSecretaryID = PhotographingEventToEdit.SchoolSecretary.ID;
+            Start = PhotographingEventToEdit.Start;
+            End = PhotographingEventToEdit.End;
         }
 
         public async Task<IActionResult> OnPostUpdate(int photographingEventID)
         {
             try
             {
+                PhotographerList = await _photographers.GetAllAsync();
+                SecretaryList = await _secretaryRepo.GetAllAsync();
                 //PhotographingEventToEdit = await _photographingEvents.GetAsync(photographingEventID);
-                await _photographingEvents.UpdateAsync(PhotographingEventToEdit);
+                PhotographingEvent edited = new PhotographingEvent(photographingEventID, Start, End, 
+                    await _secretaryRepo.GetAsync(SchoolSecretaryID), 
+                    await _photographers.GetAsync(PhotographerID));
+                    await _photographingEvents.UpdateAsync(edited);
                 return RedirectToPage("Index");
             }
             catch (Exception ex)
