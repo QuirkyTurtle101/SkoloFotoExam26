@@ -1,0 +1,63 @@
+﻿@page
+@using SkoloFotoExam26.Models
+@model SkoloFotoExam26.Pages.Teachers.EditTeacherModel
+@{
+    ViewData["Title"] = "Edit Teacher Event";
+}
+
+<h1>
+    Rediger Lære 
+</h1>
+
+<form method="post">
+    <div class="form-group">
+        <label asp-for="@Model.Initials" class="control-label"></label>
+        <input asp-for="@Model.Initials" class="form-control" />
+    </div>
+    <div class="form-group">
+        <label asp-for="@Model.FirstName" class="control-label"> </label>
+        <input asp-for="@Model.FirstName" class="form-control" />
+    </div>
+    <div class="form-group">
+        <label asp-for="@Model.LastName" class="control-label"></label>
+        <input asp-for="@Model.LastName" class="form-control" />
+    </div>
+    <div class="form-group">
+        <label asp-for="@Model.Email" class="control-label"></label>
+        <input asp-for="Email" class="form-control" readonly />
+    </div>
+    <div class="form-group">
+        <label asp-for="@Model.PhoneNumber" class="control-label"></label>
+        <input asp-for="@Model.PhoneNumber" class="form-control" />
+    </div>
+
+    <div class="form-group">
+        <label asp-for="SchoolID">Choose a School</label>
+        <select asp-for="SchoolID" class="form-control">
+            <option value=""> Select School </option>
+            @foreach (School s in Model.SchoolList)
+            {
+                <option value="@s.SchoolID">
+                    @s.Name
+                </option>
+            }
+        </select>
+    </div>
+   @*  <div>
+        <input type="hidden" name="UserType" value="Teacher">
+    </div> *@
+   @*  <div class="form-group">
+        <label asp-for="@Model.Password" class="control-label"></label>
+        <input asp-for="@Model.Password" class="form-control" />
+    </div> *@
+
+    <br />
+    <button type="submit"
+            class="btn btn-success"
+            asp-page-handler="Update" asp-route-ID="@Model.TeacherEdit.ID">
+        Rediger Lære
+    </button>
+    <a asp-page="Index" class="btn btn-warning">
+        Cancel
+    </a>
+</form>
