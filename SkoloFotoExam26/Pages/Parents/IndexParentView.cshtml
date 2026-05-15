@@ -2,18 +2,19 @@
 @using SkoloFotoExam26.Models
 @model SkoloFotoExam26.Pages.Parents.IndexModel
 @{
-    ViewData["Titel"] = Model.CurrentRole == "admin" ? "Admin Oversigt" : "Min Profil";
+    ViewData["Titel"] = "Forælderprofil";
 }
 
-<h1>@Model.CurrentRole == "admin" ? "Admin: Forældre Oversigt" : Velkommen til din profil</h1>
+<h1>Forælderprofil</h1>
 
-<div class="alert alert-secondary">
-    <strong>Test visning:</strong>
-    <a asp-page="./Index" asp-route-role="admin class="btn btn-sm btn-dark">Se som Admin</a>
-    <a asp-page="./Index" asp-route-role="parent class="btn btn-sm btn-dark">Se som Forælder</a>
+<div class="form-group mb-3">
+
+    <a class="btn btn-primary" asp-page="/students/create">tilmeld barn</a> 
+
+    <a class="btn btn-primary" asp-page="/students/index">børn</a>
 </div>
 
-
+@*Maybe create a Filter here*@
 
 <table class="table table-striped">
     <thead>
@@ -49,8 +50,6 @@
                 <td>@item.Street</td>
                 <td>
                     <div class="btn-group" role="group">
-                        <a class="btn btn-primary" asp-page="/Students/Index">Min(e) børn</a>
-                        <a class="btn btn-primary" asp-page="/Students/CreateStudent">Tilmeld barn</a>
                         <a asp-page="UpdateParent" asp-route-ParentID="@item.ID">Rediger forælder</a>
                         <a asp-page="DeleteParent" asp-route-ParentID="@item.ID">Slet forælder</a>
                     </div>

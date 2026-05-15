@@ -2,18 +2,20 @@
 @using SkoloFotoExam26.Models
 @model SkoloFotoExam26.Pages.Parents.IndexModel
 @{
-    ViewData["Titel"] = Model.CurrentRole == "admin" ? "Admin Oversigt" : "Min Profil";
+    ViewData["Titel"] = "Admin liste af forældre";
 }
 
-<h1>@Model.CurrentRole == "admin" ? "Admin: Forældre Oversigt" : Velkommen til din profil</h1>
+<h1>Admin forældre info</h1>
 
-<div class="alert alert-secondary">
-    <strong>Test visning:</strong>
-    <a asp-page="./Index" asp-route-role="admin class="btn btn-sm btn-dark">Se som Admin</a>
-    <a asp-page="./Index" asp-route-role="parent class="btn btn-sm btn-dark">Se som Forælder</a>
+<div class="form-group mb-3">
+    <a class="btn btn-primary" asp-page="CreateParent">Opret Forældreprofil</a>
+
+    @* <a class="btn btn-primary" asp-page="/Students/Create">Tilmeld barn</a> *@
+
+    @* <a class="btn btn-primary" asp-page="/Students/Index">Børn</a> *@
 </div>
 
-
+@*Maybe create a Filter here*@
 
 <table class="table table-striped">
     <thead>
