@@ -44,6 +44,8 @@ if (!app.Environment.IsDevelopment())
 }
 app.UseSession();
 
+app.UseSession();
+
 app.UseHttpsRedirection();
 app.UseStaticFiles();
 

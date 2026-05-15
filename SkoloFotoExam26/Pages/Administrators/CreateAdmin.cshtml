@@ -1,10 +1,11 @@
 ﻿@page
-@using SkoloFotoExam26.Models
-@model SkoloFotoExam26.Pages.SchoolSecretaries.CreateSchoolSecretaryModel
+@model SkoloFotoExam26.Pages.Administrators.CreateAdminModel
 @{
-    ViewData["Title"] = "Oprettelse af skolesekretær";
+    ViewData["Title"] = "Opret Administrator";
 }
-<h3>Opret en skolesekretær</h3>
+
+<h1>Opret administrator</h1>
+
 
 <form method="post">
     <div asp-validation-summary="All" class="text-danger"></div>
@@ -29,29 +30,8 @@
         <input asp-for="@Model.PhoneNumber" class="form-control" />
     </div>
 
-    <div class="form-group">
-        <label asp-for="@Model.Initials" class="control-label"></label>
-        <input asp-for="@Model.Initials" class="form-control" />
-    </div>
-@*     <div class="form-group">
-        <label asp-for="@Model.SchoolID" class="control-label"></label>
-        <input asp-for="@Model.SchoolID" class="form-control" />
-    </div> *@
-    <div class="form-group">
-        <label asp-for="ChosenSchoolID"> Choose a school </label>
-        <select asp-for="ChosenSchoolID" class="form-select">
-            <option value=""> Select school</option>
-            @foreach (School s in @Model.Schools)
-            {
-                <option value="@s.SchoolID">
-                    @s.Name
-                </option>
-            }
-        </select>
-    </div>
-
     <div>
-        <input type="hidden" name="UserType" value="SchoolSecretary">
+        <input type="hidden" name="UserType" value="Administrator">
     </div>
     <div class="form-group">
         <label asp-for="@Model.Password" class="control-label"></label>
@@ -60,7 +40,7 @@
 
     <br />
     <div class="form-group">
-        <input type="submit" value="Opret skolesekretæren" class="btn-primary"/>
+        <input type="submit" value="Opret administratoren" class="btn-primary" />
     </div>
 
     <div>

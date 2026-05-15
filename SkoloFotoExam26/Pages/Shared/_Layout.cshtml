@@ -81,6 +81,9 @@
                         <li class="nav-item">
                             <a class="nav-link text-dark" asp-area="" asp-page="/Photographers/Index">Fotografer</a>
                         </li>
+                        <li class="nav-item">
+                            <a class="nav-link text-dark" asp-area="" asp-page="/Administrators/Index">Administrators</a>
+                        </li>
                     </ul>
                 </div>
             </div>
@@ -90,10 +93,9 @@
         <div class="container d-flex justify-content-end">
             @{
                 var session = Context?.Session;
-                var isAuthenticated = User?.Identity?.IsAuthenticated == true;
                 var hasUserId = session != null && session.GetInt32("UserID") != null;
             }
-            @if (isAuthenticated || hasUserId)
+            @if (hasUserId)
             {
                 <a class="btn btn-sm btn-login-tab" asp-page="/Account/Profile">Min Profil</a>
                 <a class="btn btn-sm btn-danger ms-2" asp-page="/LoginPage" asp-page-handler="Logout" style="border-radius: 0 0 4px 4px;">Log ud</a>

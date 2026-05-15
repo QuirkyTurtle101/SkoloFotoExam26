@@ -6,7 +6,7 @@ using System.Net.Http.Headers;
 
 namespace SkoloFotoExam26.Services
 {
-    public class TeacherRepoAsync : IRepoAsync<Teacher, int>
+    public class TeacherRepoAsync : IRepoAsync<Teacher, int>, ILoginableRepo
     {
         private string _addTeacher = "INSERT INTO Teacher VALUES(@FirstName, @LastName, @Email, @PhoneNumber, @Initials, @SchoolID)";
         private string _getAll = "SELECT * FROM Teacher";

@@ -35,11 +35,13 @@ namespace SkoloFotoExam26.Pages.Schools
             catch (SqlException sqlex)
             {
                 ViewData["ErrorMessage"] = "Fejl ved sletning - der er andre data, som er knyttet til denne skole";
+                SchoolToBeDeleted = await _schoolRepo.GetAsync(schoolID);
                 return Page();
             }
             catch (Exception ex)
             {
                 ViewData["ErrorMessage"] = ex.Message;
+                SchoolToBeDeleted = await _schoolRepo.GetAsync(schoolID);
                 return Page();
             }
         }

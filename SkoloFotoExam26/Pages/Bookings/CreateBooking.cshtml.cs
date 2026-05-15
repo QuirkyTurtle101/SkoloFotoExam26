@@ -32,6 +32,8 @@ namespace SkoloFotoExam26.Pages.Bookings
 
         public List<SchoolClass> SchoolClassList { get; set; }
 
+        public List<Booking> Bookings { get; set; }
+
         public CreateBookingModel(IRepoAsync<PhotographingEvent, int> photographingEventRepo, IRepoAsync<Booking, int> bookingRepo,
             IRepoAsync<Teacher, int> teacherRepo, IRepoAsync<SchoolClass, int> schoolClassRepo)
         {
@@ -46,6 +48,7 @@ namespace SkoloFotoExam26.Pages.Bookings
             TeacherList = await _teacherRepo.GetAllAsync();
             TheEvent = await _photographingEventRepo.GetAsync(id);
             SchoolClassList = await _schoolClassRepo.GetAllAsync();
+            Bookings = await _bookingRepo.GetAllAsync();
         }
 
         public async Task<IActionResult> OnPostAsync(int id)
@@ -57,7 +60,21 @@ namespace SkoloFotoExam26.Pages.Bookings
                 TheEvent = await _photographingEventRepo.GetAsync(id);
                 SchoolClass schoolClass = await _schoolClassRepo.GetAsync(SelectedSchoolClassID);
                 Booking booking = new Booking(Start, End, TheEvent, teacher, schoolClass);
+                foreach (Booking b in Bookings)
+                {         
+                    if (booking.Start < b.End && booking.End > b.Start)
+                    {
+                        ViewData["ErrorMessage"] = "Tiden er booket";
+                        return Page();
+                    }
+                    //if ()
+                    //{
+                    //    ViewData["ErrorMessage"] = "Bookningen skal laves indefor eventet tidsramme";
+                    //    return Page();
+                    //}
+                }
                 await _bookingRepo.AddAsync(booking);
+
             }
             catch (Exception ex)
             {

@@ -17,7 +17,7 @@
         <label>By </label> : @Model.PhotographerToBeDeleted.City<br>
         <label>Email</label> : @Model.PhotographerToBeDeleted.Email<br>
         <label>Telefonnummer </label> : @Model.PhotographerToBeDeleted.PhoneNumber<br>
-        <input type="submit" value="Slet fotograf" asp-page-handler="Delete" asp-route-photographerID="@Model.PhotographerToBeDeleted.ID" class="btn-danger" onclick="return confirm('Er du sikker på at slette fotografen?')" />
+        <input type="submit" value="Slet fotograf" asp-route-photographerID="@Model.PhotographerToBeDeleted.ID" class="btn-danger" onclick="return confirm('Er du sikker på at slette fotografen?')" />
         <input type="submit" value="Anuller" asp-page-handler="Cancel" class="btn-warning" />
     </div>
 </form>

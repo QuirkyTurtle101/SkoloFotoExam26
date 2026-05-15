@@ -13,6 +13,7 @@ namespace SkoloFotoExam26.Models
         public int Height { get; set; }
         public int Width { get; set; }
         public PhotoType PhotoType { get; set; }
+
         #endregion
 
         #region Constructor
