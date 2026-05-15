@@ -16,6 +16,8 @@ namespace SkoloFotoExam26.Services
         private string _updatePhotographer = "UPDATE Photographer SET FirstName = @FirstName, LastName = @LastName, PhoneNumber = @PhoneNumber, StreetName = @StreetName, ZipCode  = @ZipCode, WebSite = @WebSite, CVRNumber = @CVRNumber, ExperienceInYears = @ExperienceInYears, MaxTravelRadiusInKm = @MaxTravelRadiusInKm, Instagram = @Instagram, Facebook = @Facebook WHERE PhotographerID = @ID";
 
         #endregion
+
+        #region Methods
         public async Task AddAsync(Photographer input)
         {
             using (SqlConnection connection = new SqlConnection(Secret.connectionString))
@@ -237,6 +239,7 @@ namespace SkoloFotoExam26.Services
                 }
             }
         }
+        #endregion
 
 
     }

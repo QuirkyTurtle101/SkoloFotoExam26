@@ -15,6 +15,12 @@ namespace SkoloFotoExam26.Services
         private string _updateAdmin = " UPDATE Administrator SET FirstName = @FirstName, LastName = @LastName, PhoneNumber = @PhoneNumber WHERE AdministratorID = @AdminID";
         #endregion
 
+        #region Methods
+        /// <summary>
+        /// This method adds the input of type Administrator to the database 
+        /// </summary>
+        /// <param name="input"> This is the adminitrator that is being added to the database</param>
+        /// <returns>A task that represents the asynchronous delete operation</returns>
         public async Task AddAsync(Administrator input)
         {
             using (SqlConnection connection = new SqlConnection(Secret.connectionString))
@@ -54,7 +60,11 @@ namespace SkoloFotoExam26.Services
         {
             throw new NotImplementedException();
         }
-
+        /// <summary>
+        /// Asynchronously deletes the administrator record with the specified identifier from the database.
+        /// </summary>
+        /// <param name="toDelete">The unique identifier of the administrator to delete, this is the administrators ID. Must correspond to an existing administrator record.</param>
+        /// <returns>A task that represents the asynchronous delete operation.</returns>
         public async Task DeleteAsync(int toDelete)
         {
             using (SqlConnection connection = new SqlConnection(Secret.connectionString))
@@ -85,6 +95,15 @@ namespace SkoloFotoExam26.Services
             }
         }
 
+        /// <summary>
+        /// Asynchronously retrieves all administrator records from the data store.
+        /// </summary>
+        /// <remarks>This method opens a database connection and executes a query to retrieve
+        /// administrator data. The returned list preserves the order provided by the data source. Callers should await
+        /// the returned task to ensure the operation completes before accessing the results.</remarks>
+        /// <returns>A task that represents the asynchronous operation. The task result contains a list of <see
+        /// cref="Administrator"/> objects representing all administrators. The list is empty if no administrators are
+        /// found.</returns>
         public async Task<List<Administrator>> GetAllAsync()
         {
             List<Administrator> administrators = new List<Administrator>();
@@ -122,10 +141,9 @@ namespace SkoloFotoExam26.Services
                 }
             }
             return administrators;
-
-
         }
 
+   
         public async Task<Administrator> GetAsync(int toGet)
         {
             Administrator admin = null;
@@ -202,5 +220,6 @@ namespace SkoloFotoExam26.Services
                 }
             }
         }
+        #endregion 
     }
 }
