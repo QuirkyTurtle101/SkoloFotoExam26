@@ -7,19 +7,19 @@
         public int ZipCode { get; set; }
         public string City { get; set; }
 
-        public Parent(string firstName, string lastName, string email, string phoneNumber, string street, int zipCode, string city, int parentID) :
-            base(parentID, firstName, lastName, phoneNumber, email)
+        public Parent(int ID,string firstName, string lastName, string email, string phoneNumber, string street, int zipCode, string city) :
+            base(ID, firstName, lastName, phoneNumber, email)
         {
-            Street = street;
-            ZipCode = zipCode;
             City = city;
+            ZipCode = zipCode;
+            Street = street;
         }
         public Parent(string firstName, string lastName, string email, string phoneNumber, string street, int zipCode, string city) :
            base(firstName, lastName, phoneNumber, email)
         {
-            Street = street;
-            ZipCode = zipCode;
             City = city;
+            ZipCode = zipCode;
+            Street = street;
         }
 
         public Parent()

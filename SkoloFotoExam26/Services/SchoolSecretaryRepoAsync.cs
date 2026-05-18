@@ -7,7 +7,7 @@ namespace SkoloFotoExam26.Services
 {
     public class SchoolSecretaryRepoAsync : IRepoAsync<SchoolSecretary, int>, ILoginableRepo
     {
-        #region SQL querys
+        #region Query strings
         private string _addSchoolSecretary = "INSERT INTO SchoolSecretary VALUES(@FirstName, @LastName, @Email, @PhoneNumber, @Initials, @SchoolID)";
         private string _getAllSchoolSecretaries = "SELECT SchoolSecretary.FirstName, SchoolSecretary.LastName, SchoolSecretary.SchoolSecretaryID, SchoolSecretary.Email, SchoolSecretary.PhoneNumber, SchoolSecretary.Initials, School.SchoolID, School.Name, School.StreetName, School.ZipCode, School.SchoolType, ZipCodeLookup.City FROM SchoolSecretary JOIN School on School.SchoolID = SchoolSecretary.SchoolID JOIN ZipCodeLookup ON School.ZipCode = ZipCodeLookup.ZipCode";
         private string _getSchoolSecretary = "SELECT SchoolSecretary.FirstName, SchoolSecretary.SchoolSecretaryID, SchoolSecretary.LastName, SchoolSecretary.Email, SchoolSecretary.PhoneNumber, SchoolSecretary.Initials, School.SchoolID, School.Name, School.StreetName, School.ZipCode FROM SchoolSecretary JOIN School on School.SchoolID = SchoolSecretary.SchoolID WHERE SchoolSecretaryID = @SchoolSecretaryID";
@@ -16,12 +16,15 @@ namespace SkoloFotoExam26.Services
         private string _getSchoolSecretaryForLogin = "SELECT * FROM SchoolSecretary WHERE Email = @Email";
         #endregion
 
+        #region constructor med SchoolRepo
         IRepoAsync<School, int> _schoolRepo;
         public SchoolSecretaryRepoAsync(IRepoAsync<School, int> schoolRepo)
         {
             _schoolRepo = schoolRepo;
         }
+        #endregion
 
+        #region Methods
         public async Task AddAsync(SchoolSecretary input)
         {
             using (SqlConnection connection = new SqlConnection(Secret.connectionString))
@@ -259,5 +262,6 @@ namespace SkoloFotoExam26.Services
 
 
         }
+        #endregion
     }
 }

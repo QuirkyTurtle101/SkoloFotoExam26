@@ -1,0 +1,54 @@
+﻿@page
+@model SkoloFotoExam26.Pages.Parents.UpdateParentModel
+@{
+    ViewData["Title"] = "Opdater forælder";
+}
+
+<h1>Rediger forælder</h1>
+<form method="post">
+
+    <input type="hidden" asp-for="@Model.ParentToUpdate.ID" />
+
+    <div class="form-group">
+        <label asp-for="@Model.ParentToUpdate.FirstName" class="control-label"></label>
+        <input asp-for="@Model.ParentToUpdate.FirstName" class="form-control" />
+    </div>
+
+    <div class="form-group">
+        <label asp-for="@Model.ParentToUpdate.LastName" class="control-label"></label>
+        <input asp-for="@Model.ParentToUpdate.LastName" class="form-control" />
+    </div>
+
+    <div class="form-group">
+        <label asp-for="@Model.ParentToUpdate.Email" class="control-label"></label>
+        <input asp-for="@Model.ParentToUpdate.Email" readonly class="form-control" />
+    </div>
+
+    <div class="form-group">
+        <label asp-for="@Model.ParentToUpdate.PhoneNumber" class="control-label"></label>
+        <input asp-for="@Model.ParentToUpdate.PhoneNumber" class="form-control" />
+    </div>
+
+    <div class="form-group">
+        <label asp-for="@Model.ParentToUpdate.City" class="control-label"></label>
+        <input asp-for="@Model.ParentToUpdate.City" class="form-control" />
+    </div>
+
+    <div class="form-group">
+        <label asp-for="@Model.ParentToUpdate.ZipCode" class="control-label"></label>
+        <input asp-for="@Model.ParentToUpdate.ZipCode" class="form-control" />
+    </div>
+
+    <div class="form-group">
+        <label asp-for="@Model.ParentToUpdate.Street" class="control-label"></label>
+        <input asp-for="@Model.ParentToUpdate.Street" class="form-control">
+    </div>
+
+    <br />
+    <div class="form-group">
+        <input type="submit" value="Opdater forælder" class="btn-primary" />
+        <input type="submit" value="Slet forælder" asp-page-handler="Delete" class="btn-danger" />
+        <input type="submit" value="Anuller" asp-page-handler="Cancel" class="btn-warning" />
+    </div>
+
+</form>

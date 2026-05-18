@@ -1,9 +1,10 @@
 ﻿@page
 @model SkoloFotoExam26.Pages.Administrators.EditAdminModel
 @{
+    ViewData["Title"] = "Rediger Administrator";
 }
 
-<h1>Rediger skolesekretær</h1>
+<h1>Rediger administrator</h1>
 <form method="post">
 
     <input type="hidden" asp-for="@Model.AdminToBeUpdated.ID" />
@@ -31,7 +32,7 @@
     <div class="form-group">
         <input type="submit" value="Opdater administrator" class="btn-primary" />
 @*         <input type="submit" value="Slet sekretær" asp-page-handler="Delete" class="btn-danger" /> *@
-        <input type="submit" value="Cancel" asp-page-handler="Cancel" class="btn-warning" />
+        <input type="submit" value="Anuller" asp-page-handler="Cancel" class="btn-warning" />
     </div>
 
 </form>
