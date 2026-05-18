@@ -157,7 +157,7 @@ namespace SkoloFotoExam26.Services
                 command.Parameters.AddWithValue("@PhotographerID", toGet);
                 SqlDataReader reader = await command.ExecuteReaderAsync();
 
-                if (reader.Read())
+                if (await reader.ReadAsync())
                 {
                     int photographerID = reader.GetInt32("PhotographerID");
                     string firstName = reader.GetString("FirstName");

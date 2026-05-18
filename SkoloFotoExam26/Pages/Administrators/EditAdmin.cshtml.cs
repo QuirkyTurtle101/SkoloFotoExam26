@@ -30,7 +30,8 @@ namespace SkoloFotoExam26.Pages.Administrators
             }
             catch (SqlException sqlex)
             {
-                ViewData["ErrorMessage"] = "Kunne ikke opdateres";
+                ViewData["ErrorMessage"] = "Kunne ikke redigeres";
+
                 return Page();
             }
             catch (Exception ex)
@@ -39,8 +40,29 @@ namespace SkoloFotoExam26.Pages.Administrators
                 return Page();
             }
             return RedirectToPage("Index");
-
         }
+
+        public async Task<IActionResult> OnPostDelete(int adminID)
+        {
+            try
+            {
+                _adminRepo.DeleteAsync(adminID);
+                return RedirectToPage("Index");
+            }
+            catch (SqlException sqlex)
+            {
+                ViewData["ErrorMessage"] = "Fejl ved sletning - der er andre data, som er knyttet til denne administrator";
+                AdminToBeUpdated = await _adminRepo.GetAsync(adminID);
+                return Page();
+            }
+            catch (Exception ex)
+            {
+                ViewData["ErrorMessage"] = ex.Message;
+                AdminToBeUpdated = await _adminRepo.GetAsync(adminID);
+                return Page();
+            }
+        }
+
         public IActionResult OnPostCancel()
         {
             return RedirectToPage("Index");

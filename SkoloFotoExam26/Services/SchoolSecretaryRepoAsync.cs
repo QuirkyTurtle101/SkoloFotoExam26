@@ -42,7 +42,6 @@ namespace SkoloFotoExam26.Services
                     command.Parameters.AddWithValue("@SchoolID", input.TheSchool.SchoolID);
                     int noOfRowsEffected = await command.ExecuteNonQueryAsync();
 
-                    await connection.CloseAsync();
                 }
                 catch (SqlException sqlex)
                 {
@@ -157,7 +156,7 @@ namespace SkoloFotoExam26.Services
 
                     SqlDataReader reader = await command.ExecuteReaderAsync();
 
-                    if (reader.Read())
+                    if (await reader.ReadAsync())
                     {
                         string firstName = reader.GetString("FirstName");
                         string lastName = reader.GetString("LastName");
