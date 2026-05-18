@@ -64,7 +64,7 @@ namespace SkoloFotoExam26.Pages.Bookings
                 Booking booking = new Booking(Start, End, TheEvent, teacher, schoolClass);
                 if (booking.Start < TheEvent.Start || booking.End > TheEvent.End)
                 {
-                    ViewData["ErrorMessage"] = "Bookingen skal være i eventets tidsramme";
+                    ViewData["ErrorMessage"] = "Bookingen skal vaere i eventets tidsramme";
                     return Page();
                 }
 

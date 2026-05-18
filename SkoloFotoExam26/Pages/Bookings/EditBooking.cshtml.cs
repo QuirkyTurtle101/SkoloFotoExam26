@@ -62,13 +62,34 @@ namespace SkoloFotoExam26.Pages.Bookings
         {
             try
             {
+                Bookings = await _bookingRepo.GetAllAsync();
                 TeacherList = await _teacherRepo.GetAllAsync();
                 EditBooking = await _bookingRepo.GetAsync(BookingID);
                 SchoolClassList = await _schoolClassRepo.GetAllAsync();
-
-                Booking edited = new Booking(Start, End, await _photographingEventRepo.GetAsync(TheEventID),
+                PhotographingEvent TheEvent = await _photographingEventRepo.GetAsync(EditBooking.ThePhotographingEvent.PhotographingEventID);
+                Booking edited = new Booking(Start, End, TheEvent,
                     await _schoolClassRepo.GetAsync(SelectedSchoolClassID), 
                     await _teacherRepo.GetAsync(TeacherID), BookingID);
+
+                if (edited.Start < TheEvent.Start || edited.End > TheEvent.End)
+                {
+                    ViewData["ErrorMessage"] = "Bookingen skal vaere i eventets tidsramme";
+                    return Page();
+                }
+
+                foreach (Booking b in Bookings)
+                {
+                    if (edited.Start < b.End && edited.End > b.Start)
+                    {
+                        if (b.ThePhotographingEvent.PhotographingEventID == edited.ThePhotographingEvent.PhotographingEventID)
+                        {
+                            ViewData["ErrorMessage"] = "Tiden er booket";
+                            return Page();
+                        }
+                    }
+
+                }
+
                 await _bookingRepo.UpdateAsync(edited);
                 return RedirectToPage("Index");
             }
