@@ -14,13 +14,13 @@ namespace SkoloFotoExam26.Pages.Profile
                 case UserType.Administrator:
                     return RedirectToPage("/Profile/ProfileAdmin");
                 case UserType.Parent:
-                    //redirect here
+                    return RedirectToPage("/Profile/ProfileParent");
                 case UserType.Photographer:
-                    //redirect here
+                    return RedirectToPage("/Profile/ProfilePhotographer");
                 case UserType.SchoolSecretary:
-                    //redirect here
+                    return RedirectToPage("/Profile/ProfileSchoolSecretary");
                 case UserType.Teacher:
-                    //redirect here
+                    return RedirectToPage("/Profile/ProfileTeacher");
                 default:
                     return RedirectToPage("/Index");
             }
