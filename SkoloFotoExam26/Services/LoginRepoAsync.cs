@@ -20,7 +20,7 @@ namespace SkoloFotoExam26.Services
 
                     command.Parameters.AddWithValue("@Email", input.Email);
                     command.Parameters.AddWithValue("@PasswordHash", input.PasswordHash);
-                    command.Parameters.AddWithValue("TheUserType", (int)input.TheUserType);
+                    command.Parameters.AddWithValue("@TheUserType", (int)input.TheUserType);
 
                     await connected;
 

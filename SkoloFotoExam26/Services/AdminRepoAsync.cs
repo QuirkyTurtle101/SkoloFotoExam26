@@ -186,7 +186,7 @@ namespace SkoloFotoExam26.Services
         }
         
 
-        public Task<User> GetForLogin(string email)
+        public async Task<User> GetForLogin(string email)
         {
             Administrator admin = null;
             using SqlConnection connection = new SqlConnection(Secret.connectionString);
@@ -199,7 +199,7 @@ namespace SkoloFotoExam26.Services
 
                 if (reader.Read())
                 {
-                    int adminID = reader.GetInt32("PhotographerID");
+                    int adminID = reader.GetInt32("AdministratorID");
                     string firstName = reader.GetString("FirstName");
                     string lastName = reader.GetString("LastName");
                     string emailResult = reader.GetString("Email");
