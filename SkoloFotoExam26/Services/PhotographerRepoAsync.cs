@@ -16,6 +16,7 @@ namespace SkoloFotoExam26.Services
         private string _updatePhotographer = "UPDATE Photographer SET FirstName = @FirstName, LastName = @LastName, PhoneNumber = @PhoneNumber, StreetName = @StreetName, ZipCode  = @ZipCode, WebSite = @WebSite, CVRNumber = @CVRNumber, ExperienceInYears = @ExperienceInYears, MaxTravelRadiusInKm = @MaxTravelRadiusInKm, Instagram = @Instagram, Facebook = @Facebook WHERE PhotographerID = @ID";
         private string _getPhotographerForLogin = "SELECT * FROM Photographer WHERE Email = @Email";
 
+        private string _countPhotographers = "SELECT COUNT(*) FROM Photographer";
         #endregion
 
         #region Methods
@@ -60,9 +61,34 @@ namespace SkoloFotoExam26.Services
             }
         }
 
-        public Task<int> CountAsync()
+        public async Task<int> CountAsync()
         {
-            throw new NotImplementedException();
+            int countOfPhotographers;
+            using (SqlConnection connection = new SqlConnection(Secret.connectionString))
+            {
+                try
+                {
+                    SqlCommand command = new SqlCommand(_countPhotographers, connection);
+                    await connection.OpenAsync();
+
+                    countOfPhotographers = Convert.ToInt32(await command.ExecuteScalarAsync());
+
+
+                }
+                catch (SqlException sqlex)
+                {
+                    throw;
+                }
+                catch (Exception ex)
+                {
+                    throw;
+                }
+                finally
+                {
+                    await connection.CloseAsync();
+                }
+                return countOfPhotographers;
+            }
         }
 
         public async Task DeleteAsync(int toDelete)

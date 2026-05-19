@@ -14,6 +14,7 @@ namespace SkoloFotoExam26.Services
         private string _deleteSchoolSecretary = "DELETE FROM SchoolSecretary WHERE SchoolSecretaryID = @SchoolSecretaryID ";
         private string _updateSchoolSecretary = "UPDATE SchoolSecretary SET FirstName = @FirstName, LastName = @LastName, PhoneNumber = @PhoneNumber, Initials = @Initials, SchoolID = @SchoolID WHERE SchoolSecretaryID = @ID";
         private string _getSchoolSecretaryForLogin = "SELECT * FROM SchoolSecretary WHERE Email = @Email";
+        private string _countSecretaries = "SELECT COUNT(*) FROM SchoolSecretary";
         #endregion
 
         #region constructor med SchoolRepo
@@ -59,9 +60,34 @@ namespace SkoloFotoExam26.Services
             }
         }
 
-        public Task<int> CountAsync()
+        public async Task<int> CountAsync()
         {
-            throw new NotImplementedException();
+            int countOfSecretary;
+            using (SqlConnection connection = new SqlConnection(Secret.connectionString))
+            {
+                try
+                {
+                    SqlCommand command = new SqlCommand(_countSecretaries, connection);
+                    await connection.OpenAsync();
+
+                    countOfSecretary = Convert.ToInt32(await command.ExecuteScalarAsync());
+
+
+                }
+                catch (SqlException sqlex)
+                {
+                    throw;
+                }
+                catch (Exception ex)
+                {
+                    throw;
+                }
+                finally
+                {
+                    await connection.CloseAsync();
+                }
+                return countOfSecretary;
+            }
         }
 
         public async Task DeleteAsync(int toDelete)

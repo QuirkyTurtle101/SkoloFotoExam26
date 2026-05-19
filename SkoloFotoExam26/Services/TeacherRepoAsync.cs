@@ -14,11 +14,22 @@ namespace SkoloFotoExam26.Services
         private string _delete = "DELETE FROM Teacher WHERE TeacherID = @TeacherID";
         private string _update = "UPDATE Teacher SET FirstName = @FirstName, LastName = @LastName, Email = @Email, PhoneNumber = @PhoneNumber, Initials = @Initials, SchoolID = @SchoolID WHERE TeacherID = @TeacherID";
         private string _getTeacherForLogin = "SELECT * FROM Teacher WHERE Email = @Email";
+        private string _count = "SELECT COUNT(*) FROM Teacher";
+        private string _addLogin = "INSERT INTO LoginInfo VALUES (@Email, @PasswordHash, @TheUserType)";
+
+
 
         private IRepoAsync<School, int> _schoolRepo;
+
+
         public TeacherRepoAsync(IRepoAsync<School, int> schoolRepo)
         {
             _schoolRepo = schoolRepo;
+        }
+
+        public TeacherRepoAsync()
+        {
+                
         }
         public async Task AddAsync(Teacher input)
         {
@@ -27,6 +38,7 @@ namespace SkoloFotoExam26.Services
             {
                 SqlCommand command = new SqlCommand(_addTeacher, connection);
                 await command.Connection.OpenAsync();
+                
                 
                 command.Parameters.AddWithValue("@FirstName", input.FirstName);
                 command.Parameters.AddWithValue("@LastName", input.LastName);
@@ -46,9 +58,27 @@ namespace SkoloFotoExam26.Services
             }
         }
 
-        public Task<int> CountAsync()
+        public async Task<int> CountAsync()
         {
-            throw new NotImplementedException();
+            int count = 0;
+            SqlConnection connection = new SqlConnection(Secret.connectionString); 
+            try
+            {
+                SqlCommand command = new SqlCommand(_count, connection);
+                await command.Connection.OpenAsync();
+                count = Convert.ToInt32(await command.ExecuteScalarAsync());
+
+            }
+            catch (SqlException sqlEx)
+            {
+                Console.WriteLine($"SQL exception message: {sqlEx.Message}");
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"Exception message: {ex.Message}");
+            }
+            return count;
+         
         }
 
         public async Task DeleteAsync(int toDelete)
