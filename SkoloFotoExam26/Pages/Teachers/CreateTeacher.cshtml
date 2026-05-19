@@ -2,26 +2,26 @@
 @using SkoloFotoExam26.Models
 @model SkoloFotoExam26.Pages.Teachers.CreateTeacherModel
 @{
-    ViewData["Title"] = "Create New Teacher";
+    ViewData["Title"] = "Opret en lære";
 }
 
 <h2>
-    Create Teacher
+    Opret en lære
 </h2>
 
 
 <form method="post">
     <div asp-validation-summary="All" class="text-danger"></div>
     <div class="form-group">
-        <label asp-for="Initials" class="control-label"></label>
+        <label asp-for="Initials" class="control-label">Initialer</label>
         <input asp-for="Initials" class="form-control" />
     </div>
     <div class="form-group">
-        <label asp-for="FirstName" class="control-label"> </label>
+        <label asp-for="FirstName" class="control-label">Navn </label>
         <input asp-for="FirstName" class="form-control" />
     </div>
     <div class="form-group">
-        <label asp-for="LastName" class="control-label"></label>
+        <label asp-for="LastName" class="control-label">Efternavn</label>
         <input asp-for="LastName" class="form-control"/>
     </div>
     <div class="form-group">
@@ -29,14 +29,14 @@
         <input asp-for="Email" class="form-control"/>
     </div>
     <div class="form-group">
-        <label asp-for="PhoneNumber" class="control-label"></label>
+        <label asp-for="PhoneNumber" class="control-label">Telefonnummer</label>
         <input asp-for="PhoneNumber" class="form-control"/>
     </div>
 
     <div class="form-group">
-        <label asp-for="SchoolID">Choose a School</label>
+        <label asp-for="SchoolID">Vælg en School</label>
         <select asp-for="SchoolID" class="form-control">
-            <option value=""> Select School </option>
+            <option value=""> Vælg en School </option>
             @foreach (School s in Model.SchoolList)
             {
                 <option value="@s.SchoolID">

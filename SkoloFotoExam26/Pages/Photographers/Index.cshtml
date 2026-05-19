@@ -42,10 +42,7 @@
                     <td>@item.PhoneNumber</td>
                     <td>@item.Email</td>
                     <td>@item.MaxTravelRadiusInKm</td>
-                    <td><a asp-page="EditPhotographer" asp-route-PhotographerID="@item.ID">Edit</a> |
-                        <a asp-page="DeletePhotographer" asp-route-PhotographerID="@item.ID">Delete</a>
-                    </td>
-
+                    <td><a asp-page="EditPhotographer" asp-route-PhotographerID="@item.ID">Rediger</a> | <a asp-page="DeletePhotographer" asp-route-PhotographerID="@item.ID">Slet</a> </td>
                 </tr>
             }
         </tbody>

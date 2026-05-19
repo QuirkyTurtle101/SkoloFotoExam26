@@ -1,0 +1,43 @@
+﻿@page
+@using SkoloFotoExam26.Models
+@model SkoloFotoExam26.Pages.Administrators.IndexModel
+@{
+    ViewData["Title"] = "Administrator";
+}
+
+<h1>Adminitratorer</h1>
+
+<p>
+    <a asp-page="CreateAdmin"> Opret en ny administrator </a>
+</p>
+
+<h4>Administratorer i systemet</h4>
+<p>Der er @Model.Admins.Count administratorer</p>
+
+<form method="get">
+    <table class="table">
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Fornavn</th>
+                <th>Efternavn</th>
+                <th>Telefonnummer</th>
+                <th>Email</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (Administrator item in Model.Admins)
+            {
+                <tr>
+                    <td>@item.ID</td>
+                    <td>@item.FirstName</td>
+                    <td>@item.LastName</td>
+                    <td>@item.PhoneNumber</td>
+                    <td>@item.Email</td>
+                    <td><a asp-page="EditAdmin" asp-route-adminID="@item.ID">Rediger</a> | <a asp-page="DeleteAdmin" asp-route-adminID="@item.ID">Slet</a> </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+
+</form>

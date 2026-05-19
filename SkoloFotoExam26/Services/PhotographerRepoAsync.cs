@@ -17,6 +17,8 @@ namespace SkoloFotoExam26.Services
         private string _getPhotographerForLogin = "SELECT * FROM Photographer WHERE Email = @Email";
 
         #endregion
+
+        #region Methods
         public async Task AddAsync(Photographer input)
         {
             using (SqlConnection connection = new SqlConnection(Secret.connectionString))
@@ -41,7 +43,6 @@ namespace SkoloFotoExam26.Services
 
                     int noOfRowsEffected = await command.ExecuteNonQueryAsync();
 
-                    await connection.CloseAsync();
                 }
                 catch (SqlException sqlex)
                 {
@@ -138,6 +139,10 @@ namespace SkoloFotoExam26.Services
                 {
                     Console.WriteLine($"Exception message: {ex.Message}");
                 }
+                finally
+                {
+                    await connection.CloseAsync();
+                }
             }
             return photographers;
         }
@@ -153,7 +158,7 @@ namespace SkoloFotoExam26.Services
                 command.Parameters.AddWithValue("@PhotographerID", toGet);
                 SqlDataReader reader = await command.ExecuteReaderAsync();
 
-                if (reader.Read())
+                if (await reader.ReadAsync())
                 {
                     int photographerID = reader.GetInt32("PhotographerID");
                     string firstName = reader.GetString("FirstName");
@@ -180,6 +185,10 @@ namespace SkoloFotoExam26.Services
             catch (Exception ex)
             {
                 Console.WriteLine($"Exception message: {ex.Message}");
+            }
+            finally
+            {
+                await connection.CloseAsync();
             }
             return photographer;
         }
@@ -266,6 +275,7 @@ namespace SkoloFotoExam26.Services
                 }
             }
         }
+        #endregion
 
 
     }

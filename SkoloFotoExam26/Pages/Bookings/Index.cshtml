@@ -7,9 +7,9 @@
 
 <h1>Bookings</h1>
 
-<a asp-page="CreateBooking">
+@* <a asp-page="CreateBooking">
     Create a new booking
-</a>
+</a> *@
 
 <form>
     <table class="table">
@@ -33,6 +33,10 @@
                         <td>@b.ThePhotographingEvent</td>
                         <td>@b.TheSchoolClass</td>
                         <td>@b.TheTeacher.FirstName @b.TheTeacher.LastName</td>
+                    <td><a asp-page="DeleteBooking" asp-route-BookingID="@b.BookingID" class="btn btn-danger">Slet</a></td>
+                    <td><a asp-page="EditBooking" asp-route-BookingID="@b.BookingID" class="btn btn-success">Rediger</a></td>
+
+
                     </tr>
                 }
         </tbody>

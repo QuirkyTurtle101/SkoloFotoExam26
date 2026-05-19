@@ -9,8 +9,16 @@ namespace SkoloFotoExam26.Services
     {
         private string _addParent = "INSERT INTO Parent Values (@FirstName, @LastName, @Email, @PhoneNumber, @StreetName, @ZipCode)";
         private string _getAllParent = "SELECT p.ParentID, p.FirstName, p.LastName, p.Email, p.PhoneNumber, p.StreetName, p.ZipCode, z.City FROM Parent p JOIN ZipCodeLookup z ON p.ZipCode = z.ZipCode";
-        private string _readParent = "SELECT * FROM Parent JOIN ZipCodeLookup ON Parent.ZipCode = ZipCodeLookup.ZipCode WHERE ParentID = @ParentID";
-        //private string _updateParent = "UPDATE Parent SET FirstName=@FirstName, LastBane=@LastName, Email=@Email, PhoneNumber=@PhoneNumber, StreetName=@StreetName, ZipCode=@ZipCode, City=@City, WHERE ParentID = @ParentID";
+        private string _getParent = "SELECT * FROM Parent JOIN ZipCodeLookup ON Parent.ZipCode=ZipCodeLookup.ZipCode WHERE ParentID = @ParentID";
+        private string _deleteParent = "DELETE FROM Parent WHERE ParentID = @ParentID";
+        private string _updateParent = "UPDATE Parent SET " +
+            "FirstName=@FirstName, " +
+            "LastName=@LastName, " +
+            "Email=@Email, " +
+            "PhoneNumber=@PhoneNumber, " +
+            "StreetName=@StreetName, " +
+            "ZipCode=@ZipCode " +
+            "WHERE ParentID = @ID";
         private string _getParentForLogin = "SELECT * FROM Parent JOIN ZipCodeLookup ON Parent.ZipCode = ZipCodeLookup.ZipCode WHERE Email = @Email";
         public Task<int> CountAsync()
         {
@@ -51,9 +59,43 @@ namespace SkoloFotoExam26.Services
             }
         }
 
-        public Task<Parent> GetAsync(int toGet)
+        public async Task<Parent> GetAsync(int toGet)
         {
-            throw new NotImplementedException();
+            Parent parent = null;
+            using SqlConnection connection = new SqlConnection(Secret.connectionString); 
+            try
+            {
+                using SqlCommand command = new SqlCommand(_getParent, connection);
+                await command.Connection.OpenAsync();
+                command.Parameters.AddWithValue("@ParentID", toGet);
+                SqlDataReader reader = await command.ExecuteReaderAsync();
+
+                if (reader.Read())
+                {
+                    int parentID = reader.GetInt32("ParentID");
+                    string firstName = reader.GetString("FirstName");
+                    string lastName = reader.GetString("LastName");
+                    string email = reader.GetString("Email");
+                    string phoneNumber = reader.GetString("PhoneNumber");
+                    string city = reader.GetString("City");
+                    int zipCode = reader.GetInt32("ZipCode");
+                    string street = reader.GetString("StreetName");
+                    parent = new Parent(parentID, firstName, lastName, email, phoneNumber, city, zipCode, street);
+                }                
+            }
+            catch (SqlException sqlEx)
+            {
+                Console.WriteLine($"SQL Exception message: {sqlEx.Message}");
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"Exception message: {ex.Message}");
+            }
+            finally
+            {
+                await connection.CloseAsync();
+            }
+            return parent;
         }
 
         public async Task<List<Parent>> GetAllAsync()
@@ -78,7 +120,7 @@ namespace SkoloFotoExam26.Services
                         int zipCode = reader.GetInt32("ZipCode");
                         string city = reader.GetString("City");
 
-                        parents.Add(new Parent(firstName, lastName, email, phoneNumber, street, zipCode, city, parentID));
+                        parents.Add(new Parent(parentID,firstName, lastName, email, phoneNumber, street, zipCode, city));
                     }
                 }
                 catch (SqlException sqlExp)
@@ -97,14 +139,71 @@ namespace SkoloFotoExam26.Services
             return parents;
         }
 
-        public Task UpdateAsync(Parent toUpdate)
+        public async Task UpdateAsync(Parent toUpdate)
         {
-            throw new NotImplementedException();
+            using (SqlConnection connection = new SqlConnection(Secret.connectionString))
+            using (SqlCommand command = new SqlCommand(_updateParent, connection))
+            {
+                try
+                {
+                    await command.Connection.OpenAsync();
+
+                    command.Parameters.AddWithValue("@FirstName", toUpdate.FirstName);
+                    command.Parameters.AddWithValue("@LastName", toUpdate.LastName);
+                    command.Parameters.AddWithValue("@Email", toUpdate.Email);
+                    command.Parameters.AddWithValue("@PhoneNumber", toUpdate.PhoneNumber);
+                    command.Parameters.AddWithValue("@ZipCode", toUpdate.ZipCode);
+                    command.Parameters.AddWithValue("@StreetName", toUpdate.Street);
+                    command.Parameters.AddWithValue("@ID", toUpdate.ID);
+
+                    int rowsAffected = await command.ExecuteNonQueryAsync();
+
+                    if (rowsAffected == 0)
+                    {
+                        Console.WriteLine("Ingen rækker blev opdateret! Tjek om ID'et findes.");
+                    }
+                }
+                catch (SqlException sqlex)
+                {
+                    Console.WriteLine("Sql fejl: " + sqlex.Message);
+                }
+                catch (Exception ex)
+                {
+                    Console.WriteLine("Generel fejl: " + ex.Message);
+                }
+                finally
+                {
+                    await command.Connection.CloseAsync();
+                }
+            }
         }
 
-        public Task DeleteAsync(int toDelete)
+        public async Task DeleteAsync(int toDelete)
         {
-            throw new NotImplementedException();
+            using (SqlConnection connection = new SqlConnection(Secret.connectionString))
+            {
+                try
+                {
+                    SqlCommand command = new SqlCommand(_deleteParent, connection);
+                    await connection.OpenAsync();
+
+                    command.Parameters.AddWithValue("ParentID", toDelete);
+
+                    int noOfRowsEffected = await command.ExecuteNonQueryAsync();
+                }
+                catch (SqlException sqlex)
+                {
+                    throw;
+                }
+                catch (Exception ex)
+                {
+                    throw;
+                }
+                finally
+                {
+                    await connection.CloseAsync();
+                }
+            }
         }
 
         public async Task<User> GetForLogin(string email)

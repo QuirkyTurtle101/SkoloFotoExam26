@@ -1,0 +1,30 @@
+﻿@page
+@using SkoloFotoExam26.Models
+@model SkoloFotoExam26.Pages.Photos.IndexModel
+@{
+    ViewData["Title"] = "Liste af Photos";
+}
+<h1>
+    Liste af Photos
+</h1>
+<p>
+    <a asp-page="CreatePhoto"> lav et nyt photo </a>
+</p>
+
+<form method="get">
+    <table class="table">
+        <th> Klasse navn </th>
+        <th> Skole navn </th>
+        <tbody>
+            @foreach (Photo p in @Model.PhotoList)
+            {
+                <tr>
+                    <td> @p.PhotoType </td>
+                    <td> @p.Price </td>
+                    <td><a asp-page="DeletePhoto" asp-route-PhotoID="@p.PhotoID" class="btn btn-danger">Slet</a></td>
+                </tr>
+            }
+
+        </tbody>
+    </table>
+</form>
