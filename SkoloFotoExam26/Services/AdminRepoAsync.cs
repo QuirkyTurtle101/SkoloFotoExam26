@@ -13,6 +13,7 @@ namespace SkoloFotoExam26.Services
         private string _getAdmin = "SELECT * FROM Administrator WHERE AdministratorID = @AdministratorID";
         private string _deleteAdmin = "DELETE FROM Administrator WHERE AdministratorID = @AdministratorID";
         private string _updateAdmin = " UPDATE Administrator SET FirstName = @FirstName, LastName = @LastName, PhoneNumber = @PhoneNumber WHERE AdministratorID = @AdminID";
+        private string _getAdminForLogin = "SELECT * FROM Administrator WHERE Email = @Email";
         #endregion
 
         #region Methods
@@ -187,7 +188,35 @@ namespace SkoloFotoExam26.Services
 
         public Task<User> GetForLogin(string email)
         {
-            throw new NotImplementedException();
+            Administrator admin = null;
+            using SqlConnection connection = new SqlConnection(Secret.connectionString);
+            try
+            {
+                using SqlCommand command = new SqlCommand(_getAdminForLogin, connection);
+                await command.Connection.OpenAsync();
+                command.Parameters.AddWithValue("@Email", email);
+                SqlDataReader reader = await command.ExecuteReaderAsync();
+
+                if (reader.Read())
+                {
+                    int adminID = reader.GetInt32("PhotographerID");
+                    string firstName = reader.GetString("FirstName");
+                    string lastName = reader.GetString("LastName");
+                    string emailResult = reader.GetString("Email");
+                    string phoneNumber = reader.GetString("PhoneNumber");
+
+                    admin = new Administrator(adminID, firstName, lastName, phoneNumber, emailResult);
+                }
+            }
+            catch (SqlException sqlEx)
+            {
+                Console.WriteLine($"SQL Exception message: {sqlEx.Message}");
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"Exception message: {ex.Message}");
+            }
+            return admin;
         }
 
         public async Task UpdateAsync(Administrator toUpdate)
