@@ -19,7 +19,7 @@ namespace SkoloFotoExam26.Services
             "StreetName=@StreetName, " +
             "ZipCode=@ZipCode " +
             "WHERE ParentID = @ID";
-
+        private string _getParentForLogin = "SELECT * FROM Parent JOIN ZipCodeLookup ON Parent.ZipCode = ZipCodeLookup.ZipCode WHERE Email = @Email";
         public Task<int> CountAsync()
         {
             throw new NotImplementedException();
@@ -206,9 +206,40 @@ namespace SkoloFotoExam26.Services
             }
         }
 
-        public Task<User> GetForLogin(string email)
+        public async Task<User> GetForLogin(string email)
         {
-            throw new NotImplementedException();
+            Parent parent = null;
+            using SqlConnection connection = new SqlConnection(Secret.connectionString);
+            try
+            {
+                using SqlCommand command = new SqlCommand(_getParentForLogin, connection);
+                await command.Connection.OpenAsync();
+                command.Parameters.AddWithValue("@Email", email);
+                SqlDataReader reader = await command.ExecuteReaderAsync();
+
+                if (reader.Read())
+                {
+                    int parentID = reader.GetInt32("PhotographerID");
+                    string firstName = reader.GetString("FirstName");
+                    string lastName = reader.GetString("LastName");
+                    string emailResult = reader.GetString("Email");
+                    string phoneNumber = reader.GetString("PhoneNumber");
+                    string street = reader.GetString("Street");
+                    int zipCode = reader.GetInt32("ZipCode");
+                    string city = reader.GetString("City");
+
+                    parent = new Parent(firstName, lastName, emailResult, phoneNumber, street, zipCode, city, parentID);
+                }
+            }
+            catch (SqlException sqlEx)
+            {
+                Console.WriteLine($"SQL Exception message: {sqlEx.Message}");
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"Exception message: {ex.Message}");
+            }
+            return parent;
         }
     }
 }
