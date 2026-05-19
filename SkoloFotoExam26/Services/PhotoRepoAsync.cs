@@ -13,6 +13,7 @@ namespace SkoloFotoExam26.Services
         private string _add = "INSERT INTO Photo VALUES(@FileName, @FilePath, @Price, @Date, @Height, @Width, @PhotoType)";
         private string _delete = "DELETE FROM Photo WHERE PhotoID = @PhotoID";
         private string _getAll = "SELECT * FROM Photo";
+        private string _get = "SELECT * FROM Photo WHERE PhotoID = @PhotoID";
 
         #endregion
 
@@ -117,9 +118,40 @@ namespace SkoloFotoExam26.Services
 
         
 
-        public Task<Photo> GetAsync(int toGet)
+        public async Task<Photo> GetAsync(int toGet)
         {
-            throw new NotImplementedException();
+            Photo photo = null;
+            SqlConnection connection = new SqlConnection(Secret.connectionString);
+            try
+            {
+                SqlCommand command = new SqlCommand(_get, connection);
+                command.Connection.OpenAsync();
+                command.Parameters.AddWithValue("@PhotoID", toGet);
+                SqlDataReader reader = await command.ExecuteReaderAsync();
+                if (await reader.ReadAsync())
+                {
+                    string fileName = reader.GetString("FileName");
+                    string filePath = reader.GetString("FilePath");
+                    double price = reader.GetDouble("Price");
+                    DateTime date = reader.GetDateTime("Date");
+                    int height = reader.GetInt32("Height");
+                    int width = reader.GetInt32("Width");
+                    int valueType = reader.GetInt32("PhotoType");
+                    PhotoType photoType = (PhotoType)valueType;
+
+                    //photo = new Photo(fileName, filePath, price, date, height, width, photoType, )
+                }
+
+            }
+            catch (SqlException sqlEx)
+            {
+                Console.WriteLine($"SQL Exception message: {sqlEx.Message}");
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"Exception message: {ex.Message}");
+            }
+            return photo;
         }
 
         public Task UpdateAsync(Photo toUpdate)

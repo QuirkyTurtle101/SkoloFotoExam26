@@ -2,10 +2,10 @@
 @using SkoloFotoExam26.Models
 @model SkoloFotoExam26.Pages.Photos.IndexModel
 @{
-    ViewData["Title"] = "Liste af Photos";
+    ViewData["Title"] = "Liste over Photos";
 }
 <h1>
-    Liste af Photos
+    Liste over Photos
 </h1>
 <p>
     <a asp-page="CreatePhoto"> lav et nyt photo </a>
@@ -13,16 +13,23 @@
 
 <form method="get">
     <table class="table">
-        <th> Klasse navn </th>
-        <th> Skole navn </th>
+        <th> Photo type </th>
+        <th> Pris </th>
+        <th> Højde</th>
+        <th> Bredde</th>
+        <th> Bookingen</th>
         <tbody>
             @foreach (Photo p in @Model.PhotoList)
             {
                 <tr>
                     <td> @p.PhotoType </td>
                     <td> @p.Price </td>
-                    <td><a asp-page="DeletePhoto" asp-route-PhotoID="@p.PhotoID" class="btn btn-danger">Slet</a></td>
-                </tr>
+                    <td> @p.Height</td>
+                    <td> @p.Width</td>
+                    <td> @p.TheBooking.BookingID</td>
+
+@*                     <td><a asp-page="DeletePhoto" asp-route-PhotoID="@p.PhotoID" class="btn btn-danger">Slet</a></td>
+ *@                </tr>
             }
 
         </tbody>
