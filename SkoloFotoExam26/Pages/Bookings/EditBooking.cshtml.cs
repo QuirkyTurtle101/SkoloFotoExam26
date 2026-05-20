@@ -2,12 +2,13 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using SkoloFotoExam26.Interfaces;
 using SkoloFotoExam26.Models;
+using SkoloFotoExam26.Services;
 
 namespace SkoloFotoExam26.Pages.Bookings
 {
     public class EditBookingModel : PageModel
     {
-        private IRepoAsync<Booking, int> _bookingRepo;
+        private BookingRepoAsync _bookingRepo;
 
         private IRepoAsync<PhotographingEvent, int> _photographingEventRepo;
 
@@ -37,7 +38,7 @@ namespace SkoloFotoExam26.Pages.Bookings
 
         public List<Booking> Bookings { get; set; }
 
-        public EditBookingModel(IRepoAsync<PhotographingEvent, int> photographingEventRepo, IRepoAsync<Booking, int> bookingRepo,
+        public EditBookingModel(IRepoAsync<PhotographingEvent, int> photographingEventRepo, BookingRepoAsync bookingRepo,
             IRepoAsync<Teacher, int> teacherRepo, IRepoAsync<SchoolClass, int> schoolClassRepo)
         {
             _bookingRepo = bookingRepo;
@@ -71,24 +72,7 @@ namespace SkoloFotoExam26.Pages.Bookings
                     await _schoolClassRepo.GetAsync(SelectedSchoolClassID), 
                     await _teacherRepo.GetAsync(TeacherID), BookingID);
 
-                if (edited.Start < TheEvent.Start || edited.End > TheEvent.End)
-                {
-                    ViewData["ErrorMessage"] = "Bookingen skal vaere i eventets tidsramme";
-                    return Page();
-                }
-
-                foreach (Booking b in Bookings)
-                {
-                    if (edited.Start < b.End && edited.End > b.Start)
-                    {
-                        if (b.ThePhotographingEvent.PhotographingEventID == edited.ThePhotographingEvent.PhotographingEventID)
-                        {
-                            ViewData["ErrorMessage"] = "Tiden er booket";
-                            return Page();
-                        }
-                    }
-
-                }
+                await _bookingRepo.BookingCheckAsync(edited, TheEvent);
 
                 await _bookingRepo.UpdateAsync(edited);
                 return RedirectToPage("Index");

@@ -228,7 +228,7 @@ namespace SkoloFotoExam26.Services
                     int zipCode = reader.GetInt32("ZipCode");
                     string city = reader.GetString("City");
 
-                    parent = new Parent(firstName, lastName, emailResult, phoneNumber, street, zipCode, city, parentID);
+                    //parent = new Parent(firstName, lastName, emailResult, phoneNumber, street, zipCode, city, parentID);
                 }
             }
             catch (SqlException sqlEx)

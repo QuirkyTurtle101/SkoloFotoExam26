@@ -2,37 +2,37 @@
 @using SkoloFotoExam26.Models
 @model SkoloFotoExam26.Pages.Bookings.CreateBookingModel
 @{
-    ViewData["Title"] = "Create Booking";
+    ViewData["Title"] = "Opret Booking";
 }
 <h1>
-    Create booking
+    Opret booking
 </h1>
 
 <div> 
     ID: @Model.TheEvent.PhotographingEventID
 </div>
 <div>
-    Start: @Model.TheEvent.Start
+    Starter: @Model.TheEvent.Start
 </div>
-    End: @Model.TheEvent.End
+    Ender: @Model.TheEvent.End
 <div> 
-    Photographer: @Model.TheEvent.Photographer.FirstName @Model.TheEvent.Photographer.LastName
+    Fotografer: @Model.TheEvent.Photographer.FirstName @Model.TheEvent.Photographer.LastName
 </div>
 <br />
 
 <form method="post">
     <div>
-        <label asp-for="Start" class="control-label"></label>
+        <label asp-for="Start" class="control-label">Starter</label>
         <input asp-for="Start" class="form-control"/>
     </div>
     <div>
-        <label asp-for="End" class="control-label"></label>
+        <label asp-for="End" class="control-label">Ender</label>
         <input asp-for="End" class="form-control" />
     </div>
     <div class="form-group">
-        <label asp-for="TeacherID"> Choose a Teacher </label>
+        <label asp-for="TeacherID"> Vælg en lærer </label>
         <select asp-for="TeacherID" class="form-select">
-            <option value=""> Select Teacher</option>
+            <option value=""> Vælg en Lærer</option>
             @foreach (Teacher t in @Model.TeacherList)
             {
                 <option value="@t.ID">
@@ -42,9 +42,9 @@
         </select>
     </div>
     <div class="form-group">
-        <label asp-for="SelectedSchoolClassID"> Choose a School Class </label>
+        <label asp-for="SelectedSchoolClassID"> Vælg en klasse </label>
         <select asp-for="SelectedSchoolClassID" class="form-select">
-            <option value=""> Select School Class</option>
+            <option value=""> Vælg en klasse</option>
             @foreach (SchoolClass s in @Model.SchoolClassList)
             {
                 <option value="@s.SchoolClassID">
@@ -55,9 +55,9 @@
     </div>
 
     <br />
-    <input type="submit" value="Create Booking" class="btn btn-success" />
+    <input type="submit" value="Opret Booking" class="btn btn-success" />
     <a asp-page="ChooseEvents" class="btn btn-warning">
-        Cancel
+        Annuller
     </a>
 
 </form>

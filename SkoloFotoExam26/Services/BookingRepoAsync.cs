@@ -1,4 +1,5 @@
 ﻿using Microsoft.Data.SqlClient;
+using SkoloFotoExam26.Exceptions;
 using SkoloFotoExam26.Interfaces;
 using SkoloFotoExam26.Models;
 using System.Data;
@@ -26,12 +27,18 @@ namespace SkoloFotoExam26.Services
 
         private IRepoAsync<SchoolClass, int> _schoolClassRepo;
 
+
         public BookingRepoAsync(IRepoAsync<PhotographingEvent, int> photographingEventRepo, IRepoAsync<Teacher, int> teacherRepo,
              IRepoAsync<SchoolClass, int> schoolClassRepo)
         {
             _photographingEventRepo = photographingEventRepo;
             _teacherRepo = teacherRepo;
             _schoolClassRepo = schoolClassRepo;
+        }
+
+        public BookingRepoAsync()
+        {
+
         }
 
         public async Task AddAsync(Booking input)
@@ -183,5 +190,33 @@ namespace SkoloFotoExam26.Services
                 Console.WriteLine($"Exception message: {ex.Message}");
             }
         }
+
+        public async Task BookingCheckAsync(Booking newBooking, PhotographingEvent theEvent)
+        {
+
+            List<Booking> bookings = await GetAllAsync();
+
+            if (newBooking.Start > newBooking.End)
+            {
+                throw new Exception("Bookingen skal begynde inden den ender");
+            }
+
+            if (newBooking.Start < theEvent.Start || newBooking.End > theEvent.End)
+            {
+                throw new BookingTimeframeException();
+            }
+            
+            foreach (Booking b in bookings)
+            {
+                if (newBooking.Start < b.End && newBooking.End > b.Start)
+                {
+                    if (b.ThePhotographingEvent.PhotographingEventID == newBooking.ThePhotographingEvent.PhotographingEventID)
+                    {
+                        throw new TimeBookedException();
+                    }
+                }
+            }
+        }
+
     }
 }

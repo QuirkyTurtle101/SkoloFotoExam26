@@ -29,6 +29,7 @@ builder.Services.AddTransient<IRepoAsync<Photographer, int>, PhotographerRepoAsy
 builder.Services.AddTransient<IRepoAsync<Teacher, int>, TeacherRepoAsync>();
 builder.Services.AddTransient<IRepoAsync<LoginInfo, string>, LoginRepoAsync>();
 builder.Services.AddTransient<IRepoAsync<Student, int>, StudentRepoAsync>();
+builder.Services.AddTransient<IRepoAsync<Photo, int>, PhotoRepoAsync>();
 
 builder.Services.AddSession();
 builder.Services.AddHttpContextAccessor();

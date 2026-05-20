@@ -14,7 +14,7 @@ namespace SkoloFotoExam26.Models
         public int Width { get; set; }
         public PhotoType PhotoType { get; set; }
 
-        public Booking TheBooking { get; set; }
+        //public Booking TheBooking { get; set; }
         #endregion
 
         #region Constructor
@@ -22,8 +22,8 @@ namespace SkoloFotoExam26.Models
         {
             
         }
-        public Photo(string fileName, string filePath, double price, DateTime theDate, int height, int width, PhotoType photoType,
-            Booking theBooking)
+        public Photo(string fileName, string filePath, double price, DateTime theDate, int height, int width, PhotoType photoType
+           )
         {
             FileName = fileName;
             FilePath = filePath;
@@ -32,10 +32,10 @@ namespace SkoloFotoExam26.Models
             Height = height;
             Width = width;
             PhotoType = photoType;
-            TheBooking = theBooking;
+            //TheBooking = theBooking;
         }
         public Photo(int photoID, string fileName, string filePath, double price, DateTime theDate, int height, int width, 
-            PhotoType photoType, Booking theBooking)
+            PhotoType photoType)
         {
             PhotoID = photoID;
             FileName = fileName;
@@ -45,7 +45,7 @@ namespace SkoloFotoExam26.Models
             Height = height;
             Width = width;
             PhotoType = photoType;
-            TheBooking = theBooking;
+            //TheBooking = theBooking;
         }
 
         #endregion

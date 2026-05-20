@@ -186,7 +186,7 @@ namespace SkoloFotoExam26.Services
         }
         
 
-        public Task<User> GetForLogin(string email)
+        public async Task<User> GetForLogin(string email)
         {
             Administrator admin = null;
             using SqlConnection connection = new SqlConnection(Secret.connectionString);

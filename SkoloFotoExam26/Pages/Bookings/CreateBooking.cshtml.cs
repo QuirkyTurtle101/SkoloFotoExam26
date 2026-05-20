@@ -2,12 +2,13 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using SkoloFotoExam26.Interfaces;
 using SkoloFotoExam26.Models;
+using SkoloFotoExam26.Services;
 
 namespace SkoloFotoExam26.Pages.Bookings
 {
     public class CreateBookingModel : PageModel
     {
-        private IRepoAsync<Booking, int> _bookingRepo;
+        private BookingRepoAsync _bookingRepo;
 
         private IRepoAsync<PhotographingEvent, int> _photographingEventRepo;
 
@@ -37,7 +38,7 @@ namespace SkoloFotoExam26.Pages.Bookings
         public CreateBookingModel(IRepoAsync<PhotographingEvent, int> photographingEventRepo, IRepoAsync<Booking, int> bookingRepo,
             IRepoAsync<Teacher, int> teacherRepo, IRepoAsync<SchoolClass, int> schoolClassRepo)
         {
-            _bookingRepo = bookingRepo;
+            _bookingRepo = (BookingRepoAsync)bookingRepo;
             _photographingEventRepo = photographingEventRepo;
             _teacherRepo = teacherRepo;
             _schoolClassRepo = schoolClassRepo;
@@ -48,7 +49,7 @@ namespace SkoloFotoExam26.Pages.Bookings
             TeacherList = await _teacherRepo.GetAllAsync();
             TheEvent = await _photographingEventRepo.GetAsync(id);
             SchoolClassList = await _schoolClassRepo.GetAllAsync();
-            Bookings = await _bookingRepo.GetAllAsync();
+            //Bookings = await _bookingRepo.GetAllAsync();
         }
 
         public async Task<IActionResult> OnPostAsync(int id)
@@ -60,28 +61,13 @@ namespace SkoloFotoExam26.Pages.Bookings
                 Teacher teacher = await _teacherRepo.GetAsync(TeacherID);
                 TheEvent = await _photographingEventRepo.GetAsync(id);
                 SchoolClass schoolClass = await _schoolClassRepo.GetAsync(SelectedSchoolClassID);
-                Bookings = await _bookingRepo.GetAllAsync();
+                //Bookings = await _bookingRepo.GetAllAsync();
                 Booking booking = new Booking(Start, End, TheEvent, teacher, schoolClass);
-                if (booking.Start < TheEvent.Start || booking.End > TheEvent.End)
-                {
-                    ViewData["ErrorMessage"] = "Bookingen skal vaere i eventets tidsramme";
-                    return Page();
-                }
 
-                foreach (Booking b in Bookings)
-                {         
-                    if (booking.Start < b.End && booking.End > b.Start)
-                    {
-                        if (b.ThePhotographingEvent.PhotographingEventID == booking.ThePhotographingEvent.PhotographingEventID)
-                        {
-                            ViewData["ErrorMessage"] = "Tiden er booket";
-                            return Page();
-                        }
-                    }
+                //await BookingCheckAsync(booking, TheEvent);
+                await _bookingRepo.BookingCheckAsync(booking, TheEvent);
 
-                }
                 await _bookingRepo.AddAsync(booking);
-
             }
             catch (Exception ex)
             {
@@ -91,5 +77,29 @@ namespace SkoloFotoExam26.Pages.Bookings
             }
             return RedirectToPage("Index");
         }
+
+
+        //public async Task BookingCheckAsync(Booking booking, PhotographingEvent theEvent)
+        //{
+
+        //    if (booking.Start < theEvent.Start || booking.End > theEvent.End)
+        //    {
+        //        throw new Exception("Bookingen skal vaere i eventets tidsramme");
+        //    }
+
+        //    foreach (Booking b in Bookings)
+        //    {
+        //        if (booking.Start < b.End && booking.End > b.Start)
+        //        {
+        //            if (b.ThePhotographingEvent.PhotographingEventID == booking.ThePhotographingEvent.PhotographingEventID)
+        //            {
+        //                throw new Exception("Tiden er booket");
+        //            }
+        //        }
+        //    }
+        //    await _bookingRepo.AddAsync(booking);
+        //}
+
+
     }
 }
