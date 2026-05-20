@@ -2,21 +2,21 @@
 @using SkoloFotoExam26.Models
 @model SkoloFotoExam26.Pages.SchoolClasses.CreateSchoolClassModel
 @{
-    ViewData["Title"] = "Create School Class";
+    ViewData["Title"] = "Opret En Skole Klasse";
 }
 <h2>
-    Create School Class
+    Opret En Skole Klasse
 </h2>
 
 <form method="post">
     <div>
-    <label asp-for="ClassName" class="control-label"></label>
+    <label asp-for="ClassName" class="control-label">Klasse navn</label>
     <input asp-for="ClassName" class="form-control"/>
     </div>
     <div class="form-group"> 
-    <label asp-for="SchoolID">Choose a School</label>
+    <label asp-for="SchoolID">Vælg en skole</label>
     <select asp-for="SchoolID" class="form-control"> 
-            <option value="">Select School</option>
+            <option value="">Vælg en skole</option>
             @foreach (School s in Model.SchoolList)
                     {
                         <option value="@s.SchoolID">

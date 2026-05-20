@@ -58,7 +58,7 @@
                             <a class="nav-link text-dark" asp-area="" asp-page="/Privacy">Privacy</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-page="PhotographingEvents/Index">PhotographingEvents</a>
+                            <a class="nav-link text-dark" asp-area="" asp-page="PhotographingEvents/Index">FotograferingEvents</a>
                         </li>
                         <li class="nav-item">
                             <a class="nav-link text-dark" asp-area="" asp-page="/Schools/Index">Skoler</a>
@@ -67,10 +67,13 @@
                             <a class="nav-link text-dark" asp-area="" asp-page="/SchoolClasses/Index">SkoleKlasser</a>
                         </li>
                         <li class="nav-item">
+                            <a class="nav-link text-dark" asp-area="" asp-page="/Photos/Index">Fotos</a>
+                        </li>
+                        <li class="nav-item">
                             <a class="nav-link text-dark" asp-area="" asp-page="/Bookings/ChooseEvents">Bookings</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-page="/Teachers/Index">Teachers</a>
+                            <a class="nav-link text-dark" asp-area="" asp-page="/Teachers/Index">Lærer</a>
                         </li>
                         <li class="nav-item">
                             <a class="nav-link text-dark" asp-area="" asp-page="/Parents/Index">Forældre</a>
@@ -94,10 +97,14 @@
             @{
                 var session = Context?.Session;
                 var hasUserId = session != null && session.GetInt32("UserID") != null;
+                var pageName = ViewContext.RouteData.Values["page"].ToString();
             }
             @if (hasUserId)
             {
-                <a class="btn btn-sm btn-login-tab" asp-page="/Account/Profile">Min Profil</a>
+                if (!pageName.Contains("/Profile/"))
+                {
+                    <a class="btn btn-sm btn-login-tab" asp-page="/Profile/ProfileRedirect" asp-page-handler="Redirect">Min Profil</a>
+                }
                 <a class="btn btn-sm btn-danger ms-2" asp-page="/LoginPage" asp-page-handler="Logout" style="border-radius: 0 0 4px 4px;">Log ud</a>
             }
             else

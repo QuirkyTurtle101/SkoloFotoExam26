@@ -25,6 +25,14 @@ namespace SkoloFotoExam26.Models
             ZipCode = zipCode;
             SchoolID = schoolID;
         }
+        public School(string name, string street, string city, int zipCode, SchoolType schoolType)
+        {
+            Name = name;
+            Street = street;
+            City = city;
+            SchoolType = schoolType;
+            ZipCode = zipCode;
+        }
 
         public override string ToString()
         {

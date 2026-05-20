@@ -55,24 +55,30 @@ namespace SkoloFotoExam26.Pages.Bookings
         {
             try
             {
-
+                TeacherList = await _teacherRepo.GetAllAsync();
+                SchoolClassList = await _schoolClassRepo.GetAllAsync();
                 Teacher teacher = await _teacherRepo.GetAsync(TeacherID);
                 TheEvent = await _photographingEventRepo.GetAsync(id);
                 SchoolClass schoolClass = await _schoolClassRepo.GetAsync(SelectedSchoolClassID);
                 Bookings = await _bookingRepo.GetAllAsync();
                 Booking booking = new Booking(Start, End, TheEvent, teacher, schoolClass);
+                if (booking.Start < TheEvent.Start || booking.End > TheEvent.End)
+                {
+                    ViewData["ErrorMessage"] = "Bookingen skal vaere i eventets tidsramme";
+                    return Page();
+                }
+
                 foreach (Booking b in Bookings)
                 {         
                     if (booking.Start < b.End && booking.End > b.Start)
                     {
-                        ViewData["ErrorMessage"] = "Tiden er booket";
-                        return Page();
+                        if (b.ThePhotographingEvent.PhotographingEventID == booking.ThePhotographingEvent.PhotographingEventID)
+                        {
+                            ViewData["ErrorMessage"] = "Tiden er booket";
+                            return Page();
+                        }
                     }
-                    //if ()
-                    //{
-                    //    ViewData["ErrorMessage"] = "Bookningen skal laves indefor eventet tidsramme";
-                    //    return Page();
-                    //}
+
                 }
                 await _bookingRepo.AddAsync(booking);
 
@@ -83,7 +89,7 @@ namespace SkoloFotoExam26.Pages.Bookings
                 ViewData["ErrorMessage"] = ex.Message;
                 return Page();
             }
-            return RedirectToPage("ChooseEvents");
+            return RedirectToPage("Index");
         }
     }
 }

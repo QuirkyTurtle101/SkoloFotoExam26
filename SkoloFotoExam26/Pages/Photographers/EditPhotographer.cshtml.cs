@@ -26,18 +26,16 @@ namespace SkoloFotoExam26.Pages.Photographers
         {
             try
             {
-                //Photographer photographerToUpdate = await _photographerRepo.GetAsync(photographerID);
-
                 await _photographerRepo.UpdateAsync(PhotographerToUpdate);
             }
             catch(SqlException sqlex)
             {
-                ViewData["ErrorMessage"] = "Kunne ikke opdateres";
+                ViewData["ErrorMessage"] = "Fejl i databasen. Fotograf er ikke blevet redigeret";
                 return Page();
             }
             catch(Exception ex)
             {
-                ViewData["ErrorMessage"] = ex.Message;
+                ViewData["ErrorMessage"] = "Fejl ved redigering";
                 return Page();
             }
             return RedirectToPage("Index");

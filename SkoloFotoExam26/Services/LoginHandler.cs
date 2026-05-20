@@ -83,37 +83,6 @@ namespace SkoloFotoExam26.Services
                 return (true, "Login succesful.", dbResult.TheUserType);
             }
             return (false, "Wrong password.", null);
-
-            //TODO rewrite using LoginRepo and LoginInfo model
-            //using (SqlConnection connection = new SqlConnection("placeholder, replace with connection string"))
-            //{
-            //    try
-            //    {
-            //        SqlCommand command = new SqlCommand("SELECT * FROM LoginInfo WHERE Email = @Email;", connection);
-            //        Task openConnection = command.Connection.OpenAsync();
-            //        command.Parameters.AddWithValue("@Email", _toBeHandled.Email);
-            //        await openConnection;
-            //        SqlDataReader reader = await command.ExecuteReaderAsync();
-            //        if(await reader.ReadAsync())
-            //        {
-            //            byte[] hashToCheck = HashHelper.HashPassword(_toBeHandled.Password);
-            //            byte[] hashFromDB = (byte[])reader["PasswordHash"];
-            //            if (hashToCheck == hashFromDB)
-            //            {
-            //                return (true, "Login succesful.", (UserType)reader["UserType"]);
-            //            }
-            //            return (false, "Wrong password.", null);
-            //        }
-            //        else
-            //        {
-            //            return (false, "Wrong email.", null);
-            //        }
-            //    }
-            //    catch(Exception e)
-            //    {
-            //        return (false, e.Message, null);
-            //    }
-            //}
         }
     }
 }
