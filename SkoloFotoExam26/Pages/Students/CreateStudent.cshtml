@@ -26,11 +26,30 @@
         <input asp-for="@Model.LastName" class="form-control" />
         <span asp-validation-for="@Model.LastName" class="text-danger"></span>
     </div>
-    @* <div class="form-group">
-        <label>Klasse ID</label>
-        <input asp-for="SchoolClassID" class="form-control" />
-        <span asp-validation-for="@Model.SchoolClassID" class="text-danger"></span>
-    </div> *@
+
+    <div class="form-group">
+        <label asp-for="@Model.ParentID" class="control-label"></label>
+        <input asp-for="@Model.ParentID" class="form-control" />
+        <span asp-validation-for="@Model.ParentID" class="text-danger"></span>
+    </div>
+
+    <div class="form-group">
+        <label asp-for="SchoolID" class="control-label">Vælg Skole</label>
+        <select asp-for="SchoolID" class="form-control">
+            <option value="">-- Vælg en skole --</option>
+            @if (Model.SchoolClassList != null)
+            {
+                @foreach (var school in Model.SchoolList)
+                {
+                    <option value="@school.SchoolID">
+                        @school
+                    </option>
+                }
+            }
+        </select>
+        <span asp-validation-for="SchoolClassID" class="text-danger"></span>
+    </div>
+   
     <div class="form-group">
         <label asp-for="SchoolClassID" class="control-label">Vælg Skoleklasse</label>
         <select asp-for="SchoolClassID" class="form-control">
@@ -47,11 +66,6 @@
         </select>
         <span asp-validation-for="SchoolClassID" class="text-danger"></span>
     </div>
-    @* <div class="form-group">
-        <label asp-for="@Model.SchoolClassID" class="control-label"></label>
-        <input asp-for="@Model.SchoolClassID" class="form-control" />
-        <span asp-validation-for="@Model.SchoolClassID" class="text-danger"></span>
-    </div> *@
 
     <br />
 

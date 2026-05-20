@@ -53,13 +53,9 @@
                 <td>@item.Street</td>
                 <td>
                     <div class="btn-group" role="group">
-                        <a class="btn btn-primary" asp-page="/Students/Index">Børn</a>
-                        <a class="btn btn-outline-info btn-sm" asp-page="IndexStudent" asp-route-ParentID="@item.ID">Børn</a>
-                        <a asp-page="IndexStudent" asp-route-ParentID="@item.ID">Børne oversigt</a>
-                        <a class="btn btn-primary" asp-page="/Students/CreateStudent">Tilmeld barn</a>
-                        <a asp-page="CreateStudent" asp-route-ParentID="@item.ID">Tilføj barn</a>
-                        <a asp-page="UpdateParent" asp-route-ParentID="@item.ID">Rediger forælder</a>
-                        <a asp-page="DeleteParent" asp-route-ParentID="@item.ID">Slet forælder</a>
+                        <a class="btn btn-outline-info btn-sm" asp-page="/Students/Index" asp-route-ParentID="@item.ID">Se børn</a>
+                        <a class="btn btn-outline-info btn-sm" asp-page="UpdateParent" asp-route-ParentID="@item.ID">Rediger forælder</a>
+                        <a class="btn btn-outline-info btn-sm" asp-page="DeleteParent" asp-route-ParentID="@item.ID">Slet forælder</a>
                     </div>
                 </td>
             </tr>
