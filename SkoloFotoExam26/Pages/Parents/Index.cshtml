@@ -2,16 +2,20 @@
 @using SkoloFotoExam26.Models
 @model SkoloFotoExam26.Pages.Parents.IndexModel
 @{
-    ViewData["Titel"] = "Forælder";
+    ViewData["Titel"] = "Liste af forældre";
 }
 
-<h1>Forældre Oversigt"</h1>
+<h1>Forælder info</h1>
 
-    @* <a asp-page="CreateStudent" class="btn btn-primary">Opret dit barn</a> *@
+<div class="form-group mb-3">
+    <a class="btn btn-primary" asp-page="CreateParent">Opret Forældreprofil</a>
 
-        <a class="btn btn-primary" asp-page="/Students/Index">Børn</a>
+    @* <a class="btn btn-primary" asp-page="/Students/Create">Tilmeld barn</a> *@
 
+    @* <a class="btn btn-primary" asp-page="/Students/Index">Børn</a> *@
 </div>
+
+@*Maybe create a Filter here*@
 
 @*Maybe create a Filter here*@
 
@@ -44,6 +48,17 @@
                 <td>@item.City</td>
                 <td>@item.ZipCode</td>
                 <td>@item.Street</td>
+                <td>
+                    <div class="btn-group" role="group">
+                        <a class="btn btn-primary" asp-page="/Students/Index">Børn</a>
+                        <a class="btn btn-outline-info btn-sm" asp-page="IndexStudent" asp-route-ParentID="@item.ID">Børn</a>
+                        <a asp-page="IndexStudent" asp-route-ParentID="@item.ID">Børne oversigt</a>
+                        <a class="btn btn-primary" asp-page="/Students/CreateStudent">Tilmeld barn</a>
+                        <a asp-page="CreateStudent" asp-route-ParentID="@item.ID">Tilføj barn</a>
+                        <a asp-page="UpdateParent" asp-route-ParentID="@item.ID">Rediger forælder</a>
+                        <a asp-page="DeleteParent" asp-route-ParentID="@item.ID">Slet forælder</a>
+                    </div>
+                </td>
             </tr>
         }
     </tbody>
