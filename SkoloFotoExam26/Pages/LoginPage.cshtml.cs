@@ -32,7 +32,6 @@ namespace SkoloFotoExam26.Pages
         {
             HttpContext.Session.Clear();
             return RedirectToPage("Index");
-
         }
 
         public async Task<IActionResult> OnPostAsync()

@@ -1,6 +1,56 @@
 ﻿@page
 @model SkoloFotoExam26.Pages.Profile.ProfileAdminModel
 @{
+    ViewData["Title"] = "Profil";
 }
 
-<h1>admin placeholder</h1>
+<div class="container">
+    <div class="row">
+        <div class="col-3">
+            <div class="card shadow mt-2">
+                <img src="../assets/images/testpfp.jpg" class="card-img-top mb-0" />
+                <hr class="my-0"/>
+                <div class="mt-2">
+                    <p class="text-center">@Model.TheAdmin.FirstName @Model.TheAdmin.LastName <br /> @Model.TheAdmin.Email <br /> @Model.TheAdmin.PhoneNumber</p>
+                </div>
+            </div>
+                
+        </div>
+        <div class="col">
+            <div class="row">
+                <div class="col card shadow m-2 p-3">
+                    <p>Parent</p>
+                    <hr class="my-0"/>
+                    <a asp-page="" class="btn btn-primary">Gå til side</a>
+                </div>
+                <div class="col card shadow m-2 p-3">
+                    <p>Teacher</p>
+                    <hr class="my-0" />
+                    <a asp-page="" class="btn btn-primary">Gå til side</a>
+                </div>
+                <div class="col card shadow m-2 p-3">
+                    <p>Photographer</p>
+                    <hr class="my-0" />
+                    <a asp-page="" class="btn btn-primary">Gå til side</a>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col card shadow m-2 p-3">
+                    <p>School Secretary</p>
+                    <hr class="my-0" />
+                    <a asp-page="" class="btn btn-primary">Gå til side</a>
+                </div>
+                <div class="col card shadow m-2 p-3">
+                    <p>School</p>
+                    <hr class="my-0" />
+                    <a asp-page="" class="btn btn-primary">Gå til side</a>
+                </div>
+                <div class="col card shadow m-2 p-3">
+                    <p>School Class</p>
+                    <hr class="my-0" />
+                    <a asp-page="" class="btn btn-primary">Gå til side</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
