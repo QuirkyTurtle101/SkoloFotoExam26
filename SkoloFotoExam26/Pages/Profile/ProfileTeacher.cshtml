@@ -1,7 +1,50 @@
 ﻿@page
+@using SkoloFotoExam26.Models
 @model SkoloFotoExam26.Pages.Profile.ProfileTeacherModel
 @{
     ViewData["Title"] = "Profil";
 }
 
-<h1>teacher placeholder</h1>
+<div class="container mt-1">
+    <div class="row">
+        <div class="col-3">
+            <div class="card shadow">
+                <img src="../assets/images/testpfp.jpg" class="card-img-top mb-0" />
+                <hr class="my-0" />
+                <div class="mt-2">
+                    <p class="text-center">@Model.TheTeacher.FirstName @Model.TheTeacher.LastName <br /> @Model.TheTeacher.Email <br /> @Model.TheTeacher.PhoneNumber</p>
+                </div>
+            </div>
+
+        </div>
+        <div class="col">
+            <div class="card shadow">
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th>Fornavn</th>
+                            <th>Mellemnavn</th>
+                            <th>Efternavn</th>
+                            <th>ForældreID</th>
+                            <th>SkoleID</th>
+                            <th>Skoleklasse</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (Student item in @Model.Students)
+                        {
+                            <tr>
+                                <td>@item.FirstName</td>
+                                <td>@item.MiddleName</td>
+                                <td>@item.LastName</td>
+                                <td>@item.Parent.FirstName @item.Parent.LastName</td>
+                                <td>@item.School.Name</td>
+                                <td>@item.SchoolClass.ClassName</td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>

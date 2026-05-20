@@ -8,7 +8,7 @@ namespace SkoloFotoExam26.Pages.Profile
     public class ProfileAdminModel : PageModel
     {
         private IRepoAsync<Administrator, int> _adminRepo;
-        public Administrator Admin;
+        public Administrator TheAdmin;
 
         public ProfileAdminModel(IRepoAsync<Administrator, int> adminRepo)
         {
@@ -16,7 +16,7 @@ namespace SkoloFotoExam26.Pages.Profile
         }
         public async Task OnGetAsync()
         {
-            Admin = await _adminRepo.GetAsync((int)HttpContext.Session.GetInt32("UserID"));
+            TheAdmin = await _adminRepo.GetAsync((int)HttpContext.Session.GetInt32("UserID"));
         }
     }
 }
