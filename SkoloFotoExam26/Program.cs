@@ -2,7 +2,7 @@ using Microsoft.Extensions.DependencyInjection.Extensions;
 using SkoloFotoExam26.Interfaces;
 using SkoloFotoExam26.Models;
 using SkoloFotoExam26.Services;
-
+using SkoloFotoExam26.Helpers;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -29,6 +29,7 @@ builder.Services.AddTransient<IRepoAsync<Photographer, int>, PhotographerRepoAsy
 builder.Services.AddTransient<IRepoAsync<Teacher, int>, TeacherRepoAsync>();
 builder.Services.AddTransient<IRepoAsync<LoginInfo, string>, LoginRepoAsync>();
 builder.Services.AddTransient<IRepoAsync<Student, int>, StudentRepoAsync>();
+builder.Services.AddTransient<IFilterFunction, FilterFunction>();
 
 builder.Services.AddSession();
 builder.Services.AddHttpContextAccessor();

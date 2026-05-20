@@ -56,7 +56,11 @@ namespace SkoloFotoExam26.Pages.Administrators
                 return Page();
             }
             return RedirectToPage("Index");
+        }
 
+        public IActionResult OnPostCancel()
+        {
+            return RedirectToPage("Index");
         }
     }
 }
