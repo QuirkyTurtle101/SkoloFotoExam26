@@ -2,13 +2,12 @@
 @using SkoloFotoExam26.Models
 @model SkoloFotoExam26.Pages.Schools.EditSchoolModel
 @{
-    ViewData["Title"] = "Opdater skole";
+    ViewData["Title"] = "Rediger skole";
 }
 
 <h1>Opdater skole</h1>
 <form method="post">
     <input type="hidden" asp-for="@Model.SchoolToBeUpdated.SchoolID" /> 
-
     <div class="form-group">
         <label asp-for="@Model.SchoolToBeUpdated.Name" class="control-label"></label>
         <input asp-for="@Model.SchoolToBeUpdated.Name" class="form-control" />
@@ -36,8 +35,8 @@
     <br />
     <div class="form-group">
         <input type="submit" value="Opdater skole" class="btn-primary" />
-        <input type="submit" value="Slet skole" asp-page-handler="Delete" class="btn-danger" />
-        <input type="submit" value="anuller" asp-page-handler="Cancel" class="btn-warning" />
+@*         <input type="submit" value="Slet skole" asp-page-handler="Delete" class="btn-danger" /> *@
+        <input type="submit" value="Anuller" asp-page-handler="Cancel" class="btn-warning" />
     </div>
 
 </form>

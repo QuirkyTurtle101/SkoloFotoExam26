@@ -1,0 +1,19 @@
+﻿@page
+@model SkoloFotoExam26.Pages.Administrators.DeleteAdminModel
+@{
+    ViewData["Title"] = "Slet administrator";
+}
+
+<h1>Slet administrator</h1>
+
+<form method="post">
+    <div class="form-group">
+        <label>Administrators ID</label> : @Model.AdminToBeDeleted.ID<br>
+        <label>Administrators fornavn</label> : @Model.AdminToBeDeleted.FirstName<br>
+        <label>Administrators efternavn</label> : @Model.AdminToBeDeleted.LastName<br>
+        <label>Email</label> : @Model.AdminToBeDeleted.Email<br>
+        <label>Telefonnummer </label> : @Model.AdminToBeDeleted.PhoneNumber<br>
+        <input type="submit" value="Slet administrator" asp-route-adminID="@Model.AdminToBeDeleted.ID" class="btn-danger" onclick="return confirm('Er du sikker på at slette skolen?')" />
+        <input type="submit" value="Anuller" asp-page-handler="Cancel" class="btn-warning" />
+    </div>
+</form>

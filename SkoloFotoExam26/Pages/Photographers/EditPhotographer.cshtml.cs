@@ -26,13 +26,30 @@ namespace SkoloFotoExam26.Pages.Photographers
         {
             try
             {
-                //Photographer photographerToUpdate = await _photographerRepo.GetAsync(photographerID);
-
                 await _photographerRepo.UpdateAsync(PhotographerToUpdate);
             }
             catch(SqlException sqlex)
             {
-                ViewData["ErrorMessage"] = "Kunne ikke opdateres";
+                ViewData["ErrorMessage"] = "Fejl i databasen. Fotograf er ikke blevet redigeret";
+                return Page();
+            }
+            catch(Exception ex)
+            {
+                ViewData["ErrorMessage"] = "Fejl ved redigering";
+                return Page();
+            }
+            return RedirectToPage("Index");
+        }
+
+        public IActionResult OnPostDelete()
+        {
+            try
+            {
+                _photographerRepo.DeleteAsync(PhotographerToUpdate.ID);
+            }
+            catch(SqlException sqlex)
+            {
+                ViewData["ErrorMessage"] = "Fejl ved sletning - fotografen kan ikke slettes, da der er andre data, som er knyttet til denne";
                 return Page();
             }
             catch(Exception ex)
@@ -40,9 +57,9 @@ namespace SkoloFotoExam26.Pages.Photographers
                 ViewData["ErrorMessage"] = ex.Message;
                 return Page();
             }
+
             return RedirectToPage("Index");
         }
-
 
         public IActionResult OnPostCancel()
         {

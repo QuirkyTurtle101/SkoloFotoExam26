@@ -21,6 +21,9 @@
                 <tr>
                     <td> @s.ClassName </td>
                     <td> @s.School.Name </td>
+                    <td><a asp-page="DeleteSchoolClass" asp-route-SchoolClassID="@s.SchoolClassID" class="btn btn-danger">Slet</a></td>
+                    <td><a asp-page="EditSchoolClass" asp-route-SchoolClassID="@s.SchoolClassID" class="btn btn-success">Rediger</a></td>
+
                 </tr>
             }
 

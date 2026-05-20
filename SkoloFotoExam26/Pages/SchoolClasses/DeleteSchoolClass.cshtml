@@ -1,0 +1,28 @@
+﻿@page
+@model SkoloFotoExam26.Pages.SchoolClasses.DeleteSchoolClassModel
+@{
+    ViewData["Title"] = "Slet en skole klasse";
+}
+<h2>
+    Slet en skole klasse
+</h2>
+<form method="post">
+    <div class="form-group">
+        <label>Klassen</label> : @Model.SchoolClassDelete.ClassName<br>
+        <label>Skole navn</label> : @Model.SchoolClassDelete.School.Name<br>
+        <label>ID</label> : @Model.SchoolClassDelete.SchoolClassID<br>
+    </div>
+
+    <button type="submit"
+            class="btn-danger"
+            asp-page-handler="Delete" asp-route-SchoolClassID="@Model.SchoolClassDelete.SchoolClassID"
+            onclick="return confirm('Er du sikker på at slette skole klassen?')">
+        Slet Klasse
+
+
+
+    </button>
+    <a asp-page="Index" class="btn btn-warning">
+        Cancel
+    </a>
+</form>

@@ -2,7 +2,7 @@
 @using SkoloFotoExam26.Models
 @model SkoloFotoExam26.Pages.Parents.IndexModel
 @{
-    ViewData["Titel"] = "Liste af forældre";
+    ViewData["Titel"] = Model.CurrentRole == "admin" ? "Admin Oversigt" : "Min Profil";
 }
 
 <h1>Forælder info</h1>
@@ -17,16 +17,18 @@
 
 @*Maybe create a Filter here*@
 
-@*Maybe create a Filter here*@
 
-<table class="table">
+
+<table class="table table-striped">
     <thead>
         <tr>
-            <form method"get">
             <th>
-                    <button type="submit" class="btn btn-link" name="SortBy" value="ForældreID" >ID</button>
+                <button type="submit" class="btn btn-link" name="SortBy" value="ForældreID">ID</button>
+                <form method="get" style="display:inline;">
+                    <button type="submit" class=btn btn-link p-0" name="SortBy" value="ParentID">ID</button>
+                </form>
             </th>
-            </form>
+
             <th>Fornavn</th>
             <th>Efternavn</th>
             <th>Email</th>
@@ -34,6 +36,7 @@
             <th>By</th>
             <th>PostNummer</th>
             <th>Vejnavn</th>
+            <th class="text-center">Handlinger</th>
         </tr>
     </thead>
     <tbody>
@@ -41,7 +44,7 @@
         {
             <tr>
                 <td>@item.ID</td>
-                <td>@item.FirstName</td>
+                <td> @item.FirstName</td>
                 <td>@item.LastName</td>
                 <td>@item.Email</td>
                 <td>@item.PhoneNumber</td>

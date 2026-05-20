@@ -17,16 +17,16 @@ namespace SkoloFotoExam26.Pages.PhotographingEvents
         }
         [BindProperty]
         public PhotographingEvent PhotographingEventDelete { get; set; }
-        public async Task OnGet(int id)
+        public async Task OnGetAsync(int PhotographingEventID)
         {
-            PhotographingEventDelete = await _photographingEventRepo.GetAsync(id);
+            PhotographingEventDelete = await _photographingEventRepo.GetAsync(PhotographingEventID);
         }
 
-        public async Task<IActionResult> OnPostAsync(int id)
+        public async Task<IActionResult> OnPostDeleteAsync(int PhotographingEventID)
         {
             try
             {
-                await _photographingEventRepo.DeleteAsync(id);
+                await _photographingEventRepo.DeleteAsync(PhotographingEventID);
                 return RedirectToPage("Index");
             }
             catch (Exception ex)

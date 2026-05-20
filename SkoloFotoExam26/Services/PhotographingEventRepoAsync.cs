@@ -12,7 +12,7 @@ namespace SkoloFotoExam26.Services
         private string _getAll = "SELECT * FROM PhotographingEvent";
         private string _getEvent = "SELECT * FROM PhotographingEvent WHERE PhotographingEventID = @PhotographingEventID";
         private string _delete = "DELETE FROM PhotographingEvent WHERE PhotographingEventID = @PhotographingEventID";
-        private string _update = "UPDATE PhotographingEvent SET Start = @Start, End = @End, SchoolSecretaryID = @SchoolSecretaryID, PhotographerID = @PhotographerID WHERE PhotographingEventID = @PhotographingEventID";
+        private string _update = "UPDATE PhotographingEvent SET [Start] = @Start, [End] = @End, SchoolSecretaryID = @SchoolSecretaryID, PhotographerID = @PhotographerID WHERE PhotographingEventID = @PhotographingEventID";
 
         //private string _getAll = "SELECT SchoolSecretary.FirstName, SchoolSecretary.LastName, SchoolSecretary.SchoolSecretaryID, SchoolSecretary.Email, SchoolSecretary.PhoneNumber, SchoolSecretary.Initials, School.SchoolID, School.Name, School.StreetName, School.ZipCode, School.SchoolType, ZipCodeLookup.City FROM SchoolSecretary JOIN School on School.SchoolID = SchoolSecretary.SchoolID JOIN ZipCodeLookup ON School.ZipCode = ZipCodeLookup.ZipCode";
 

@@ -63,7 +63,7 @@ namespace SkoloFotoExam26.Pages.SchoolSecretaries
             }
             catch (Exception ex)
             {
-                ViewData["ErrorMessage"] = ex.Message;
+                ViewData["ErrorMessage"] = "Fejl ved opprettelse";
                 return Page();
             }
             return RedirectToPage("Index");

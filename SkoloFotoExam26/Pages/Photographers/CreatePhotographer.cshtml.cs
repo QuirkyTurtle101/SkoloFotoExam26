@@ -68,7 +68,7 @@ namespace SkoloFotoExam26.Pages.Photographers
             }
             catch (Exception ex)
             {
-                ViewData["ErrorMessage"] = ex.Message;
+                ViewData["ErrorMessage"] = "Fejl ved oprettelse";
                 return Page();
             }
             return RedirectToPage("Index");

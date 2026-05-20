@@ -9,46 +9,44 @@ namespace SkoloFotoExam26.Pages.SchoolSecretaries
 {
     public class DeleteSchoolSecretaryModel : PageModel
     {
-        IRepoAsync<SchoolSecretary, int> _schoolSecRepo;
-        IRepoAsync<LoginInfo, string> _loginRepo;
-
+        private IRepoAsync<SchoolSecretary, int> _schoolSecRepo;
         [BindProperty]
         public SchoolSecretary SchoolSecretaryToBeDeleted { get; set; }
 
-        public DeleteSchoolSecretaryModel(IRepoAsync<SchoolSecretary, int> schoolSecRepo, IRepoAsync<LoginInfo, string> loginRepo)
+        public DeleteSchoolSecretaryModel(IRepoAsync<SchoolSecretary, int> schoolSecRepo)
         {
             _schoolSecRepo = schoolSecRepo;
-            _loginRepo = loginRepo;
-
         }
+
         public async Task OnGetAsync(int schoolSecretaryID)
         {
             SchoolSecretaryToBeDeleted = await _schoolSecRepo.GetAsync(schoolSecretaryID);
         }
 
-        public async Task<IActionResult> OnPostaAyncDelete(int schoolSecretaryID)//Kan ikke teste før loginRepo
+        public async Task<IActionResult> OnPostAsync(int schoolSecretaryID)
         {
             try
-            {
-                SchoolSecretary schoolSecretaryToBeDeleted = await _schoolSecRepo.GetAsync(schoolSecretaryID);
-
-                //await _loginRepo.DeleteAsync(schoolSecretaryToBeDeleted.Email);
+            { 
+                //await _loginRepo.DeleteAsync(photographToBeDeleted.Email);
                 await _schoolSecRepo.DeleteAsync(schoolSecretaryID);
                 return RedirectToPage("Index");
             }
-            catch(SqlException sqlex)
+            catch (SqlException sqlex)
             {
-                ViewData["ErrorMessage"] = "Denne kan ikke slettes, da der er andre data, som er knyttet til denne";
+                ViewData["ErrorMessage"] = "Fejl ved sletning - der er andre data, som er knyttet til denne sekretær";
+                SchoolSecretaryToBeDeleted = await _schoolSecRepo.GetAsync(schoolSecretaryID);
                 return Page();
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 ViewData["ErrorMessage"] = ex.Message;
+                SchoolSecretaryToBeDeleted = await _schoolSecRepo.GetAsync(schoolSecretaryID);
                 return Page();
             }
+
         }
 
-        public IActionResult OnPost()
+        public IActionResult OnPostCancel()
         {
             return RedirectToPage("Index");
         }

@@ -7,16 +7,25 @@ namespace SkoloFotoExam26.Services
 {
     public class SchoolSecretaryRepoAsync : IRepoAsync<SchoolSecretary, int>, ILoginableRepo
     {
-        #region SQL querys
+        #region Query strings
         private string _addSchoolSecretary = "INSERT INTO SchoolSecretary VALUES(@FirstName, @LastName, @Email, @PhoneNumber, @Initials, @SchoolID)";
         private string _getAllSchoolSecretaries = "SELECT SchoolSecretary.FirstName, SchoolSecretary.LastName, SchoolSecretary.SchoolSecretaryID, SchoolSecretary.Email, SchoolSecretary.PhoneNumber, SchoolSecretary.Initials, School.SchoolID, School.Name, School.StreetName, School.ZipCode, School.SchoolType, ZipCodeLookup.City FROM SchoolSecretary JOIN School on School.SchoolID = SchoolSecretary.SchoolID JOIN ZipCodeLookup ON School.ZipCode = ZipCodeLookup.ZipCode";
         private string _getSchoolSecretary = "SELECT SchoolSecretary.FirstName, SchoolSecretary.SchoolSecretaryID, SchoolSecretary.LastName, SchoolSecretary.Email, SchoolSecretary.PhoneNumber, SchoolSecretary.Initials, School.SchoolID, School.Name, School.StreetName, School.ZipCode FROM SchoolSecretary JOIN School on School.SchoolID = SchoolSecretary.SchoolID WHERE SchoolSecretaryID = @SchoolSecretaryID";
-        private string _deleteSchoolSecretary = "Delete FROM School WHERE SchoolSecretaryID = @SchoolSecretaryID ";
-        private string _updateSchoolSecretary = "UPDATE SchoolSecretary SET FirstName = @FirstName, LastName = @LastName, PhoneNumber = @PhoneNumber, Initials = @Initials, SchoolID = @SchoolSecretaryID WHERE SchoolID = @ID";
-        
+        private string _deleteSchoolSecretary = "DELETE FROM SchoolSecretary WHERE SchoolSecretaryID = @SchoolSecretaryID ";
+        private string _updateSchoolSecretary = "UPDATE SchoolSecretary SET FirstName = @FirstName, LastName = @LastName, PhoneNumber = @PhoneNumber, Initials = @Initials, SchoolID = @SchoolID WHERE SchoolSecretaryID = @ID";
+        private string _getSchoolSecretaryForLogin = "SELECT * FROM SchoolSecretary WHERE Email = @Email";
+        private string _countSecretaries = "SELECT COUNT(*) FROM SchoolSecretary";
         #endregion
 
+        #region constructor med SchoolRepo
+        IRepoAsync<School, int> _schoolRepo;
+        public SchoolSecretaryRepoAsync(IRepoAsync<School, int> schoolRepo)
+        {
+            _schoolRepo = schoolRepo;
+        }
+        #endregion
 
+        #region Methods
         public async Task AddAsync(SchoolSecretary input)
         {
             using (SqlConnection connection = new SqlConnection(Secret.connectionString))
@@ -34,7 +43,6 @@ namespace SkoloFotoExam26.Services
                     command.Parameters.AddWithValue("@SchoolID", input.TheSchool.SchoolID);
                     int noOfRowsEffected = await command.ExecuteNonQueryAsync();
 
-                    await connection.CloseAsync();
                 }
                 catch (SqlException sqlex)
                 {
@@ -52,9 +60,34 @@ namespace SkoloFotoExam26.Services
             }
         }
 
-        public Task<int> CountAsync()
+        public async Task<int> CountAsync()
         {
-            throw new NotImplementedException();
+            int countOfSecretary;
+            using (SqlConnection connection = new SqlConnection(Secret.connectionString))
+            {
+                try
+                {
+                    SqlCommand command = new SqlCommand(_countSecretaries, connection);
+                    await connection.OpenAsync();
+
+                    countOfSecretary = Convert.ToInt32(await command.ExecuteScalarAsync());
+
+
+                }
+                catch (SqlException sqlex)
+                {
+                    throw;
+                }
+                catch (Exception ex)
+                {
+                    throw;
+                }
+                finally
+                {
+                    await connection.CloseAsync();
+                }
+                return countOfSecretary;
+            }
         }
 
         public async Task DeleteAsync(int toDelete)
@@ -83,9 +116,11 @@ namespace SkoloFotoExam26.Services
                 {
                     await connection.CloseAsync();
                 }
+
             }
         }
-        
+
+
         public async Task<List<SchoolSecretary>> GetAllAsync()
         {
             List<SchoolSecretary> secretaries = new List<SchoolSecretary>();
@@ -147,7 +182,7 @@ namespace SkoloFotoExam26.Services
 
                     SqlDataReader reader = await command.ExecuteReaderAsync();
 
-                    if (reader.Read())
+                    if (await reader.ReadAsync())
                     {
                         string firstName = reader.GetString("FirstName");
                         string lastName = reader.GetString("LastName");
@@ -155,9 +190,9 @@ namespace SkoloFotoExam26.Services
                         string phoneNumber = reader.GetString("PhoneNumber");
                         int schoolSecretaryID = reader.GetInt32("SchoolSecretaryID");
                         string initials = reader.GetString("Initials");
-                        int SchoolID = reader.GetInt32("SchoolID");
+                        int schoolID = reader.GetInt32("SchoolID");
 
-                        secretary = new SchoolSecretary(schoolSecretaryID, firstName, lastName, initials, phoneNumber, email, new School());
+                        secretary = new SchoolSecretary(schoolSecretaryID, firstName, lastName, initials, phoneNumber, email, await _schoolRepo.GetAsync(schoolID));
                     }
                 }
                 catch (SqlException sqlex)
@@ -176,9 +211,46 @@ namespace SkoloFotoExam26.Services
             return secretary;
         }
 
-        public Task<User> GetForLogin(string email)
+        public async Task<User> GetForLogin(string email)
         {
-            throw new NotImplementedException();
+            SchoolSecretary secretary = null;
+            using (SqlConnection connection = new SqlConnection(Secret.connectionString))
+            {
+                try
+                {
+                    SqlCommand command = new SqlCommand(_getSchoolSecretaryForLogin, connection);
+                    await connection.OpenAsync();
+                    command.Parameters.AddWithValue("@Email", email);
+
+                    SqlDataReader reader = await command.ExecuteReaderAsync();
+
+                    if (reader.Read())
+                    {
+                        string firstName = reader.GetString("FirstName");
+                        string lastName = reader.GetString("LastName");
+                        string emailResult = reader.GetString("Email");
+                        string phoneNumber = reader.GetString("PhoneNumber");
+                        int schoolSecretaryID = reader.GetInt32("SchoolSecretaryID");
+                        string initials = reader.GetString("Initials");
+                        int SchoolID = reader.GetInt32("SchoolID");
+
+                        secretary = new SchoolSecretary(schoolSecretaryID, firstName, lastName, initials, phoneNumber, emailResult, new School());
+                    }
+                }
+                catch (SqlException sqlex)
+                {
+                    throw;
+                }
+                catch (Exception ex)
+                {
+                    throw;
+                }
+                finally
+                {
+                    await connection.CloseAsync();
+                }
+            }
+            return secretary;
         }
 
         public async Task UpdateAsync(SchoolSecretary toUpdate)
@@ -195,7 +267,7 @@ namespace SkoloFotoExam26.Services
                     command.Parameters.AddWithValue("@PhoneNumber", toUpdate.PhoneNumber);
                     command.Parameters.AddWithValue("@Initials", toUpdate.Initials);
                     command.Parameters.AddWithValue("@SchoolID", toUpdate.TheSchool.SchoolID);
-                    command.Parameters.AddWithValue("@SchoolSecretaryID", toUpdate.ID);
+                    command.Parameters.AddWithValue("@ID", toUpdate.ID);
                     await command.ExecuteNonQueryAsync();
 
                 }
@@ -215,5 +287,6 @@ namespace SkoloFotoExam26.Services
 
 
         }
+        #endregion
     }
 }

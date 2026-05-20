@@ -11,7 +11,7 @@ namespace SkoloFotoExam26.Pages.Photographers
         IRepoAsync<Photographer, int> _photographerRepo;
         IRepoAsync<LoginInfo, string> _loginRepo;
 
-        [BindProperty]
+
         public Photographer PhotographerToBeDeleted { get; set; }
 
         public DeletePhotographerModel(IRepoAsync<Photographer, int> photographerRepo, IRepoAsync<LoginInfo, string>loginRepo)
@@ -25,28 +25,32 @@ namespace SkoloFotoExam26.Pages.Photographers
             PhotographerToBeDeleted = await _photographerRepo.GetAsync(photographerID);
         }
 
-        public async Task<IActionResult> OnPostAsyncDelete(int photographerID)
+        public async Task<IActionResult> OnPostAsync(int photographerID)
         {
             try
             {
                 Photographer photographToBeDeleted = await _photographerRepo.GetAsync(photographerID);
                 //await _loginRepo.DeleteAsync(photographToBeDeleted.Email);
+                //Photographer photographToBeDeleted = new Photographer(PhotographerToBeDeleted.ID, PhotographerToBeDeleted.FirstName, PhotographerToBeDeleted.LastName, PhotographerToBeDeleted.PhoneNumber, PhotographerToBeDeleted.Email, PhotographerToBeDeleted.Website, PhotographerToBeDeleted.CVRNumber, PhotographerToBeDeleted.City, PhotographerToBeDeleted.ZipCode, PhotographerToBeDeleted.Street, PhotographerToBeDeleted.ExperienceInYears, PhotographerToBeDeleted.MaxTravelRadiusInKm, PhotographerToBeDeleted.Instagram, PhotographerToBeDeleted.Facebook);
+
                 await _photographerRepo.DeleteAsync(photographerID);
                 return RedirectToPage("Index");
             }
             catch(SqlException sqlex)
             {
                 ViewData["ErrorMessage"] = "Fejl ved sletning - fotografen kan ikke slettes, da der er andre data, som er knyttet til denne";
+                PhotographerToBeDeleted = await _photographerRepo.GetAsync(photographerID);
                 return Page();
             }
             catch(Exception ex)
             {
                 ViewData["ErrorMessage"] = ex.Message;
+                PhotographerToBeDeleted = await _photographerRepo.GetAsync(photographerID);
                 return Page();
             }
         }
 
-        public IActionResult OnPost()
+        public IActionResult OnPostCancel()
         {
             return RedirectToPage("Index");
         }

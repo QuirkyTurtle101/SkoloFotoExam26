@@ -18,7 +18,7 @@ namespace SkoloFotoExam26.Services
 
         private string _delete = "DELETE FROM Booking WHERE BookingID = @BookingID";
 
-        private string _update = "UPDATE Booking SET Start = @Start, End = @End, SchoolClassID = @SchoolClassID, PhotographingEventID = @PhotographingEventID, TeacherID = @TeacherID WHERE BookingID = @BookingID";
+        private string _update = "UPDATE Booking SET [Start] = @Start, [End] = @End, SchoolClassID = @SchoolClassID, PhotographingEventID = @PhotographingEventID, TeacherID = @TeacherID WHERE BookingID = @BookingID";
 
         private IRepoAsync<PhotographingEvent, int> _photographingEventRepo;
 
@@ -41,7 +41,7 @@ namespace SkoloFotoExam26.Services
             {
                 SqlCommand command = new SqlCommand(_addBooking, connection);
                 await command.Connection.OpenAsync();
-
+                
                 command.Parameters.AddWithValue("@Start", input.Start);
                 command.Parameters.AddWithValue("@End", input.End);
                 command.Parameters.AddWithValue("@PhotographingEventID", input.ThePhotographingEvent.PhotographingEventID);
@@ -96,7 +96,7 @@ namespace SkoloFotoExam26.Services
                     SqlDataReader reader = await command.ExecuteReaderAsync();
                     while (await reader.ReadAsync())
                     {
-                        //int bookingID = reader.GetInt32("BookingID");
+                        int bookingID = reader.GetInt32("BookingID");
                         DateTime start = reader.GetDateTime("Start");
                         DateTime end = reader.GetDateTime("End");
                         int photographingEventID = reader.GetInt32("PhotographingEventID");
@@ -105,7 +105,7 @@ namespace SkoloFotoExam26.Services
                         PhotographingEvent photographingEvent = await _photographingEventRepo.GetAsync(photographingEventID);
                         Teacher teacher = await _teacherRepo.GetAsync(teacherID);
                         SchoolClass schoolClass = await _schoolClassRepo.GetAsync(schoolClassID);
-                        Booking booking = new Booking(start, end, photographingEvent, teacher, schoolClass);
+                        Booking booking = new Booking(start, end, photographingEvent, schoolClass, teacher, bookingID);
                         bookings.Add(booking);
                     }
                 }
@@ -135,7 +135,7 @@ namespace SkoloFotoExam26.Services
 
                 if (await reader.ReadAsync())
                 {
-                    //int bookingID = reader.GetInt32("BookingID");
+                    int bookingID = reader.GetInt32("BookingID");
                     DateTime start = reader.GetDateTime("Start");
                     DateTime end = reader.GetDateTime("End");
                     int photographingEventID = reader.GetInt32("PhotographingEventID");
@@ -144,7 +144,7 @@ namespace SkoloFotoExam26.Services
                     PhotographingEvent photographingEvent = await _photographingEventRepo.GetAsync(photographingEventID);
                     Teacher teacher = await _teacherRepo.GetAsync(teacherID);
                     SchoolClass schoolClass = await _schoolClassRepo.GetAsync(schoolClassID);
-                    booking = new Booking(start, end, photographingEvent, teacher, schoolClass);
+                    booking = new Booking(start, end, photographingEvent, schoolClass, teacher, bookingID);
 
                 }
             }

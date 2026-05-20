@@ -7,6 +7,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SkoloFotoExam26", "SkoloFot
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ConsoleAksel", "ConsoleAksel\ConsoleAksel.csproj", "{D33B1DF7-C598-444B-A2A3-A53EF0EB8A55}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Unittesting", "Unittesting\Unittesting.csproj", "{B130390A-0A30-4188-9BA5-D99973C2CF9A}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -21,6 +23,10 @@ Global
 		{D33B1DF7-C598-444B-A2A3-A53EF0EB8A55}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{D33B1DF7-C598-444B-A2A3-A53EF0EB8A55}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{D33B1DF7-C598-444B-A2A3-A53EF0EB8A55}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B130390A-0A30-4188-9BA5-D99973C2CF9A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B130390A-0A30-4188-9BA5-D99973C2CF9A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B130390A-0A30-4188-9BA5-D99973C2CF9A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B130390A-0A30-4188-9BA5-D99973C2CF9A}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

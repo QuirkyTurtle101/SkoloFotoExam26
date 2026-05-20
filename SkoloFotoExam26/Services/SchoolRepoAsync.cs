@@ -8,7 +8,7 @@ namespace SkoloFotoExam26.Services
 {
     public class SchoolRepoAsync : IRepoAsync<School, int>
     {
-        #region QueryStrings
+        #region Query strings
         private string _addSchool = "INSERT INTO School VALUES(@Name, @Street, @ZipCode, @SchoolType)";
         private string _countSchools = "SELECT COUNT(*) FROM School";
         private string _deleteSchool = "Delete FROM School WHERE SchoolID = @SchoolID";
@@ -18,7 +18,7 @@ namespace SkoloFotoExam26.Services
 
         #endregion
 
-
+        #region Methods
         public async Task AddAsync(School input)
         {
             using (SqlConnection connection = new SqlConnection(Secret.connectionString))
@@ -31,11 +31,11 @@ namespace SkoloFotoExam26.Services
                     command.Parameters.AddWithValue("@Name", input.Name);
                     command.Parameters.AddWithValue("@Street", input.Street);
                     command.Parameters.AddWithValue("@ZipCode", input.ZipCode);
-                    command.Parameters.AddWithValue("@SchoolType", (int)input.SchoolType); //Skal lige forhøre mig hos Rosa. //det er præcis sådan det gøres //Det var godt :-)
+                    command.Parameters.AddWithValue("@SchoolType", (int)input.SchoolType);
                     command.Parameters.AddWithValue("@City", input.City);
                     int noOfRowsEffected = await command.ExecuteNonQueryAsync();
 
-                    await connection.CloseAsync();
+                   
                 }
                 catch (SqlException sqlex)
                 {
@@ -45,6 +45,10 @@ namespace SkoloFotoExam26.Services
                 {
 
                     throw;
+                }
+                finally
+                {
+                    await connection.CloseAsync();
                 }
             }
         }
@@ -61,7 +65,7 @@ namespace SkoloFotoExam26.Services
 
                     countOfSchools = Convert.ToInt32(await command.ExecuteScalarAsync());
 
-                    await connection.CloseAsync();
+
                 }
                 catch (SqlException sqlex)
                 {
@@ -70,6 +74,10 @@ namespace SkoloFotoExam26.Services
                 catch (Exception ex)
                 {
                     throw;
+                }
+                finally
+                {
+                    await connection.CloseAsync();
                 }
                 return countOfSchools;
             }
@@ -123,8 +131,9 @@ namespace SkoloFotoExam26.Services
                         string street = reader.GetString("StreetName");
                         int zipCode = reader.GetInt32("ZipCode");
                         string city = reader.GetString("City");
-                        int valueType = reader.GetInt32("SchoolType");
                         int schoolID = reader.GetInt32("SchoolID");
+                        
+                        int valueType = reader.GetInt32("SchoolType");
                         SchoolType schoolType = (SchoolType)valueType;
                         schools.Add(new School(schoolID, name, street, city, zipCode, schoolType));
                     }
@@ -219,5 +228,6 @@ namespace SkoloFotoExam26.Services
                 }
             }
         }
+        #endregion
     }
 }

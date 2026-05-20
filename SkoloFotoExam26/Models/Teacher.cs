@@ -15,7 +15,6 @@
             School theSchool) 
             : base(teacherID, firstName, lastName, phoneNumber, email)
         {
-            
             Initials = initials;
             TheSchool = theSchool;
         }

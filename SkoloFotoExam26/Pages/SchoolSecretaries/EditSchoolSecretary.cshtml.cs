@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.Data.SqlClient;
 using SkoloFotoExam26.Interfaces;
 using SkoloFotoExam26.Models;
+using SkoloFotoExam26.Services;
 
 namespace SkoloFotoExam26.Pages.SchoolSecretaries
 {
@@ -13,7 +14,8 @@ namespace SkoloFotoExam26.Pages.SchoolSecretaries
         [BindProperty]
         public SchoolSecretary SecretaryToBeUpdated { get; set; }
         [BindProperty]
-        public School ChosenSchoolID { get; set; }
+        public int ChosenSchool { get; set; }
+        [BindProperty]
         public List<School> Schools { get; set; }
         public EditSchoolSecretaryModel(IRepoAsync<SchoolSecretary, int> schoolSecRepo, IRepoAsync<School, int> schoolRepo)
         {
@@ -21,20 +23,21 @@ namespace SkoloFotoExam26.Pages.SchoolSecretaries
             _schoolRepo = schoolRepo;
         }
 
-        public async Task OnGetAsync(int schoolSecretaryID)
+        public async Task OnGetAsync(int schoolSecretaryID, int schoolID)
         {
 
             Schools = await _schoolRepo.GetAllAsync();
+            //ChosenSchool = await _schoolRepo.GetAsync(schoolID);
             SecretaryToBeUpdated = await _schoolSecRepo.GetAsync(schoolSecretaryID);
         }
 
-        public async Task<IActionResult> OnPostAsyncUpdate()
+        public async Task<IActionResult> OnPostAsync()
         {
             try
             {
-                //SchoolSecretary secretaryToBeUpdated = await _schoolSecRepo.GetAsync(schoolSecretaryID);
+                SchoolSecretary secretaryToBeUpdated = new SchoolSecretary(SecretaryToBeUpdated.ID ,SecretaryToBeUpdated.FirstName, SecretaryToBeUpdated.LastName, SecretaryToBeUpdated.Initials, SecretaryToBeUpdated.PhoneNumber, SecretaryToBeUpdated.Email, await _schoolRepo.GetAsync(ChosenSchool));
 
-                _schoolSecRepo.UpdateAsync(SecretaryToBeUpdated);
+                _schoolSecRepo.UpdateAsync(secretaryToBeUpdated);
             }
             catch(SqlException sqlex)
             {
@@ -46,6 +49,13 @@ namespace SkoloFotoExam26.Pages.SchoolSecretaries
                 ViewData["ErrorMessage"] = ex.Message;
                 return Page();
             }
+            return RedirectToPage("Index");
+        }
+
+        public async Task<IActionResult> OnPostDeleteAsync()
+        {
+
+            await _schoolSecRepo.DeleteAsync(SecretaryToBeUpdated.ID);
             return RedirectToPage("Index");
         }
 
