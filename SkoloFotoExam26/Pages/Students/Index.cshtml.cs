@@ -9,6 +9,7 @@ namespace SkoloFotoExam26.Pages.Students
     {
         private IRepoAsync<Student, int> sRepo;
         public List<Student> Students { get; set; }
+        public int ParentID { get; set; }
         public IndexModel(IRepoAsync<Student, int> studentRepo)
         {
             sRepo = studentRepo;

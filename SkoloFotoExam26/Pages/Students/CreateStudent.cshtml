@@ -1,4 +1,5 @@
 ﻿@page
+@using SkoloFotoExam26.Models
 @model SkoloFotoExam26.Pages.Students.CreateStudentModel
 @{
     ViewData["Title"] = "Opret barn";
@@ -33,22 +34,29 @@
         <span asp-validation-for="@Model.ParentID" class="text-danger"></span>
     </div>
 
-    <div class="form-group">
-        <label asp-for="SchoolID" class="control-label">Vælg Skole</label>
-        <select asp-for="SchoolID" class="form-control">
-            <option value="">-- Vælg en skole --</option>
-            @if (Model.SchoolClassList != null)
+  <selecet asp-for="SchoolID" class="form-control">
+      <option value="">-- Vælg en skole</option>
+        @if (Model.SchoolList != null)
+        {
+            @foreach (var school in Model.SchoolList)
             {
-                @foreach (var school in Model.SchoolList)
-                {
-                    <option value="@school.SchoolID">
-                        @school
-                    </option>
-                }
+                <option value="@school.SchoolID">@school.Name</option>
+            }
+        }
+    </selecet>
+
+    @* <div class="form-group">
+        <label asp-for="SchoolID">Vælg skole</label>
+        <select asp-for="SchoolID" class="form-select">
+            <option value="">Vælg en skole</option>
+            @foreach (School s in @Model.SchoolList)
+            {
+                <option value="@s.SchoolID">
+                    @s.Name
+                </option>
             }
         </select>
-        <span asp-validation-for="SchoolClassID" class="text-danger"></span>
-    </div>
+    </div> *@
    
     <div class="form-group">
         <label asp-for="SchoolClassID" class="control-label">Vælg Skoleklasse</label>
@@ -65,6 +73,10 @@
             }
         </select>
         <span asp-validation-for="SchoolClassID" class="text-danger"></span>
+    </div>
+
+    <div>
+        
     </div>
 
     <br />

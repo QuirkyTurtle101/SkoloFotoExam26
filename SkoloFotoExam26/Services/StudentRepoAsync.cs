@@ -9,7 +9,7 @@ namespace SkoloFotoExam26.Services
     {
         #region Querys
 
-        private string _addStudent = "INSERT INTO Student VALUES (@StudentID, @FirstName, @MiddleName, @LastName, @ParentID, @SchoolClassID)";
+        private string _addStudent = "INSERT INTO Student VALUES (@FirstName, @MiddleName, @LastName, @ParentID, @School, @SchoolClassID)";
         private string _getAllStudent = @"SELECT " +
             "s.StudentID," +
             "s.FirstName, " +
@@ -43,7 +43,7 @@ namespace SkoloFotoExam26.Services
                     command.Parameters.AddWithValue("@MiddleName", input.MiddleName);
                     command.Parameters.AddWithValue("@LastName", input.LastName);
                     command.Parameters.AddWithValue("@ParentID", input.Parent.ID);
-                    //command.Parameters.AddWithValue("@SchoolID", input.School.SchoolID);
+                    command.Parameters.AddWithValue("@SchoolID", input.School.SchoolID);
                     command.Parameters.AddWithValue("@SchoolClassID", input.SchoolClass.SchoolClassID);
 
                     int noOfRowsEffected = await command.ExecuteNonQueryAsync();

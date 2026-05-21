@@ -52,6 +52,7 @@ namespace SkoloFotoExam26.Pages.Students
 
             // Hent alle klasser fra databasen, så vi kan vise dem i dropdown'en
             SchoolClassList = await _schoolClassRepo.GetAllAsync();
+            SchoolList = await _schoolRepo.GetAllAsync();
         }
 
 
@@ -67,6 +68,7 @@ namespace SkoloFotoExam26.Pages.Students
                     MiddleName = this.MiddleName,
                     LastName = this.LastName,
                     Parent = new Parent { ID = this.ParentID },
+                    School = new School {SchoolID = this.SchoolID},
                     SchoolClass = new SchoolClass { SchoolClassID = this.SchoolClassID }
                 };
 
@@ -78,6 +80,8 @@ namespace SkoloFotoExam26.Pages.Students
             catch (Exception ex)
             {
                 ViewData["ErrorMessage"] = "Fejl ved oprettelse: " + ex.Message;
+                SchoolList = await _schoolRepo.GetAllAsync();
+                SchoolClassList = await _schoolClassRepo.GetAllAsync();
                 return Page();
             }
         }
