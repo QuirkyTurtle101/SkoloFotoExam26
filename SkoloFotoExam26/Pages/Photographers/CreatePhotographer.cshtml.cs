@@ -73,5 +73,10 @@ namespace SkoloFotoExam26.Pages.Photographers
             }
             return RedirectToPage("Index");
         }
+
+        public IActionResult OnPostCancel()
+        {
+            return RedirectToPage("Index");
+        }
     }
 }

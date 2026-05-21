@@ -41,24 +41,24 @@ namespace SkoloFotoExam26.Pages.Schools
 
         }
 
-        //public async Task<IActionResult> OnPostAsyncDelete()
-        //{
-        //    try
-        //    {
-        //        await _schoolRepo.DeleteAsync(SchoolToBeUpdated.SchoolID);
-        //    }
-        //    catch(SqlException sqlex)
-        //    {
-        //        ViewData["ErrorMessage"] = "Fejl ved sletning - der er andre data, som er knyttet til denne skole";
-        //        return Page();
-        //    }
-        //    catch(Exception ex)
-        //    {
-        //        ViewData["ErrorMessage"] = ex.Message;
-        //        return Page();
-        //    }
-        //    return RedirectToPage("Index");
-        //}
+        public async Task<IActionResult> OnPostDelete(int schoolID)
+        {
+            try
+            {
+                await _schoolRepo.DeleteAsync(schoolID);
+            }
+            catch (SqlException sqlex)
+            {
+                ViewData["ErrorMessage"] = "Fejl ved sletning - der er andre data, som er knyttet til denne skole";
+                return Page();
+            }
+            catch (Exception ex)
+            {
+                ViewData["ErrorMessage"] = ex.Message;
+                return Page();
+            }
+            return RedirectToPage("Index");
+        }
 
         public async Task<IActionResult> OnPostAsyncCancel()
         {

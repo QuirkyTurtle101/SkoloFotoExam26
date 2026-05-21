@@ -2,22 +2,22 @@
 @using SkoloFotoExam26.Models
 @model SkoloFotoExam26.Pages.Bookings.ChooseEventsModel
 @{
-    ViewData["Title"] = "Choose Event";
+    ViewData["Title"] = "Vælg Event";
 }
 <h1>
-    Choose event
+    vælg event
 </h1>
 
 <h2>
-    You can choose between @Model.EventList.Count events
+    Du kan vælge imellem @Model.EventList.Count events
 </h2>
 
 <form method="get">
     <table class="table">
         <th> ID </th>
-        <th> Start </th>
-        <th> End </th>
-        <th> Photographer </th>
+        <th> Starter </th>
+        <th> Ender </th>
+        <th> Fotograf </th>
         <tbody>
             @foreach (PhotographingEvent e in @Model.EventList)
             {
@@ -26,7 +26,7 @@
                         <td> @e.Start </td>
                         <td> @e.End </td>
                         <td> @e.Photographer.FirstName @e.Photographer.LastName</td>
-                        <td><a asp-page="CreateBooking" asp-route-id="@e.PhotographingEventID" class="btn btn-success">Choose event</a></td>
+                        <td><a asp-page="CreateBooking" asp-route-id="@e.PhotographingEventID" class="btn btn-success">Vælg event</a></td>
                     </tr>
             }
 

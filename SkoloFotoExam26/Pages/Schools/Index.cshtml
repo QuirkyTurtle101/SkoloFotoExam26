@@ -16,6 +16,17 @@
 <p>Der er @Model.Schools.Count skoler</p>
 
 <form method="get">
+    Search: <input type="text" asp-for="@Model.FilterCriteria" />
+    <select asp-for="@Model.FilterBy" class="form-select d-inline-block" style="width:auto; margin-left: 8px;">
+        <option value="All">All</option>
+        <option value="Name">Navn</option>
+        <option value="City">By</option>
+    </select>
+    <br />
+    <input type="submit" value="Filter" />
+</form>
+
+<form method="get">
     <table class="table">
         <thead>
             <tr>

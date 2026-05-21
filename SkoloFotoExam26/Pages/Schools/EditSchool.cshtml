@@ -35,7 +35,7 @@
     <br />
     <div class="form-group">
         <input type="submit" value="Opdater skole" class="btn-primary" />
-@*         <input type="submit" value="Slet skole" asp-page-handler="Delete" class="btn-danger" /> *@
+        <input type="submit" value="Slet skole" asp-page-handler="Delete" asp-route-schoolID="@Model.SchoolToBeUpdated.SchoolID" onclick="return confirm('Er du sikker på at slette skolen?')" class="btn-danger" />
         <input type="submit" value="Anuller" asp-page-handler="Cancel" class="btn-warning" />
     </div>
 

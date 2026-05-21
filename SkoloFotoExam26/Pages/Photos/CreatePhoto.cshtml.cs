@@ -11,7 +11,7 @@ namespace SkoloFotoExam26.Pages.Photos
     {
         IRepoAsync<Photo, int> _photos;
 
-        IRepoAsync<Booking, int> _bookings;
+        //IRepoAsync<Booking, int> _bookings;
 
         private IWebHostEnvironment webHostEnvironment;
 
@@ -28,7 +28,7 @@ namespace SkoloFotoExam26.Pages.Photos
         public double Price { get; set; }
 
         [BindProperty]
-        public DateTime TheDate { get; set; }
+        public DateTime TheDate { get; set; } = DateTime.Today;
 
         [BindProperty]
         public int Height { get; set; }
@@ -39,21 +39,19 @@ namespace SkoloFotoExam26.Pages.Photos
         [BindProperty]
         public PhotoType PhotoType { get; set; }
 
-        [BindProperty]
-        public int BookingID { get; set; }
+        //[BindProperty]
+        //public int BookingID { get; set; }
 
-        [BindProperty]
-        public List<Booking> BookingList { get; set; }
+        
+        //public List<Booking> BookingList { get; set; }
 
-        public CreatePhotoModel(IRepoAsync<Photo, int> photos)
+        public CreatePhotoModel(IRepoAsync<Photo, int> photos, IWebHostEnvironment webHost)
         {
             _photos = photos;
-        }
-        public async Task OnGetAsync(IWebHostEnvironment webHost)
-        {
-            BookingList = await _bookings.GetAllAsync();
             webHostEnvironment = webHost;
-
+        }
+        public async Task OnGetAsync()
+        {
 
         }
         public async Task OnPostAsync()
@@ -62,7 +60,7 @@ namespace SkoloFotoExam26.Pages.Photos
             {
                 if (FileName != null)
                 {
-                    string filePath = Path.Combine(webHostEnvironment.WebRootPath, "/images/PhotografImages", FileName);
+                    string filePath = Path.Combine(webHostEnvironment.WebRootPath, "/Images/PhotografImages", FileName);
                     System.IO.File.Delete(filePath);
                 }
 
@@ -70,8 +68,8 @@ namespace SkoloFotoExam26.Pages.Photos
             }
             try
             {
-                Booking theBooking = await _bookings.GetAsync(BookingID);
-                Photo photo = new Photo(FileName, FilePath, Price, TheDate, Height, Width, PhotoType, theBooking);
+                //Booking theBooking = await _bookings.GetAsync(BookingID);
+                Photo photo = new Photo(FileName, FilePath, Price, TheDate, Height, Width, PhotoType);
                 await _photos.AddAsync(photo);
             }
             catch (Exception ex)
@@ -88,7 +86,7 @@ namespace SkoloFotoExam26.Pages.Photos
             string uniqueFileName = null;
             if (Photo != null)
             {
-                string uploadsFolder = Path.Combine(webHostEnvironment.WebRootPath, "images/PhotografImages");
+                string uploadsFolder = Path.Combine(webHostEnvironment.WebRootPath, "Images/PhotografImages");
                 uniqueFileName = Guid.NewGuid().ToString() + "_" + Photo.FileName;
                 string filePath = Path.Combine(uploadsFolder, uniqueFileName);
                 using (var fileStream = new FileStream(filePath, FileMode.Create))

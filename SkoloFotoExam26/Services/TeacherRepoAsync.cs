@@ -16,7 +16,7 @@ namespace SkoloFotoExam26.Services
         private string _getTeacherForLogin = "SELECT * FROM Teacher WHERE Email = @Email";
         private string _count = "SELECT COUNT(*) FROM Teacher";
         private string _addLogin = "INSERT INTO LoginInfo VALUES (@Email, @PasswordHash, @TheUserType)";
-
+        //private string _findID = "SELECT ID FROM Teacher WHERE TeacherID = @TeacherID";
 
 
         private IRepoAsync<School, int> _schoolRepo;
@@ -31,6 +31,13 @@ namespace SkoloFotoExam26.Services
         {
                 
         }
+
+        //public async Task<int> FindID(Teacher teacher)
+        //{
+        //    SqlConnection connection = new SqlConnection()
+
+        //}
+
         public async Task AddAsync(Teacher input)
         {
             using SqlConnection connection = new SqlConnection(Secret.connectionString);
@@ -80,6 +87,7 @@ namespace SkoloFotoExam26.Services
             return count;
          
         }
+
 
         public async Task DeleteAsync(int toDelete)
         {
@@ -233,6 +241,20 @@ namespace SkoloFotoExam26.Services
             {
                 Console.WriteLine($"Exception message: {ex.Message}");
             }
+        }
+
+        public async Task<List<Teacher>> FilterTeachersAsync(string filterCriteria)
+        {
+            List<Teacher> teachers = await GetAllAsync();
+            List<Teacher> filteredTeachers = new List<Teacher>();
+            foreach (Teacher item in teachers)
+            {
+                if (item.FirstName.Contains(filterCriteria.ToLower()))
+                {
+                    filteredTeachers.Add(item);
+                }
+            }
+            return filteredTeachers;
         }
     }
 }

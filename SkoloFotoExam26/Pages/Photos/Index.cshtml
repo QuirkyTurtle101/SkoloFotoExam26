@@ -5,20 +5,20 @@
     ViewData["Title"] = "Liste over Photos";
 }
 <h1>
-    Liste over Photos
+    Liste over Fotos
 </h1>
 <p>
-    <a asp-page="CreatePhoto"> lav et nyt photo </a>
+    <a asp-page="CreatePhoto"> lav et nyt foto </a>
 </p>
 
 <form method="get">
     <table class="table">
-        <th> Photo type </th>
+        <th> Foto type </th>
         <th> Pris </th>
         <th> Højde</th>
         <th> Bredde</th>
-        <th> Bookingen</th>
-        <tbody>
+@*         <th> Bookingen</th>
+ *@        <tbody>
             @foreach (Photo p in @Model.PhotoList)
             {
                 <tr>
@@ -26,8 +26,8 @@
                     <td> @p.Price </td>
                     <td> @p.Height</td>
                     <td> @p.Width</td>
-                    <td> @p.TheBooking.BookingID</td>
-
+@*                     <td> @p.TheBooking.BookingID</td>
+ *@
 @*                     <td><a asp-page="DeletePhoto" asp-route-PhotoID="@p.PhotoID" class="btn btn-danger">Slet</a></td>
  *@                </tr>
             }

@@ -21,6 +21,5 @@ namespace Unittesting
             //Assert
             Assert.AreEqual(countBeforeAdd + 1, countAfterAdd);
         }
-
     }
 }

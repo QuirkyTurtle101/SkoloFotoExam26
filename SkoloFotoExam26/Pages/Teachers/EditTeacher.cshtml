@@ -2,24 +2,24 @@
 @using SkoloFotoExam26.Models
 @model SkoloFotoExam26.Pages.Teachers.EditTeacherModel
 @{
-    ViewData["Title"] = "Edit Teacher Event";
+    ViewData["Title"] = "rediger lærer";
 }
 
 <h1>
-    Rediger Lære 
+    Rediger Lærer 
 </h1>
 
 <form method="post">
     <div class="form-group">
-        <label asp-for="@Model.Initials" class="control-label"></label>
+        <label asp-for="@Model.Initials" class="control-label">Initialer</label>
         <input asp-for="@Model.Initials" class="form-control" />
     </div>
     <div class="form-group">
-        <label asp-for="@Model.FirstName" class="control-label"> </label>
+        <label asp-for="@Model.FirstName" class="control-label">Fornavn </label>
         <input asp-for="@Model.FirstName" class="form-control" />
     </div>
     <div class="form-group">
-        <label asp-for="@Model.LastName" class="control-label"></label>
+        <label asp-for="@Model.LastName" class="control-label">Efternavn</label>
         <input asp-for="@Model.LastName" class="form-control" />
     </div>
     <div class="form-group">
@@ -27,12 +27,12 @@
         <input asp-for="Email" class="form-control" readonly />
     </div>
     <div class="form-group">
-        <label asp-for="@Model.PhoneNumber" class="control-label"></label>
+        <label asp-for="@Model.PhoneNumber" class="control-label">Telefonnummer</label>
         <input asp-for="@Model.PhoneNumber" class="form-control" />
     </div>
 
     <div class="form-group">
-        <label asp-for="SchoolID">Choose a School</label>
+        <label asp-for="SchoolID">Vælg en skole</label>
         <select asp-for="SchoolID" class="form-control">
             <option value=""> Select School </option>
             @foreach (School s in Model.SchoolList)
@@ -55,9 +55,9 @@
     <button type="submit"
             class="btn btn-success"
             asp-page-handler="Update" asp-route-ID="@Model.TeacherEdit.ID">
-        Rediger Lære
+        Rediger Lærer
     </button>
     <a asp-page="Index" class="btn btn-warning">
-        Cancel
+        Annuller
     </a>
 </form>

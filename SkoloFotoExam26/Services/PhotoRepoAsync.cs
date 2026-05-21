@@ -96,11 +96,12 @@ namespace SkoloFotoExam26.Services
                         DateTime date = reader.GetDateTime("Date");
                         int height = reader.GetInt32("Height");
                         int width = reader.GetInt32("Width");
+                        double price = reader.GetDouble("Price");
 
                         //Booking booking = await _bookings.GetAsync();
-                        //Photo photo = new Photo(fileName, filePath, date, height, width, photoType);
+                        Photo photo = new Photo(fileName, filePath, price, date, height, width, photoType);
 
-                        //photos.Add(photo);
+                        photos.Add(photo);
                     }
 
                 }
@@ -139,7 +140,7 @@ namespace SkoloFotoExam26.Services
                     int valueType = reader.GetInt32("PhotoType");
                     PhotoType photoType = (PhotoType)valueType;
 
-                    //photo = new Photo(fileName, filePath, price, date, height, width, photoType, )
+                    photo = new Photo(fileName, filePath, price, date, height, width, photoType);
                 }
 
             }
