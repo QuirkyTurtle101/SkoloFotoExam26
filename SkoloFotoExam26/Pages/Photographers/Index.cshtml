@@ -22,11 +22,10 @@
         <option value="LastName">Efternavn</option>
         <option value="PhoneNumber">Telefonnummer</option>
         <option value="Email">Email</option>
-        @* <option value="Experience">Erfaring</option> *@
+        <option value="Experience">Erfaring</option>
         <option value="City">By</option>
     </select>
-    <br />
-    <input type="submit" value="Filter" />
+    <input type="submit" value="Filtrer" />
 </form>
 
 <form method="get">
@@ -59,7 +58,8 @@
                     <td>@item.Email</td>
                     <td>@item.ExperienceInYears</td>
                     <td>@item.MaxTravelRadiusInKm</td>
-                    <td><a asp-page="EditPhotographer" asp-route-PhotographerID="@item.ID">Rediger</a> | <a asp-page="DeletePhotographer" asp-route-PhotographerID="@item.ID">Slet</a> </td>
+                    <td><a asp-page="EditPhotographer" asp-route-PhotographerID="@item.ID">Rediger</a> | 
+                        <a asp-page="DeletePhotographer" asp-route-PhotographerID="@item.ID">Slet</a> </td>
                 </tr>
             }
         </tbody>

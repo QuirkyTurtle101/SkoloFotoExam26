@@ -11,9 +11,23 @@
     <a asp-page="CreateSchoolSecretary"> Opret en ny skolesekretær </a>
 </p>
 
-
 <h4>Skolesekretærer i systemet</h4>
 <p>Der er @Model.Secretaries.Count skolesekretære</p>
+
+
+<form method="get">
+    Search: <input type="text" asp-for="@Model.FilterCriteria" />
+    <select asp-for="@Model.FilterBy" class="form-select d-inline-block" style="width:auto; margin-left: 8px;">
+        <option value="All">All</option>
+        <option value="FirstName">Fornavn</option>
+        <option value="LastName">Efternavn</option>
+        <option value="PhoneNumber">Telefonnummer</option>
+        <option value="Email">Email</option>
+        <option value="TheSchoolName">Skole</option>
+        <option value="Initials">Initialer</option>
+    </select>
+    <input type="submit" value="Filtrer" />
+</form>
 
 <form method="get">
     <table class="table">

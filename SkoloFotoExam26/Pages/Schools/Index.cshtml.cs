@@ -24,8 +24,7 @@ namespace SkoloFotoExam26.Pages.Schools
         {
             if(!string.IsNullOrEmpty(FilterCriteria))
             {
-                var listOfPreds = FilterByPredicates();
-                Schools = _filterFunction.FilterFunc(await _schoolRepo.GetAllAsync(), listOfPreds);                
+                Schools = _filterFunction.FilterFunc(await _schoolRepo.GetAllAsync(), FilterBySchoolPredicates());                
             }
             else
             {
@@ -33,7 +32,7 @@ namespace SkoloFotoExam26.Pages.Schools
             }
         }
 
-        public List<Predicate<School>> FilterByPredicates()
+        public List<Predicate<School>> FilterBySchoolPredicates()
         {
             List<Predicate<School>> predicatesList = new List<Predicate<School>>();
             Predicate<School> names = s => s.Name.ToLower().Contains(FilterCriteria.ToLower());
