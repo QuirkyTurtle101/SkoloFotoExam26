@@ -23,7 +23,7 @@ namespace SkoloFotoExam26.Pages.Profile
             Students = new List<Student>();
             foreach (Student student in temp)
             {
-                if (student.School.SchoolID == TheTeacher.TheSchool.SchoolID)
+                if (student.SchoolClass.School.SchoolID == TheTeacher.TheSchool.SchoolID)
                 {
                     Students.Add(student);
                 }
