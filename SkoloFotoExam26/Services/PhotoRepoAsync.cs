@@ -43,11 +43,11 @@ namespace SkoloFotoExam26.Services
             }
             catch (SqlException sqlEx)
             {
-                Console.WriteLine($"SQL Exception message: {sqlEx.Message}");
+                throw new Exception($"SQL Exception message: {sqlEx.Message}");
             }
             catch (Exception ex)
             {
-                Console.WriteLine($"Exception message: {ex.Message}");
+                throw new Exception($"Exception message: {ex.Message}");
             }
 
         }
@@ -69,11 +69,11 @@ namespace SkoloFotoExam26.Services
             }
             catch (SqlException sqlEx)
             {
-                Console.WriteLine($"SQL exception: {sqlEx.Message}");
+                throw new Exception($"SQL exception: {sqlEx.Message}");
             }
             catch (Exception ex)
             {
-                Console.WriteLine($"Exception message: {ex.Message}");
+                throw new Exception($"Exception message: {ex.Message}");
             }
         }
 
@@ -96,8 +96,8 @@ namespace SkoloFotoExam26.Services
                         DateTime date = reader.GetDateTime("Date");
                         int height = reader.GetInt32("Height");
                         int width = reader.GetInt32("Width");
-                        double price = reader.GetDouble("Price");
-
+                        //double price = reader.GetDouble("Price");
+                        double price = Convert.ToDouble(reader["Price"]);
                         //Booking booking = await _bookings.GetAsync();
                         Photo photo = new Photo(fileName, filePath, price, date, height, width, photoType);
 
@@ -107,11 +107,11 @@ namespace SkoloFotoExam26.Services
                 }
                 catch (SqlException sqlEx)
                 {
-                    Console.WriteLine($"SQL Exception message: {sqlEx.Message}");
+                    throw new Exception($"SQL Exception message: {sqlEx.Message}");
                 }
                 catch (Exception ex)
                 {
-                    Console.WriteLine($"Exception message: {ex.Message}");
+                    throw new Exception($"Exception message: {ex.Message}");
                 }
             }
             return photos;
@@ -146,11 +146,11 @@ namespace SkoloFotoExam26.Services
             }
             catch (SqlException sqlEx)
             {
-                Console.WriteLine($"SQL Exception message: {sqlEx.Message}");
+                throw new Exception($"SQL Exception message: {sqlEx.Message}");
             }
             catch (Exception ex)
             {
-                Console.WriteLine($"Exception message: {ex.Message}");
+                throw new Exception($"Exception message: {ex.Message}");
             }
             return photo;
         }

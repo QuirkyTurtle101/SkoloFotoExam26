@@ -41,11 +41,11 @@ namespace SkoloFotoExam26.Services
                 }
                 catch (SqlException sqlExc)
                 {
-                    Console.WriteLine($"sql exception message: {sqlExc.Message}");
+                    throw new Exception($"sql exception message: {sqlExc.Message}");
                 }
                 catch(Exception ex)
                 {
-                    Console.WriteLine($"General exception: {ex.Message}");
+                    throw new Exception($"General exception: {ex.Message}");
                 }
             }
         }
@@ -68,11 +68,11 @@ namespace SkoloFotoExam26.Services
             }
             catch (SqlException sqlEx)
             {
-                Console.WriteLine($"SQL exception: {sqlEx.Message}");
+                throw new Exception($"SQL exception: {sqlEx.Message}");
             }
             catch (Exception ex)
             {
-                Console.WriteLine($"Exception message: {ex.Message}");
+                throw new Exception($"Exception message: {ex.Message}");
             }
         }
 
@@ -105,11 +105,11 @@ namespace SkoloFotoExam26.Services
                 }
                 catch (SqlException sqlEx)
                 {
-                    Console.WriteLine($"SQL Exception message: {sqlEx.Message}");
+                    throw new Exception($"SQL Exception message: {sqlEx.Message}");
                 }
                 catch (Exception ex)
                 {
-                    Console.WriteLine($"Exception message: {ex.Message}");
+                    throw new Exception($"Exception message: {ex.Message}");
                 }
             }
             return photographingEvents;
@@ -143,11 +143,11 @@ namespace SkoloFotoExam26.Services
             }
             catch (SqlException sqlEx)
             {
-                Console.WriteLine($"SQL Exception message: {sqlEx.Message}");
+                throw new Exception($"SQL Exception message: {sqlEx.Message}");
             }
             catch (Exception ex)
             {
-                Console.WriteLine($"Exception message: {ex.Message}");
+                throw new Exception($"Exception message: {ex.Message}");
             }
             return photographingEvent;
         }
@@ -168,11 +168,11 @@ namespace SkoloFotoExam26.Services
             }
             catch (SqlException sqlEx)
             {
-                Console.WriteLine($"SQL Exception message: {sqlEx.Message}");
+                throw new Exception($"SQL Exception message: {sqlEx.Message}");
             }
             catch(Exception ex)
             {
-                Console.WriteLine($"Exception message: {ex.Message}");
+                throw new Exception($"Exception message: {ex.Message}");
             }
         }
     }

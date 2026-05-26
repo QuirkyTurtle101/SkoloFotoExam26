@@ -57,11 +57,11 @@ namespace SkoloFotoExam26.Services
             }
             catch (SqlException sqlEx)
             {
-                Console.WriteLine($"SQL exception message: {sqlEx.Message}");
+                throw new Exception($"SQL exception message: {sqlEx.Message}");
             }
             catch(Exception ex)
             { 
-                Console.WriteLine($"Exception message: {ex.Message}");
+                throw new Exception($"Exception message: {ex.Message}");
             }
         }
 
@@ -78,11 +78,11 @@ namespace SkoloFotoExam26.Services
             }
             catch (SqlException sqlEx)
             {
-                Console.WriteLine($"SQL exception message: {sqlEx.Message}");
+                throw new Exception($"SQL exception message: {sqlEx.Message}");
             }
             catch (Exception ex)
             {
-                Console.WriteLine($"Exception message: {ex.Message}");
+                throw new Exception($"Exception message: {ex.Message}");
             }
             return count;
          
@@ -101,11 +101,11 @@ namespace SkoloFotoExam26.Services
             }
             catch (SqlException sqlEx)
             {
-                Console.WriteLine($"SQL exception message: {sqlEx.Message}");
+                throw new Exception($"SQL exception message: {sqlEx.Message}");
             }
             catch (Exception ex)
             {
-                Console.WriteLine($"Exception message: {ex.Message}");
+                throw new Exception($"Exception message: {ex.Message}");
             }
         }
 
@@ -136,11 +136,11 @@ namespace SkoloFotoExam26.Services
                 }
                 catch (SqlException sqlEx)
                 {
-                    Console.WriteLine($"SQL Exception message: {sqlEx.Message}");
+                    throw new Exception($"SQL Exception message: {sqlEx.Message}");
                 }
                 catch (Exception ex)
                 {
-                    Console.WriteLine($"Exception message: {ex.Message}");
+                    throw new Exception($"Exception message: {ex.Message}");
                 }
             }
             return teachers;
@@ -173,11 +173,11 @@ namespace SkoloFotoExam26.Services
             }
             catch (SqlException sqlEx)
             {
-                Console.WriteLine($"SQL Exception message: {sqlEx.Message}");
+                throw new Exception($"SQL Exception message: {sqlEx.Message}");
             }
             catch (Exception ex)
             {
-                Console.WriteLine($"Exception message: {ex.Message}");
+                throw new Exception($"Exception message: {ex.Message}");
             }
             return teacher;
         }
@@ -208,11 +208,11 @@ namespace SkoloFotoExam26.Services
             }
             catch (SqlException sqlEx)
             {
-                Console.WriteLine($"SQL Exception message: {sqlEx.Message}");
+                throw new Exception($"SQL Exception message: {sqlEx.Message}");
             }
             catch (Exception ex)
             {
-                Console.WriteLine($"Exception message: {ex.Message}");
+                throw new Exception($"Exception message: {ex.Message}");
             }
             return teacher;
         }
@@ -235,26 +235,26 @@ namespace SkoloFotoExam26.Services
             }
             catch (SqlException sqlEx)
             {
-                Console.WriteLine($"SQL exception message: {sqlEx.Message}");
+                throw new Exception ($"SQL exception message: {sqlEx.Message}");
             }
             catch (Exception ex)
             {
-                Console.WriteLine($"Exception message: {ex.Message}");
+                throw new Exception($"Exception message: {ex.Message}");
             }
         }
 
-        public async Task<List<Teacher>> FilterTeachersAsync(string filterCriteria)
-        {
-            List<Teacher> teachers = await GetAllAsync();
-            List<Teacher> filteredTeachers = new List<Teacher>();
-            foreach (Teacher item in teachers)
-            {
-                if (item.FirstName.Contains(filterCriteria.ToLower()))
-                {
-                    filteredTeachers.Add(item);
-                }
-            }
-            return filteredTeachers;
-        }
+        //public async Task<List<Teacher>> FilterTeachersAsync(string filterCriteria)
+        //{
+        //    List<Teacher> teachers = await GetAllAsync();
+        //    List<Teacher> filteredTeachers = new List<Teacher>();
+        //    foreach (Teacher item in teachers)
+        //    {
+        //        if (item.FirstName.Contains(filterCriteria.ToLower()))
+        //        {
+        //            filteredTeachers.Add(item);
+        //        }
+        //    }
+        //    return filteredTeachers;
+        //}
     }
 }

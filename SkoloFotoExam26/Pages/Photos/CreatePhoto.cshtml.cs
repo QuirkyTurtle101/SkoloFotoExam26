@@ -54,13 +54,13 @@ namespace SkoloFotoExam26.Pages.Photos
         {
 
         }
-        public async Task OnPostAsync()
+        public async Task<IActionResult> OnPostAsync()
         {
             if (Photo != null)
             {
                 if (FileName != null)
                 {
-                    string filePath = Path.Combine(webHostEnvironment.WebRootPath, "/Images/PhotografImages", FileName);
+                    string filePath = Path.Combine(webHostEnvironment.WebRootPath, "Images/PhotografImages", FileName);
                     System.IO.File.Delete(filePath);
                 }
 
@@ -71,11 +71,13 @@ namespace SkoloFotoExam26.Pages.Photos
                 //Booking theBooking = await _bookings.GetAsync(BookingID);
                 Photo photo = new Photo(FileName, FilePath, Price, TheDate, Height, Width, PhotoType);
                 await _photos.AddAsync(photo);
+
             }
             catch (Exception ex)
             {
                 ViewData["ErrorMessage"] = ex.Message;
             }
+            return RedirectToPage("Index");
         }
 
 

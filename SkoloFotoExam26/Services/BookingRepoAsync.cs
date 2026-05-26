@@ -58,11 +58,11 @@ namespace SkoloFotoExam26.Services
             }
             catch (SqlException sqlEx)
             {
-                Console.WriteLine($"SQL exception message: {sqlEx.Message}");
+                throw new Exception($"SQL exception message: {sqlEx.Message}");
             }
             catch (Exception ex)
             {
-                Console.WriteLine($"Exception message: {ex.Message}");
+                throw new Exception($"Exception message: {ex.Message}");
             }
         }
 
@@ -83,11 +83,11 @@ namespace SkoloFotoExam26.Services
             }
             catch (SqlException sqlExp)
             {
-                Console.WriteLine($"sql exception message: {sqlExp.Message}");
+                throw new Exception($"sql exception message: {sqlExp.Message}");
             }
             catch (Exception ex)
             {
-                Console.WriteLine($"exception message: {ex.Message}");
+                throw new Exception($"exception message: {ex.Message}");
             }
         }
 
@@ -118,11 +118,11 @@ namespace SkoloFotoExam26.Services
                 }
                 catch (SqlException sqlEx)
                 {
-                    Console.WriteLine($"SQL Exception message: {sqlEx.Message}");
+                    throw new Exception($"SQL Exception message: {sqlEx.Message}");
                 }
                 catch (Exception ex)
                 {
-                    Console.WriteLine($"Exception message: {ex.Message}");
+                    throw new Exception($"Exception message: {ex.Message}");
                 }
                 return bookings;
             }
@@ -157,11 +157,11 @@ namespace SkoloFotoExam26.Services
             }
             catch (SqlException sqlEx)
             {
-                Console.WriteLine($"SQL Exception message: {sqlEx.Message}");
+                throw new Exception($"SQL Exception message: {sqlEx.Message}");
             }
             catch (Exception ex)
             {
-                Console.WriteLine($"Exception message: {ex.Message}");
+                throw new Exception($"Exception message: {ex.Message}");
             }
             return booking;
         }
@@ -183,11 +183,11 @@ namespace SkoloFotoExam26.Services
             }
             catch (SqlException sqlEx)
             {
-                Console.WriteLine($"SQL exception message: {sqlEx.Message}");
+                throw new Exception($"SQL exception message: {sqlEx.Message}");
             }
             catch(Exception ex)
             {
-                Console.WriteLine($"Exception message: {ex.Message}");
+                throw new Exception($"Exception message: {ex.Message}");
             }
         }
 
@@ -200,7 +200,7 @@ namespace SkoloFotoExam26.Services
             {
                 throw new Exception("Bookingen skal begynde inden den ender");
             }
-
+       
             if (newBooking.Start < theEvent.Start || newBooking.End > theEvent.End)
             {
                 throw new BookingTimeframeException();

@@ -16,57 +16,81 @@ namespace SkoloFotoExam26.Pages.Teachers
         //[BindProperty(SupportsGet = true)]
         //public string FilterCriteria { get; set; }
 
-        [BindProperty(SupportsGet = true)]
-        public string SortBy { get; set; }
+        IFilterFunction _filterFunction;
+
         [BindProperty(SupportsGet = true)]
         public string FilterBy { get; set; }
 
         [BindProperty(SupportsGet = true)]
         public string FilterCriteria { get; set; }
 
-        public IndexModel(IRepoAsync<Teacher, int> teacherRepo)
+        public IndexModel(IRepoAsync<Teacher, int> teacherRepo, IFilterFunction filterFunction)
         {
             _teacherRepo = (TeacherRepoAsync)teacherRepo;
+            _filterFunction = filterFunction;
         }
         public async Task OnGetAsync()
         {
 
-                TeacherList = await _teacherRepo.GetAllAsync();
-
-            TeacherList = await _teacherRepo.GetAllAsync();
-
             if (!string.IsNullOrEmpty(FilterCriteria))
             {
-                TeacherList = await _teacherRepo.FilterTeachersAsync(FilterCriteria);
+                var listOfPreds = FilterPhotographersByPredictes();
+                TeacherList = _filterFunction.FilterFunc(await _teacherRepo.GetAllAsync(), listOfPreds);
             }
-
-            Sorts();
+            else
+            {
+                TeacherList = await _teacherRepo.GetAllAsync();
+            }
         }
 
-        private void Sorts()
+        public List<Predicate<Teacher>> FilterPhotographersByPredictes()
         {
-            IEnumerable<Teacher> filter = TeacherList;
-            switch (SortBy)
+            List<Predicate<Teacher>> listOfPredicates = new List<Predicate<Teacher>>();
+
+            Predicate<Teacher> initials = p => p.Initials.ToLower().Contains(FilterCriteria.ToLower());
+            Predicate<Teacher> firstName = p => p.FirstName.ToLower().Contains(FilterCriteria.ToLower());
+            Predicate<Teacher> lastName = p => p.LastName.ToLower().Contains(FilterCriteria.ToLower());
+            Predicate<Teacher> email = p => p.Email.ToLower().Contains(FilterCriteria.ToLower());
+            Predicate<Teacher> phoneNumber = p => p.PhoneNumber.ToLower().Contains(FilterCriteria.ToLower());
+
+            switch (FilterBy)
             {
                 case "Initials":
-                    filter = filter.OrderBy(t => t.Initials);
-                    break;
+                    {
+                        listOfPredicates.Add(initials);
+                        break;
+                    }
                 case "FirstName":
-                    filter = filter.OrderBy(t => t.FirstName, StringComparer.OrdinalIgnoreCase);
-                    break;
+                    {
+                        listOfPredicates.Add(firstName);
+                        break;
+                    }
                 case "LastName":
-                    filter = filter.OrderBy(t => t.LastName, StringComparer.OrdinalIgnoreCase);
-                    break;
+                    {
+                        listOfPredicates.Add(lastName);
+                        break;
+                    }
                 case "Email":
-                    filter = filter.OrderBy(m => m.Email, StringComparer.OrdinalIgnoreCase);
-                    break;
+                    {
+                        listOfPredicates.Add(email);
+                        break;
+                    }
                 case "PhoneNumber":
-                    filter = filter.OrderBy(m => m.PhoneNumber);
-                    break;
+                    {
+                        listOfPredicates.Add(phoneNumber);
+                        break;
+                    }
+                default:
+                    {
+                        listOfPredicates.Add(initials);
+                        listOfPredicates.Add(firstName);
+                        listOfPredicates.Add(lastName);
+                        listOfPredicates.Add(email);
+                        listOfPredicates.Add(phoneNumber);
+                        break;
+                    }
             }
-            TeacherList = filter.ToList();
+            return listOfPredicates;
         }
-
-
     }    
 }
