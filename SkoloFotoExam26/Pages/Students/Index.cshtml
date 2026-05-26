@@ -18,30 +18,30 @@
                 <th>
                     <button type="submit" class="btn btn-link" name="SortBy" value="BørneID">ID</button>
                 </th>
-<th>Fornavn</th>
-<th>Mellemnavn</th>
-<th>Efternavn</th>
-<th>ForældreID</th>
-@* <th>SkoleID</th> *@
-<th>Skoleklasse</th>
-</tr>
-</thead>
-<tbody>
-    @foreach (Student item in @Model.Students)
-    {
-        <tr>
-            <td>@item.StudentID</td>
-            <td>@item.FirstName</td>
-            <td>@item.MiddleName</td>
-            <td>@item.LastName</td>
-            <td>@item.Parent.ID</td>
-            @* <td>@item.SchoolClass.School.Name</td> *@
-            <td>@item.SchoolClass.ClassName</td>
-            <td>
-                <a asp-page="UpdateStudent" asp-route-StudentID="@item.StudentID" class="btn btn-info btn-sm">Rediger barn</a>
-            </td>
-        </tr>
-    }
-</tbody>
-</table>
+                <th>Fornavn</th>
+                <th>Mellemnavn</th>
+                <th>Efternavn</th>
+                <th>ForældreID</th>
+                @* <th>SkoleID</th> *@
+                <th>Skoleklasse</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (Student item in @Model.Students)
+            {
+                <tr>
+                    <td>@item.StudentID</td>
+                    <td>@item.FirstName</td>
+                    <td>@item.MiddleName</td>
+                    <td>@item.LastName</td>
+                    <td>@item.Parent.ID</td>
+                    @* <td>@item.SchoolClass.School.Name</td> *@
+                    <td>@item.SchoolClass.ClassName</td>
+                    <td>
+                        <a asp-page="UpdateStudent" asp-route-StudentID="@item.StudentID" class="btn btn-info btn-sm">Rediger barn</a>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
 </form>

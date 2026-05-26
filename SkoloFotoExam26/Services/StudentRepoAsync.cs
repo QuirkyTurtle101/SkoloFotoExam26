@@ -136,13 +136,14 @@ namespace SkoloFotoExam26.Services
                         string middleName = reader.IsDBNull(reader.GetOrdinal("MiddleName")) ? "" : reader.GetString("MiddleName");
                         string lastName = reader.GetString("LastName");
 
-                        string cName = reader.GetString("ClassName"); 
-                        string pName = reader.GetString("FirstName");
+                        int classID = reader.GetInt32("SchoolClassID");
+                        int parentID = reader.GetInt32("ParentID");
 
-                        SchoolClass dummyClass = new SchoolClass { ClassName = cName };
-                        Parent dummyParent = new Parent { FirstName = pName };
+                        SchoolClass schoolClass = await _schoolClassRepo.GetAsync(classID);
+                        Parent parent = await _parentRepo.GetAsync(parentID);
 
-                        students.Add(new Student(studentID, firstName, middleName, lastName, dummyParent, dummyClass));
+
+                        students.Add(new Student(studentID, firstName, middleName, lastName, parent, schoolClass));
                     }
                 }
                 catch (SqlException sqlExp)
