@@ -52,6 +52,7 @@ namespace SkoloFotoExam26.Pages.Students
 
             // Hent alle klasser fra databasen, så vi kan vise dem i dropdown'en
             SchoolClassList = await _schoolClassRepo.GetAllAsync();
+            SchoolList = await _schoolRepo.GetAllAsync();
         }
 
 
@@ -66,18 +67,20 @@ namespace SkoloFotoExam26.Pages.Students
                     FirstName = this.FirstName,
                     MiddleName = this.MiddleName,
                     LastName = this.LastName,
-                    Parent = new Parent { ID = this.ParentID },
-                    SchoolClass = new SchoolClass { SchoolClassID = this.SchoolClassID }
+                    Parent = await _parentRepo.GetAsync(ParentID),
+                    SchoolClass = await _schoolClassRepo.GetAsync(SchoolClassID)
                 };
 
                 // 2. Gem via repo
                 await _studentRepo.AddAsync(studentToSave);
 
-                return RedirectToPage("Index");
+                return RedirectToPage("Index", new { ParentID = ParentID});
             }
             catch (Exception ex)
             {
                 ViewData["ErrorMessage"] = "Fejl ved oprettelse: " + ex.Message;
+                SchoolList = await _schoolRepo.GetAllAsync();
+                SchoolClassList = await _schoolClassRepo.GetAllAsync();
                 return Page();
             }
         }

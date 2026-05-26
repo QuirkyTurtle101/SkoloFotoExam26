@@ -9,7 +9,8 @@ namespace SkoloFotoExam26.Services
     {
         #region Querys
 
-        private string _addStudent = "INSERT INTO Student VALUES (@StudentID, @FirstName, @MiddleName, @LastName, @ParentID, @SchoolClassID)";
+        private string _addStudent = "INSERT INTO Student VALUES (@FirstName, @MiddleName, @LastName, @ParentID, @SchoolClassID)";
+        private string _getStudent = "SELECT * FROM Student WHERE StudentID = @StudentID";
         private string _getAllStudent = @"SELECT " +
             "s.StudentID," +
             "s.FirstName, " +
@@ -22,8 +23,26 @@ namespace SkoloFotoExam26.Services
             "FROM Student s " +
             "JOIN SchoolClass c ON s.SchoolClassID = c.SchoolClassID " +
             "JOIN School sch ON c.SchoolID = sch.SchoolID";
-
+        private string _updateStudent = "UPDATE Student set " +
+            "FirstName=@FirstName, " +
+            "MiddleName=@MiddleName, " +
+            "LastName=@LastName, " +
+            "ParenID=@ParentID, " +
+            "School=@School, " +
+            "SchoolClass=@SchoolClassID" +
+            "WHERE StudentID = @StudentID";
         #endregion
+
+        private IRepoAsync<Parent, int> _parentRepo;
+
+        private IRepoAsync<School, int> _schoolRepo;
+        private IRepoAsync<SchoolClass, int> _schoolClassRepo;
+
+        public StudentRepoAsync(IRepoAsync<Parent, int> parentRepo, IRepoAsync<SchoolClass, int> schoolClassRepo)
+        {
+            _parentRepo = parentRepo;
+            _schoolClassRepo = schoolClassRepo;
+        }
 
         public Task<int> CountAsync()
         {
@@ -43,7 +62,6 @@ namespace SkoloFotoExam26.Services
                     command.Parameters.AddWithValue("@MiddleName", input.MiddleName);
                     command.Parameters.AddWithValue("@LastName", input.LastName);
                     command.Parameters.AddWithValue("@ParentID", input.Parent.ID);
-                    //command.Parameters.AddWithValue("@SchoolID", input.School.SchoolID);
                     command.Parameters.AddWithValue("@SchoolClassID", input.SchoolClass.SchoolClassID);
 
                     int noOfRowsEffected = await command.ExecuteNonQueryAsync();
@@ -62,9 +80,42 @@ namespace SkoloFotoExam26.Services
             }
         }
 
-        public Task<Student> GetAsync(int toGet)
+        public async Task<Student> GetAsync(int toGet)
         {
-            throw new NotImplementedException();
+            Student student = null;
+            using SqlConnection connection = new SqlConnection(Secret.connectionString);
+            try
+            {
+                using SqlCommand command = new SqlCommand(_getStudent, connection);
+                await command.Connection.OpenAsync();
+                command.Parameters.AddWithValue("@StudentID", toGet);
+                SqlDataReader reader = await command.ExecuteReaderAsync();
+
+                if (await reader.ReadAsync())
+                {
+                    int studentID = reader.GetInt32("StudentID");
+                    string firstName = reader.GetString("FirstName");
+                    string middleName = reader.GetString("MiddleName");
+                    string lastName = reader.GetString("LastName");
+                    int parentID = reader.GetInt32("ParentID");
+                    //int schoolID = reader.GetInt32("SchoolID");
+                    int schoolClassID = reader.GetInt32("SchoolClassID");
+                    Parent parent = await _parentRepo.GetAsync(parentID);
+                    //School school = await _schoolRepo.GetAsync(schoolID);
+                    SchoolClass schoolClass = await _schoolClassRepo.GetAsync(schoolClassID);
+
+                    student = new Student(firstName, middleName, lastName, parent, schoolClass);
+                }
+            }
+            catch (SqlException sqlEx)
+            {
+                Console.WriteLine($"SQL Exception message: {sqlEx.Message}");
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"Exception message: {ex.Message}");
+            }
+            return student;
         }
 
         public async Task<List<Student>> GetAllAsync()
@@ -85,15 +136,14 @@ namespace SkoloFotoExam26.Services
                         string middleName = reader.IsDBNull(reader.GetOrdinal("MiddleName")) ? "" : reader.GetString("MiddleName");
                         string lastName = reader.GetString("LastName");
 
-                        string sName = reader.GetString("SchoolName");
-                        string cName = reader.GetString("ClassName"); 
-                        string pName = reader.GetString("FirstName");
+                        int classID = reader.GetInt32("SchoolClassID");
+                        int parentID = reader.GetInt32("ParentID");
 
-                        School dummySchool = new School { Name = sName };
-                        SchoolClass dummyClass = new SchoolClass { ClassName = cName };
-                        Parent dummyParent = new Parent { FirstName = pName };
+                        SchoolClass schoolClass = await _schoolClassRepo.GetAsync(classID);
+                        Parent parent = await _parentRepo.GetAsync(parentID);
 
-                        students.Add(new Student(studentID, firstName, middleName, lastName, dummyParent, dummySchool, dummyClass));
+
+                        students.Add(new Student(studentID, firstName, middleName, lastName, parent, schoolClass));
                     }
                 }
                 catch (SqlException sqlExp)
@@ -111,14 +161,44 @@ namespace SkoloFotoExam26.Services
             }
             return students;
         }
-
-        public Task DeleteAsync(int toDelete)
+        public async Task UpdateAsync(Student toUpdate)
         {
-            throw new NotImplementedException();
+            using (SqlConnection connection = new SqlConnection(Secret.connectionString))
+            using (SqlCommand command = new SqlCommand(_updateStudent, connection))
+            {
+                try
+                {
+                    await command.Connection.OpenAsync();
+
+                    command.Parameters.AddWithValue("@FirstName", toUpdate.FirstName);
+                    command.Parameters.AddWithValue("@MiddleName", toUpdate.MiddleName);
+                    command.Parameters.AddWithValue("@LastName", toUpdate.LastName);
+                    command.Parameters.AddWithValue("@ParentID", toUpdate.Parent.ID);
+                    command.Parameters.AddWithValue("@SchoolClassID", toUpdate.SchoolClass.SchoolClassID);
+
+                    int rowsAffected = await command.ExecuteNonQueryAsync();
+
+                    if (rowsAffected == 0)
+                    {
+                        Console.WriteLine("Ingen rækker blev opdateret! Tjek om ID'et findes.");
+                    }
+                }
+                catch (SqlException sqlex)
+                {
+                    Console.WriteLine("Sql fejl: " + sqlex.Message);
+                }
+                catch (Exception ex)
+                {
+                    Console.WriteLine("Generel fejl: " + ex.Message);
+                }
+                finally
+                {
+                    await command.Connection.CloseAsync();
+                }
+            }
         }
 
-
-        public Task UpdateAsync(Student toUpdate)
+        public Task DeleteAsync(int toDelete)
         {
             throw new NotImplementedException();
         }

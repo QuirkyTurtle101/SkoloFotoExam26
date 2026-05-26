@@ -9,8 +9,8 @@ namespace SkoloFotoExam26.Pages.Photographers
     public class IndexModel : PageModel
     {
 
-        IRepoAsync<Photographer, int> _photographerRepoAsync;
-        IFilterFunction _filterFunction;
+        private IRepoAsync<Photographer, int> _photographerRepoAsync;
+        private IFilterFunction _filterFunction;
 
         public List<Photographer> Photographers { get; set; }
         [BindProperty(SupportsGet = true)]
@@ -27,15 +27,12 @@ namespace SkoloFotoExam26.Pages.Photographers
         {
             if (!string.IsNullOrEmpty(FilterCriteria))
             {
-                var listOfPreds = FilterPhotographersByPredictes();
-                Photographers = _filterFunction.FilterFunc(await _photographerRepoAsync.GetAllAsync(), listOfPreds);
+                Photographers = _filterFunction.FilterFunc(await _photographerRepoAsync.GetAllAsync(), FilterPhotographersByPredictes());
             }
             else
             {
                 Photographers = await _photographerRepoAsync.GetAllAsync();
             }
-
-            
         }
 
         public List<Predicate<Photographer>> FilterPhotographersByPredictes()
@@ -47,6 +44,7 @@ namespace SkoloFotoExam26.Pages.Photographers
             Predicate<Photographer> cities = p => p.City.ToLower().Contains(FilterCriteria.ToLower());
             Predicate<Photographer> phoneNumbers = p => p.PhoneNumber.ToLower().Contains(FilterCriteria.ToLower());
             Predicate<Photographer> emails = p => p.Email.ToLower().Contains(FilterCriteria.ToLower());
+            Predicate<Photographer> experience = p => p.ExperienceInYears.ToString().Contains(FilterCriteria.ToLower());
 
             switch (FilterBy)
             {
@@ -70,11 +68,11 @@ namespace SkoloFotoExam26.Pages.Photographers
                         listOfPredicates.Add(emails);
                         break;
                     }
-                //case "Experience" :
-                //    {
-                //        listOfPredicates.Add(experience);
-                //        break;
-                    //}
+                case "Experience":
+                    {
+                        listOfPredicates.Add(experience);
+                        break;
+                    }
                 case "City" :
                     {
                         listOfPredicates.Add(cities);
@@ -86,7 +84,7 @@ namespace SkoloFotoExam26.Pages.Photographers
                         listOfPredicates.Add(lastNames);
                         listOfPredicates.Add(phoneNumbers);
                         listOfPredicates.Add(emails);
-                        //listOfPredicates.Add(experience);
+                        listOfPredicates.Add(experience);
                         listOfPredicates.Add(cities);
                         break;
                     }
