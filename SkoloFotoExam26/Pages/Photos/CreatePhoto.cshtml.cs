@@ -60,7 +60,7 @@ namespace SkoloFotoExam26.Pages.Photos
             {
                 if (FileName != null)
                 {
-                    string filePath = Path.Combine(webHostEnvironment.WebRootPath, "Images/PhotografImages", FileName);
+                    string filePath = Path.Combine(webHostEnvironment.WebRootPath, "assets/images/uploaded", FileName);
                     System.IO.File.Delete(filePath);
                 }
 
@@ -88,7 +88,7 @@ namespace SkoloFotoExam26.Pages.Photos
             string uniqueFileName = null;
             if (Photo != null)
             {
-                string uploadsFolder = Path.Combine(webHostEnvironment.WebRootPath, "Images/PhotografImages");
+                string uploadsFolder = Path.Combine(webHostEnvironment.WebRootPath, "assets/images/uploaded");
                 uniqueFileName = Guid.NewGuid().ToString() + "_" + Photo.FileName;
                 string filePath = Path.Combine(uploadsFolder, uniqueFileName);
                 using (var fileStream = new FileStream(filePath, FileMode.Create))
