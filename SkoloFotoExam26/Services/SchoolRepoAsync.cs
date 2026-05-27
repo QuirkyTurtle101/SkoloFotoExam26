@@ -19,6 +19,14 @@ namespace SkoloFotoExam26.Services
         #endregion
 
         #region Methods
+        /// <summary>
+        /// Asynchronously adds a new school record to the database using the specified school information.
+        /// </summary>
+        /// <remarks>This method opens a new database connection for the operation. The input object's
+        /// properties are mapped to the corresponding database fields. The method does not return the newly created
+        /// record or its identifier.</remarks>
+        /// <param name="input">The school entity containing the details to be added. Cannot be null.</param>
+        /// <returns>A task that represents the asynchronous add operation.</returns>
         public async Task AddAsync(School input)
         {
             using (SqlConnection connection = new SqlConnection(Secret.connectionString))
@@ -53,6 +61,11 @@ namespace SkoloFotoExam26.Services
             }
         }
 
+        /// <summary>
+        /// Asynchronously retrieves the total number of schools in the database.
+        /// </summary>
+        /// <returns>A task that represents the asynchronous operation. The task result contains the number of schools found in
+        /// the database.</returns>
         public async Task<int> CountAsync()
         {
             int countOfSchools;
@@ -83,6 +96,13 @@ namespace SkoloFotoExam26.Services
             }
         }
 
+        /// <summary>
+        /// Asynchronously deletes the school with the specified identifier, the SchoolID, from the database.  The
+        /// operation is performed asynchronously and may throw exceptions if the database is unavailable, if there is dependancies or the query
+        /// fails.
+        /// </summary>
+        /// <param name="toDelete">The unique identifier of the school to delete.</param>
+        /// <returns>A task that represents the asynchronous delete operation.</returns>
         public async Task DeleteAsync(int toDelete)
         {
             using (SqlConnection connection = new SqlConnection(Secret.connectionString))
@@ -114,6 +134,14 @@ namespace SkoloFotoExam26.Services
 
         }
 
+        /// <summary>
+        /// Asynchronously retrieves all schools from the database.
+        /// </summary>
+        /// <remarks>This method opens a database connection and queries for all school records. The
+        /// operation is performed asynchronously and may throw exceptions if the database is unavailable or the query
+        /// fails.</remarks>
+        /// <returns>A task that represents the asynchronous operation. The task result contains a list of all schools. The list
+        /// will be empty if no schools are found.</returns>
         public async Task<List<School>> GetAllAsync()
         {
             List<School> schools = new List<School>();
@@ -155,6 +183,15 @@ namespace SkoloFotoExam26.Services
             return schools;
 
         }
+        /// <summary>
+        /// Asynchronously retrieves a school by SchoolID.
+        /// </summary>
+        /// <remarks>If no school with the specified identifier exists, the method returns <see
+        /// langword="null"/>. The operation opens and closes a database connection for each call. This method is not
+        /// thread-safe; concurrent calls should use separate instances.</remarks>
+        /// <param name="toGet">The unique identifier of the school to retrieve, the schoolID. Must correspond to an existing school in the database.</param>
+        /// <returns>A task that represents the asynchronous operation. The task result contains the <see cref="School"/>
+        /// instance if found; otherwise, <see langword="null"/>.</returns>
 
         public async Task<School> GetAsync(int toGet)
         {
@@ -197,6 +234,12 @@ namespace SkoloFotoExam26.Services
             return school;
         }
 
+        /// <summary>
+        /// Asynchronously updates the details of an existing school in the database.
+        /// </summary>
+        /// <param name="toUpdate">The school entity containing the updated information. The school's identifier must correspond to an existing
+        /// record.</param>
+        /// <returns>A task that represents the asynchronous update operation.</returns>
         public async Task UpdateAsync(School toUpdate)
         {
             using (SqlConnection connection = new SqlConnection(Secret.connectionString))

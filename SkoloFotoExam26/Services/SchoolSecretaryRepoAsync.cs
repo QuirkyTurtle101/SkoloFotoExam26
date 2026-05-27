@@ -18,7 +18,15 @@ namespace SkoloFotoExam26.Services
         #endregion
 
         #region constructor med SchoolRepo
+        /// <summary>
+        /// Provides access to asynchronous operations for managing School entities in the data store.
+        /// </summary>
         IRepoAsync<School, int> _schoolRepo;
+
+        /// <summary>
+        /// Initializes a new instance of the SchoolSecretaryRepoAsync class with the specified school repository.
+        /// </summary>
+        /// <param name="schoolRepo">The asynchronous repository used to access and manage School entities. Cannot be null.</param>
         public SchoolSecretaryRepoAsync(IRepoAsync<School, int> schoolRepo)
         {
             _schoolRepo = schoolRepo;
@@ -26,6 +34,15 @@ namespace SkoloFotoExam26.Services
         #endregion
 
         #region Methods
+
+        /// <summary>
+        /// Asynchronously adds a new school secretary to the data store.
+        /// </summary>
+        /// <remarks>This method does not return a result. If the operation fails, an exception is thrown.
+        /// Ensure that the provided SchoolSecretary object contains all required information before calling this
+        /// method.</remarks>
+        /// <param name="input">The school secretary to add. Must not be null and must have a valid associated school.</param>
+        /// <returns>A task that represents the asynchronous add operation.</returns>
         public async Task AddAsync(SchoolSecretary input)
         {
             using (SqlConnection connection = new SqlConnection(Secret.connectionString))
@@ -60,6 +77,11 @@ namespace SkoloFotoExam26.Services
             }
         }
 
+        /// <summary>
+        /// Asynchronously retrieves the total number of secretary records in the database.
+        /// </summary>
+        /// <returns>A task that represents the asynchronous operation. The task result contains the number of secretary records
+        /// found in the database.</returns>
         public async Task<int> CountAsync()
         {
             int countOfSecretary;
@@ -90,6 +112,13 @@ namespace SkoloFotoExam26.Services
             }
         }
 
+        /// <summary>
+        /// Asynchronously deletes the school secretary record with the specified identifier from the database.
+        /// </summary>
+        /// <remarks>If no record with the specified identifier exists, the operation completes without
+        /// throwing an exception. The method does not return information about whether a record was deleted.</remarks>
+        /// <param name="toDelete">The unique identifier of the school secretary to delete.</param>
+        /// <returns>A task that represents the asynchronous delete operation.</returns>
         public async Task DeleteAsync(int toDelete)
         {
             using (SqlConnection connection = new SqlConnection(Secret.connectionString))
@@ -120,7 +149,15 @@ namespace SkoloFotoExam26.Services
             }
         }
 
-
+        /// <summary>
+        /// Asynchronously retrieves all school secretary records from the data source.
+        /// </summary>
+        /// <remarks>This method opens a database connection and queries for all school secretary entries.
+        /// The operation is performed asynchronously and may throw exceptions related to database connectivity or query
+        /// execution. Callers should handle potential exceptions as appropriate for their context.</remarks>
+        /// <returns>A task that represents the asynchronous operation. The task result contains a list of <see
+        /// cref="SchoolSecretary"/> objects representing all school secretaries. The list is empty if no records are
+        /// found.</returns>
         public async Task<List<SchoolSecretary>> GetAllAsync()
         {
             List<SchoolSecretary> secretaries = new List<SchoolSecretary>();
@@ -169,6 +206,14 @@ namespace SkoloFotoExam26.Services
             return secretaries;
         }
 
+        /// <summary>
+        /// Asynchronously retrieves a school secretary by the specified identifier.
+        /// </summary>
+        /// <remarks>If no school secretary exists with the specified identifier, the method returns
+        /// <c>null</c>.</remarks>
+        /// <param name="toGet">The unique identifier of the school secretary to retrieve.</param>
+        /// <returns>A task that represents the asynchronous operation. The task result contains the <see
+        /// cref="SchoolSecretary"/> instance if found; otherwise, <c>null</c>.</returns>
         public async Task<SchoolSecretary> GetAsync(int toGet)
         {
             SchoolSecretary secretary = null;
@@ -210,7 +255,13 @@ namespace SkoloFotoExam26.Services
             }
             return secretary;
         }
-
+        
+        /// <summary>
+        /// Retrieves the user account associated with the specified email address for login purposes.
+        /// </summary>
+        /// <param name="email">The email address of the user to retrieve. Cannot be null or empty.</param>
+        /// <returns>A task that represents the asynchronous operation. The task result contains the user associated with the
+        /// specified email address, or null if no matching user is found.</returns>
         public async Task<User> GetForLogin(string email)
         {
             SchoolSecretary secretary = null;
@@ -253,6 +304,15 @@ namespace SkoloFotoExam26.Services
             return secretary;
         }
 
+        /// <summary>
+        /// Asynchronously updates the details of an existing school secretary in the database.
+        /// </summary>
+        /// <remarks>This method updates the school secretary's information based on the provided object's
+        /// properties. The operation is performed asynchronously and does not return a result. Ensure that the <see
+        /// cref="SchoolSecretary"/> object contains valid and complete data before calling this method.</remarks>
+        /// <param name="toUpdate">The <see cref="SchoolSecretary"/> instance containing the updated information. The <see
+        /// cref="SchoolSecretary.ID"/> property must identify an existing record to update. Cannot be null.</param>
+        /// <returns>A task that represents the asynchronous update operation.</returns>
         public async Task UpdateAsync(SchoolSecretary toUpdate)
         {
             using (SqlConnection connection = new SqlConnection(Secret.connectionString))

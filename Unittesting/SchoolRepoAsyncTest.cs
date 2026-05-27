@@ -11,10 +11,10 @@ namespace Unittesting
         {
             //Arrange 
             SchoolRepoAsync schoolRepo = new SchoolRepoAsync();
-            School school = new School("Absalons skole", "Absalonsgade 2", "Værløse", 3500, SchoolType.Public);
-
-            //Act 
+            School school = new School("Absalons skole", "Absalonsgade 2", "Roskilde", 4000, SchoolType.Public);
             int countBeforeAdd = await schoolRepo.CountAsync();
+            
+            //Act
             await schoolRepo.AddAsync(school);
             int countAfterAdd = await schoolRepo.CountAsync();
 
