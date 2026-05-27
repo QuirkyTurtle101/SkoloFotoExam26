@@ -4,6 +4,8 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using SkoloFotoExam26.Interfaces;
 using SkoloFotoExam26.Models;
+using SkiaSharp;
+
 
 namespace SkoloFotoExam26.Pages.Photos
 {
@@ -21,7 +23,6 @@ namespace SkoloFotoExam26.Pages.Photos
         [BindProperty]
         public string FileName { get; set; }
 
-        [BindProperty]
         public string FilePath { get; set; }
 
         [BindProperty]
@@ -30,11 +31,9 @@ namespace SkoloFotoExam26.Pages.Photos
         [BindProperty]
         public DateTime TheDate { get; set; } = DateTime.Today;
 
-        [BindProperty]
-        public int Height { get; set; }
-
-        [BindProperty]
         public int Width { get; set; }
+
+        public int Height { get; set; }
 
         [BindProperty]
         public PhotoType PhotoType { get; set; }
@@ -58,24 +57,27 @@ namespace SkoloFotoExam26.Pages.Photos
         {
             if (Photo != null)
             {
-                if (FileName != null)
-                {
-                    string filePath = Path.Combine(webHostEnvironment.WebRootPath, "assets/images/uploaded", FileName);
-                    System.IO.File.Delete(filePath);
-                }
-
                 FileName = ProcessUploadedFile();
-            }
-            try
-            {
-                //Booking theBooking = await _bookings.GetAsync(BookingID);
-                Photo photo = new Photo(FileName, FilePath, Price, TheDate, Height, Width, PhotoType);
-                await _photos.AddAsync(photo);
 
-            }
-            catch (Exception ex)
-            {
-                ViewData["ErrorMessage"] = ex.Message;
+                FilePath = Path.Combine(webHostEnvironment.WebRootPath, "assets\\images\\uploaded", FileName);
+
+                //would you believe this was the hardest part of the entire project
+                //i'm going to beat microsoft with hammers until System.Drawing.Common becomes cross platform again
+                var imageHeader = SKBitmap.DecodeBounds(Photo.OpenReadStream());
+                Width = imageHeader.Width;
+                Height = imageHeader.Height;
+
+                try
+                {
+                    //Booking theBooking = await _bookings.GetAsync(BookingID);
+                    Photo photo = new Photo(FileName, FilePath, Price, TheDate, Height, Width, PhotoType);
+                    await _photos.AddAsync(photo);
+
+                }
+                catch (Exception ex)
+                {
+                    ViewData["ErrorMessage"] = ex.Message;
+                }
             }
             return RedirectToPage("Index");
         }
@@ -88,7 +90,7 @@ namespace SkoloFotoExam26.Pages.Photos
             string uniqueFileName = null;
             if (Photo != null)
             {
-                string uploadsFolder = Path.Combine(webHostEnvironment.WebRootPath, "assets/images/uploaded");
+                string uploadsFolder = Path.Combine(webHostEnvironment.WebRootPath, "assets\\images\\uploaded");
                 uniqueFileName = Guid.NewGuid().ToString() + "_" + Photo.FileName;
                 string filePath = Path.Combine(uploadsFolder, uniqueFileName);
                 using (var fileStream = new FileStream(filePath, FileMode.Create))

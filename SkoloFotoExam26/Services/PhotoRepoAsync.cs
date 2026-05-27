@@ -89,6 +89,7 @@ namespace SkoloFotoExam26.Services
                     SqlDataReader reader = await command.ExecuteReaderAsync();
                     while (await reader.ReadAsync())
                     {
+                        int photoID = reader.GetInt32("PhotoID");
                         int valueType = reader.GetInt32("PhotoType");
                         PhotoType photoType = (PhotoType)valueType;
                         string fileName = reader.GetString("FileName");
@@ -99,7 +100,7 @@ namespace SkoloFotoExam26.Services
                         //double price = reader.GetDouble("Price");
                         double price = Convert.ToDouble(reader["Price"]);
                         //Booking booking = await _bookings.GetAsync();
-                        Photo photo = new Photo(fileName, filePath, price, date, height, width, photoType);
+                        Photo photo = new Photo(photoID, fileName, filePath, price, date, height, width, photoType);
 
                         photos.Add(photo);
                     }
@@ -126,21 +127,22 @@ namespace SkoloFotoExam26.Services
             try
             {
                 SqlCommand command = new SqlCommand(_get, connection);
-                command.Connection.OpenAsync();
+                await command.Connection.OpenAsync();
                 command.Parameters.AddWithValue("@PhotoID", toGet);
                 SqlDataReader reader = await command.ExecuteReaderAsync();
                 if (await reader.ReadAsync())
                 {
+                    int photoID = reader.GetInt32("PhotoID");
                     string fileName = reader.GetString("FileName");
                     string filePath = reader.GetString("FilePath");
-                    double price = reader.GetDouble("Price");
+                    double price = Decimal.ToDouble(reader.GetDecimal("Price"));
                     DateTime date = reader.GetDateTime("Date");
                     int height = reader.GetInt32("Height");
                     int width = reader.GetInt32("Width");
                     int valueType = reader.GetInt32("PhotoType");
                     PhotoType photoType = (PhotoType)valueType;
 
-                    photo = new Photo(fileName, filePath, price, date, height, width, photoType);
+                    photo = new Photo(photoID, fileName, filePath, price, date, height, width, photoType);
                 }
 
             }
