@@ -13,8 +13,6 @@ namespace SkoloFotoExam26.Pages.Photos
     {
         IRepoAsync<Photo, int> _photos;
 
-        //IRepoAsync<Booking, int> _bookings;
-
         private IWebHostEnvironment webHostEnvironment;
 
         [BindProperty]
@@ -38,11 +36,7 @@ namespace SkoloFotoExam26.Pages.Photos
         [BindProperty]
         public PhotoType PhotoType { get; set; }
 
-        //[BindProperty]
-        //public int BookingID { get; set; }
 
-        
-        //public List<Booking> BookingList { get; set; }
 
         public CreatePhotoModel(IRepoAsync<Photo, int> photos, IWebHostEnvironment webHost)
         {
@@ -69,7 +63,6 @@ namespace SkoloFotoExam26.Pages.Photos
 
                 try
                 {
-                    //Booking theBooking = await _bookings.GetAsync(BookingID);
                     Photo photo = new Photo(FileName, FilePath, Price, TheDate, Height, Width, PhotoType);
                     await _photos.AddAsync(photo);
 

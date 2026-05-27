@@ -13,8 +13,6 @@ namespace SkoloFotoExam26.Pages.Teachers
 
         public List<Teacher> TeacherList { get; set; }
 
-        //[BindProperty(SupportsGet = true)]
-        //public string FilterCriteria { get; set; }
 
         IFilterFunction _filterFunction;
 
