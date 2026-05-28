@@ -17,8 +17,7 @@
         <th> Pris </th>
         <th> Højde</th>
         <th> Bredde</th>
-@*         <th> Bookingen</th>
- *@     <th></th>
+
         <tbody>
             @foreach (Photo p in @Model.PhotoList)
             {
@@ -27,8 +26,6 @@
                     <td> @p.Price </td>
                     <td> @p.Height</td>
                     <td> @p.Width</td>
-@*                     <td> @p.TheBooking.BookingID</td>
- *@
 @*                     <td><a asp-page="DeletePhoto" asp-route-PhotoID="@p.PhotoID" class="btn btn-danger">Slet</a></td>
  *@                 <td><a asp-page="DisplayPhoto" asp-route-PhotoID="@p.PhotoID">Vis</a></td>
                 </tr>
