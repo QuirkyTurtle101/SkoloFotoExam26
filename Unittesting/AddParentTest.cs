@@ -16,7 +16,7 @@ namespace Unittesting
         {
             //Arrange 
             ParentRepoAsync parentRepo = new ParentRepoAsync();
-            Parent parent = new Parent(1, "Kasper", "Laursen", "kasp@gmail.com", "20102010", "Solbakkevej 2", 4000, "Roskilde");
+            Parent parent = new Parent(20, "Kasper", "Laursen", "kasp@gmail.com", "20102010", "Solbakkevej 2", 4000, "Roskilde");
             int countBeforeAdd = await parentRepo.CountAsync();
 
             //Act
