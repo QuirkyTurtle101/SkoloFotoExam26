@@ -7,6 +7,7 @@ namespace SkoloFotoExam26.Services
 {
     public class ParentRepoAsync : IRepoAsync<Parent, int>, ILoginableRepo
     {
+        private string _countParents = "SELECT COUNT(*) FROM Parent";
         private string _addParent = "INSERT INTO Parent Values (@FirstName, @LastName, @Email, @PhoneNumber, @StreetName, @ZipCode)";
         private string _getAllParent = "SELECT p.ParentID, p.FirstName, p.LastName, p.Email, p.PhoneNumber, p.StreetName, p.ZipCode, z.City FROM Parent p JOIN ZipCodeLookup z ON p.ZipCode = z.ZipCode";
         private string _getParent = "SELECT * FROM Parent JOIN ZipCodeLookup ON Parent.ZipCode=ZipCodeLookup.ZipCode WHERE ParentID = @ParentID";
@@ -20,9 +21,35 @@ namespace SkoloFotoExam26.Services
             "ZipCode=@ZipCode " +
             "WHERE ParentID = @ID";
         private string _getParentForLogin = "SELECT * FROM Parent JOIN ZipCodeLookup ON Parent.ZipCode = ZipCodeLookup.ZipCode WHERE Email = @Email";
-        public Task<int> CountAsync()
+        
+        public async Task<int> CountAsync()
         {
-            throw new NotImplementedException();
+            int countOfParents;
+            using (SqlConnection connection = new SqlConnection(Secret.connectionString))
+            {
+                try
+                {
+                    SqlCommand command = new SqlCommand(_countParents, connection);
+                    await connection.OpenAsync();
+
+                    countOfParents = Convert.ToInt32(await command.ExecuteScalarAsync());
+
+
+                }
+                catch (SqlException sqlex)
+                {
+                    throw;
+                }
+                catch (Exception ex)
+                {
+                    throw;
+                }
+                finally
+                {
+                    await connection.CloseAsync();
+                }
+                return countOfParents;
+            }
         }
 
         public async Task AddAsync(Parent input)
