@@ -23,14 +23,17 @@ namespace SkoloFotoExam26.Services
             "FROM Student s " +
             "JOIN SchoolClass c ON s.SchoolClassID = c.SchoolClassID " +
             "JOIN School sch ON c.SchoolID = sch.SchoolID";
+
         private string _updateStudent = "UPDATE Student set " +
             "FirstName=@FirstName, " +
             "MiddleName=@MiddleName, " +
             "LastName=@LastName, " +
-            "ParenID=@ParentID, " +
+            "ParentID=@ParentID, " +
             "School=@School, " +
             "SchoolClass=@SchoolClassID" +
             "WHERE StudentID = @StudentID";
+
+        private string _deleteStudent = "DELETE FROM Student WHERE StudentID = @StudentID";
         #endregion
 
         private IRepoAsync<Parent, int> _parentRepo;
@@ -198,9 +201,32 @@ namespace SkoloFotoExam26.Services
             }
         }
 
-        public Task DeleteAsync(int toDelete)
+        public async Task DeleteAsync(int toDelete)
         {
-            throw new NotImplementedException();
+            using (SqlConnection connection = new SqlConnection(Secret.connectionString))
+            {
+                try
+                {
+                    SqlCommand command = new SqlCommand(_deleteStudent, connection);
+                    await connection.OpenAsync();
+
+                    command.Parameters.AddWithValue("StudentID", toDelete);
+
+                    int noOfRowsEffected = await command.ExecuteNonQueryAsync();
+                }
+                catch (SqlException sqlex)
+                {
+                    throw;
+                }
+                catch (Exception ex)
+                {
+                    throw;
+                }
+                finally
+                {
+                    await connection.CloseAsync();
+                }
+            }
         }
     }
 }

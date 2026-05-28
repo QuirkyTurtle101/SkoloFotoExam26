@@ -61,7 +61,7 @@ namespace SkoloFotoExam26.Pages.Students
             try
             {
                 // 1. Opret et Student objekt manuelt ud fra de properties, formen har udfyldt
-                // Vi bruger ParentID fra formen og SchoolClassID (husk at tilføje den til formen!)
+                // Vi bruger ParentID fra formen og SchoolClassID
                 Student studentToSave = new Student
                 {
                     FirstName = this.FirstName,
