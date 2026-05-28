@@ -97,9 +97,7 @@ namespace SkoloFotoExam26.Services
                         DateTime date = reader.GetDateTime("Date");
                         int height = reader.GetInt32("Height");
                         int width = reader.GetInt32("Width");
-                        //double price = reader.GetDouble("Price");
                         double price = Convert.ToDouble(reader["Price"]);
-                        //Booking booking = await _bookings.GetAsync();
                         Photo photo = new Photo(photoID, fileName, filePath, price, date, height, width, photoType);
 
                         photos.Add(photo);

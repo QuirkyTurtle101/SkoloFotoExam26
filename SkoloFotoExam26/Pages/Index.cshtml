@@ -1,11 +1,28 @@
 ﻿@page
 @model IndexModel
 @{
-    ViewData["Title"] = "Home page";
+    ViewData["Title"] = "Tilmeldning";
 }
-
-<div class="text-center">
+<h1>Tilmeldning</h1>
+@* <div class="text-center">
     <h1 class="display-4">Welcome </h1>
     <p>Learn about <a href="https://learn.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
-</div>
+</div> *@
 @* evt. lave en forside med link til tilmelding *@
+
+<a asp-page="/Teachers/CreateTeacher">
+    Opret lærer
+</a>
+<br />
+<a asp-page="/Photographers/CreatePhotographer">
+    Opret fotograf
+</a>
+<br />
+<a asp-page="/SchoolSecretaries/CreateSchoolSecretary">
+    Opret skolesekretær
+</a>
+<br />
+<a asp-page="/Parents/CreateParent">
+    Opret forældre
+</a>
+

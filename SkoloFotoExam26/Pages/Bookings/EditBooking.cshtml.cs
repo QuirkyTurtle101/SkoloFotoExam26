@@ -38,10 +38,10 @@ namespace SkoloFotoExam26.Pages.Bookings
 
         public List<Booking> Bookings { get; set; }
 
-        public EditBookingModel(IRepoAsync<PhotographingEvent, int> photographingEventRepo, BookingRepoAsync bookingRepo,
+        public EditBookingModel(IRepoAsync<PhotographingEvent, int> photographingEventRepo, IRepoAsync<Booking, int> bookingRepo,
             IRepoAsync<Teacher, int> teacherRepo, IRepoAsync<SchoolClass, int> schoolClassRepo)
         {
-            _bookingRepo = bookingRepo;
+            _bookingRepo = (BookingRepoAsync)bookingRepo;
             _photographingEventRepo = photographingEventRepo;
             _teacherRepo = teacherRepo;
             _schoolClassRepo = schoolClassRepo;
@@ -71,17 +71,17 @@ namespace SkoloFotoExam26.Pages.Bookings
                 Booking edited = new Booking(Start, End, TheEvent,
                     await _schoolClassRepo.GetAsync(SelectedSchoolClassID), 
                     await _teacherRepo.GetAsync(TeacherID), BookingID);
-
                 await _bookingRepo.BookingCheckAsync(edited, TheEvent);
-
                 await _bookingRepo.UpdateAsync(edited);
+
                 return RedirectToPage("Index");
             }
             catch (Exception ex)
             {
-                ViewData["Title"] = ex.Message;
+                ViewData["ErrorMessage"] = ex.Message;
                 return Page();
             }
+
         }
 
 
